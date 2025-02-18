@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.catalis</groupId>
+        <artifactId>lib-parent-pom</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>core-lending-loan-origination</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>core-lending-loan-origination-core</module>
+        <module>core-lending-loan-origination-interfaces</module>
+        <module>core-lending-loan-origination-models</module>
+        <module>core-lending-loan-origination-web</module>
+    </modules>
+
+    <properties>
+        <core-lending-loan-origination.version>
+            1.0.0-SNAPSHOT
+        </core-lending-loan-origination.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Internal modules -->
+            <dependency>
+                <groupId>com.catalis</groupId>
+                <artifactId>core-lending-loan-origination-interfaces</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.catalis</groupId>
+                <artifactId>core-lending-loan-origination-models</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.catalis</groupId>
+                <artifactId>core-lending-loan-origination-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.catalis</groupId>
+                <artifactId>core-lending-loan-origination-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
