@@ -1,8 +1,9 @@
 package com.catalis.core.lending.origination.interfaces.dtos.decision.v1;
 
-import com.catalis.common.core.filters.FilterableId;
 import com.catalis.core.lending.origination.interfaces.enums.decision.v1.DecisionCodeEnum;
 import com.catalis.core.lending.origination.interfaces.enums.score.v1.RiskGradeEnum;
+import com.catalis.core.utils.annotations.FilterableId;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +17,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UnderwritingDecisionDTO {
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long underwritingDecisionId;
 
     @FilterableId

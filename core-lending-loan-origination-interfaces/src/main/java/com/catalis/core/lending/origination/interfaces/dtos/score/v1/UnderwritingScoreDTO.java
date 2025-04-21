@@ -1,6 +1,7 @@
 package com.catalis.core.lending.origination.interfaces.dtos.score.v1;
 
-import com.catalis.common.core.filters.FilterableId;
+import com.catalis.core.utils.annotations.FilterableId;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UnderwritingScoreDTO {
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long underwritingScoreId;
 
     @FilterableId
