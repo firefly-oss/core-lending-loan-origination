@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Flux;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -48,6 +49,11 @@ public class LoanApplicationsServiceImpl implements LoanApplicationsService {
     @Override
     public Mono<LoanApplicationDTO> createLoanApplication(LoanApplicationDTO dto) {
         return Mono.just(dto)
+                .map(loanAppDto -> {
+                    // Auto-generate UUID for applicationNumber at service level
+                    loanAppDto.setApplicationNumber(UUID.randomUUID());
+                    return loanAppDto;
+                })
                 .map(mapper::toEntity)
                 .flatMap(repository::save)
                 .map(mapper::toDTO);
