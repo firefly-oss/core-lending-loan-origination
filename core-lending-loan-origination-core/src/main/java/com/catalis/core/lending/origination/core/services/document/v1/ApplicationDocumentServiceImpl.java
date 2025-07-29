@@ -52,7 +52,12 @@ public class ApplicationDocumentServiceImpl implements ApplicationDocumentServic
         return repository.findById(documentId)
                 .filter(document -> document.getLoanApplicationId().equals(applicationId))
                 .flatMap(existingDocument -> {
-                    existingDocument.setDocumentType(dto.getDocumentType());
+                    // Convert documentTypeId to DocumentTypeEnum
+                    if (dto.getDocumentTypeId() != null) {
+                        existingDocument.setDocumentType(
+                            com.catalis.core.lending.origination.interfaces.enums.document.v1.DocumentTypeEnum.values()[dto.getDocumentTypeId().intValue()]
+                        );
+                    }
                     existingDocument.setIsMandatory(dto.getIsMandatory());
                     existingDocument.setIsReceived(dto.getIsReceived());
                     existingDocument.setReceivedAt(dto.getReceivedAt());
