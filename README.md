@@ -43,6 +43,242 @@ The microservice is structured as a multi-module Maven project with the followin
 
 ## Data Model
 
+### Entity Relationship Diagram
+
+The following diagram illustrates the relationships between entities in the system and includes detailed attributes for each entity. Primary keys (PK) and foreign keys (FK) are indicated to clearly show the relationships between entities.
+
+```mermaid
+erDiagram
+    LoanApplication {
+        Long loanApplicationId PK
+        UUID applicationNumber
+        Long applicationStatusId FK
+        Long applicationSubStatusId FK
+        LocalDate applicationDate
+        Long submissionChannelId FK
+        Long partyId
+        Long distributorId
+        String note
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+    
+    ApplicationParty {
+        Long applicationPartyId PK
+        Long loanApplicationId FK
+        Long partyId
+        Long roleCodeId FK
+        BigDecimal sharePercentage
+        BigDecimal annualIncome
+        BigDecimal monthlyExpenses
+        Long employmentTypeId FK
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+    
+    ApplicationDocument {
+        Long applicationDocumentId PK
+        Long loanApplicationId FK
+        Long documentId
+        Long documentTypeId FK
+        Boolean isMandatory
+        Boolean isReceived
+        LocalDateTime receivedAt
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+    
+    ApplicationCollateral {
+        Long applicationCollateralId PK
+        Long loanApplicationId FK
+        Long collateralTypeId FK
+        BigDecimal estimatedValue
+        String ownershipDetails
+        Boolean isPrimaryCollateral
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+    
+    ProposedOffer {
+        Long proposedOfferId PK
+        Long loanApplicationId FK
+        Long productId
+        BigDecimal requestedAmount
+        Integer requestedTenorMonths
+        BigDecimal requestedInterestRate
+        LocalDate validUntil
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+    
+    UnderwritingScore {
+        Long underwritingScoreId PK
+        Long loanApplicationId FK
+        BigDecimal scoreValue
+        String scorecardName
+        String reasonCodes
+        LocalDateTime scoringTimestamp
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+    
+    UnderwritingDecision {
+        Long underwritingDecisionId PK
+        Long loanApplicationId FK
+        LocalDateTime decisionDate
+        Long decisionCodeId FK
+        BigDecimal approvedAmount
+        BigDecimal approvedInterestRate
+        Integer tenorMonths
+        Long riskGradeId FK
+        String remarks
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+    
+    LoanApplicationStatusHistory {
+        Long statusHistoryId PK
+        Long loanApplicationId FK
+        Long oldStatusId FK
+        Long newStatusId FK
+        String changeReason
+        LocalDateTime changedAt
+        String changedBy
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+    
+    ApplicationStatus {
+        Long applicationStatusId PK
+        String code
+        String name
+        String description
+        Boolean isActive
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+    
+    ApplicationSubStatus {
+        Long applicationSubStatusId PK
+        String code
+        String name
+        String description
+        Boolean isActive
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+    
+    SubmissionChannel {
+        Long submissionChannelId PK
+        String code
+        String name
+        String description
+        Boolean isActive
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+    
+    RoleCode {
+        Long roleCodeId PK
+        String code
+        String name
+        String description
+        Boolean isActive
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+    
+    EmploymentType {
+        Long employmentTypeId PK
+        String code
+        String name
+        String description
+        Boolean isActive
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+    
+    DocumentType {
+        Long documentTypeId PK
+        String code
+        String name
+        String description
+        Boolean isActive
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+    
+    CollateralType {
+        Long collateralTypeId PK
+        String code
+        String name
+        String description
+        Boolean isActive
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+    
+    DecisionCode {
+        Long decisionCodeId PK
+        String code
+        String name
+        String description
+        Boolean isActive
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+    
+    RiskGrade {
+        Long riskGradeId PK
+        String code
+        String name
+        String description
+        Boolean isActive
+        LocalDateTime createdAt
+        LocalDateTime updatedAt
+    }
+    
+    LoanApplication ||--o{ ApplicationParty : has
+    LoanApplication ||--o{ ApplicationDocument : has
+    LoanApplication ||--o{ ApplicationCollateral : has
+    LoanApplication ||--o{ ProposedOffer : has
+    LoanApplication ||--o{ UnderwritingScore : has
+    LoanApplication ||--o{ UnderwritingDecision : has
+    LoanApplication ||--o{ LoanApplicationStatusHistory : has
+    LoanApplication }|--|| ApplicationStatus : has
+    LoanApplication }|--|| ApplicationSubStatus : has
+    LoanApplication }|--|| SubmissionChannel : has
+    
+    ApplicationParty }|--|| RoleCode : has
+    ApplicationParty }|--|| EmploymentType : has
+    
+    ApplicationDocument }|--|| DocumentType : has
+    
+    ApplicationCollateral }|--|| CollateralType : has
+    
+    UnderwritingDecision }|--|| DecisionCode : has
+    UnderwritingDecision }|--|| RiskGrade : has
+    
+    UnderwritingScore }|--|| RiskGrade : has
+    
+    LoanApplicationStatusHistory }|--|| ApplicationStatus : "oldStatus"
+    LoanApplicationStatusHistory }|--|| ApplicationStatus : "newStatus"
+```
+
+### Catalog Entities
+
+The system uses catalog entities instead of enums to allow for dynamic management of these values:
+
+1. **ApplicationStatus**: Represents the status of a loan application (DRAFT, SUBMITTED, UNDER_REVIEW, APPROVED, REJECTED)
+2. **ApplicationSubStatus**: Represents additional status details (PENDING_DOCUMENTS, NEEDS_MANUAL_REVIEW, COMPLETE)
+3. **SubmissionChannel**: Represents the channel through which the application was submitted (BRANCH, ONLINE, MOBILE)
+4. **RoleCode**: Represents the role of a party in the application (PRIMARY_APPLICANT, CO_APPLICANT, GUARANTOR)
+5. **EmploymentType**: Represents the employment type of a party (SALARIED, SELF_EMPLOYED, UNEMPLOYED, RETIRED, OTHER)
+6. **DocumentType**: Represents the type of a document (ID_PROOF, PAYSLIP, PROPERTY_DEED, BANK_STATEMENT, OTHER)
+7. **CollateralType**: Represents the type of collateral (REAL_ESTATE, VEHICLE, FINANCIAL_ASSET, OTHER)
+8. **DecisionCode**: Represents the decision on a loan application (APPROVED, DECLINED, WITHDRAWN, COUNTER_OFFER)
+9. **RiskGrade**: Represents the risk grade assigned to an application (A, B, C, D, HIGH_RISK)
+
 ### Loan Application
 
 The core entity of the system that represents a customer's application for a loan.
@@ -50,10 +286,10 @@ The core entity of the system that represents a customer's application for a loa
 **Key Fields:**
 - `loanApplicationId`: Unique identifier for the loan application
 - `applicationNumber`: Auto-generated UUID that uniquely identifies the application
-- `applicationStatus`: Current status (DRAFT, SUBMITTED, UNDER_REVIEW, APPROVED, REJECTED)
-- `applicationSubStatus`: Additional status details (PENDING_DOCUMENTS, NEEDS_MANUAL_REVIEW, COMPLETE)
+- `applicationStatusId`: Foreign key to the ApplicationStatus catalog entity
+- `applicationSubStatusId`: Foreign key to the ApplicationSubStatus catalog entity
 - `applicationDate`: Date when the application was submitted
-- `submissionChannel`: Channel through which the application was submitted (BRANCH, ONLINE, MOBILE, DISTRIBUTOR)
+- `submissionChannelId`: Foreign key to the SubmissionChannel catalog entity
 - `partyId`: Identifier for a known customer who launched the application (can be null for unknown customers)
 - `distributorId`: Identifier for a known distributor who launched the application (can be null if not submitted via distributor)
 - `note`: Additional notes or comments about the application
@@ -66,6 +302,9 @@ The core entity of the system that represents a customer's application for a loa
 - One-to-many with Underwriting Scores
 - One-to-many with Underwriting Decisions
 - One-to-many with Loan Application Status History
+- Many-to-one with Application Status
+- Many-to-one with Application Sub Status
+- Many-to-one with Submission Channel
 
 ## Prerequisites
 
@@ -116,36 +355,132 @@ The application can be configured through the `application.properties` or `appli
 - Security settings
 - External service endpoints
 
-## API Documentation
+## API Quick Start Guide
 
-The API is documented using OpenAPI/Swagger. When the application is running, you can access the API documentation at:
+The Core Lending Loan Origination API provides a RESTful interface for managing loan applications and related resources. This guide will help you get started quickly with the API.
+
+### API Documentation
+
+For detailed API documentation, you can access the Swagger UI when the application is running:
 
 ```
 http://localhost:8080/swagger-ui.html
 ```
 
-### Key Endpoints
 
-- **Loan Applications**
-  - `GET /api/v1/loan-applications` - List all loan applications
-  - `POST /api/v1/loan-applications` - Create a new loan application
-  - `GET /api/v1/loan-applications/{applicationId}` - Get a specific loan application
-  - `PUT /api/v1/loan-applications/{applicationId}` - Update a loan application
-  - `DELETE /api/v1/loan-applications/{applicationId}` - Delete a loan application
+### Common Patterns
 
-- **Underwriting Scores**
-  - `GET /api/v1/loan-applications/{applicationId}/scores` - List scores for an application
-  - `POST /api/v1/loan-applications/{applicationId}/scores` - Create a new score
-  - `GET /api/v1/loan-applications/{applicationId}/scores/{scoreId}` - Get a specific score
-  - `PUT /api/v1/loan-applications/{applicationId}/scores/{scoreId}` - Update a score
-  - `DELETE /api/v1/loan-applications/{applicationId}/scores/{scoreId}` - Delete a score
+- **Base URL**: All API endpoints start with `/api/v1`
+- **Content Type**: All requests and responses use JSON (`application/json`)
+- **Pagination**: Collection endpoints support pagination with `page`, `size`, and `sort` parameters
+- **Resource Hierarchy**: Most resources are nested under loan applications
 
-- **Underwriting Decisions**
-  - `GET /api/v1/loan-applications/{applicationId}/decisions` - List decisions for an application
-  - `POST /api/v1/loan-applications/{applicationId}/decisions` - Create a new decision
-  - `GET /api/v1/loan-applications/{applicationId}/decisions/{decisionId}` - Get a specific decision
-  - `PUT /api/v1/loan-applications/{applicationId}/decisions/{decisionId}` - Update a decision
-  - `DELETE /api/v1/loan-applications/{applicationId}/decisions/{decisionId}` - Delete a decision
+### Quick Examples
+
+#### 1. Create a Loan Application
+
+```bash
+# Request
+curl -X POST "http://localhost:8080/api/v1/loan-applications" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "applicationStatus": "DRAFT",
+    "applicationSubStatus": "PENDING_DOCUMENTS",
+    "applicationDate": "2025-07-29",
+    "submissionChannel": "ONLINE",
+    "partyId": 456,
+    "note": "Sample loan application"
+  }'
+
+# Response
+{
+  "loanApplicationId": 123,
+  "applicationNumber": "550e8400-e29b-41d4-a716-446655440000",
+  "applicationStatus": "DRAFT",
+  "applicationSubStatus": "PENDING_DOCUMENTS",
+  "applicationDate": "2025-07-29",
+  "submissionChannel": "ONLINE",
+  "partyId": 456,
+  "distributorId": null,
+  "note": "Sample loan application",
+  "createdAt": "2025-07-29T10:27:00.000+00:00",
+  "updatedAt": "2025-07-29T10:27:00.000+00:00"
+}
+```
+
+#### 2. Add a Party to a Loan Application
+
+```bash
+# Request
+curl -X POST "http://localhost:8080/api/v1/loan-applications/123/parties" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "partyId": 456,
+    "roleCodeId": 1,
+    "sharePercentage": 100.0,
+    "annualIncome": 75000.0,
+    "monthlyExpenses": 2500.0,
+    "employmentTypeId": 1
+  }'
+```
+
+#### 3. Add Collateral to a Loan Application
+
+```bash
+# Request
+curl -X POST "http://localhost:8080/api/v1/loan-applications/123/collaterals" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "collateralTypeId": 1,
+    "estimatedValue": 250000.0,
+    "ownershipDetails": "Sole owner",
+    "isPrimaryCollateral": true
+  }'
+```
+
+#### 4. Record an Underwriting Decision
+
+```bash
+# Request
+curl -X POST "http://localhost:8080/api/v1/loan-applications/123/decisions" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "decisionCodeId": 1,
+    "approvedAmount": 95000.0,
+    "approvedInterestRate": 5.75,
+    "tenorMonths": 36,
+    "riskGradeId": 2,
+    "remarks": "Approved with slightly higher interest rate"
+  }'
+```
+
+### Key Resources
+
+| Resource | Description | Main Endpoints |
+|----------|-------------|---------------|
+| **Loan Applications** | Core resource representing a customer's application for a loan | `GET/POST /loan-applications`, `GET/PUT/DELETE /loan-applications/{id}` |
+| **Application Parties** | Individuals or entities associated with a loan application | `GET/POST /loan-applications/{id}/parties`, `GET/PUT/DELETE /loan-applications/{id}/parties/{partyId}` |
+| **Application Documents** | Documents associated with a loan application | `GET/POST /loan-applications/{id}/documents`, `GET/PUT/DELETE /loan-applications/{id}/documents/{documentId}` |
+| **Application Collaterals** | Assets pledged as security for a loan | `GET/POST /loan-applications/{id}/collaterals`, `GET/PUT/DELETE /loan-applications/{id}/collaterals/{collateralId}` |
+| **Proposed Offers** | Loan offers made to applicants | `GET/POST /loan-applications/{id}/offers`, `GET/PUT/DELETE /loan-applications/{id}/offers/{offerId}` |
+| **Underwriting Decisions** | Decisions made on loan applications | `GET/POST /loan-applications/{id}/decisions`, `GET/PUT/DELETE /loan-applications/{id}/decisions/{decisionId}` |
+| **Underwriting Scores** | Risk assessments of loan applications | `GET/POST /loan-applications/{id}/scores`, `GET/PUT/DELETE /loan-applications/{id}/scores/{scoreId}` |
+| **Status History** | Changes to the status of a loan application | `GET/POST /loan-applications/{id}/status-history`, `GET/PUT/DELETE /loan-applications/{id}/status-history/{historyId}` |
+
+### Error Handling
+
+The API uses standard HTTP status codes and returns error details in the response body:
+
+```json
+{
+  "timestamp": "2025-07-29T10:27:00.000+00:00",
+  "status": 400,
+  "error": "Bad Request",
+  "message": "Invalid request parameters",
+  "path": "/api/v1/loan-applications"
+}
+```
+
 
 ## Development Guidelines
 
