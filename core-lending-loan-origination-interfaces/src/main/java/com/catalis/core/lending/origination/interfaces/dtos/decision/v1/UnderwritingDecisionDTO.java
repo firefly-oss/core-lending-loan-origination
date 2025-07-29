@@ -1,7 +1,5 @@
 package com.catalis.core.lending.origination.interfaces.dtos.decision.v1;
 
-import com.catalis.core.lending.origination.interfaces.enums.decision.v1.DecisionCodeEnum;
-import com.catalis.core.lending.origination.interfaces.enums.score.v1.RiskGradeEnum;
 import com.catalis.core.utils.annotations.FilterableId;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -25,11 +23,15 @@ public class UnderwritingDecisionDTO {
     private Long loanApplicationId;
 
     private LocalDateTime decisionDate;
-    private DecisionCodeEnum decisionCode;
+
+    @FilterableId
+    private Long decisionCodeId;
     private BigDecimal approvedAmount;
     private BigDecimal approvedInterestRate;
     private Integer tenorMonths;
-    private RiskGradeEnum riskGrade;
+
+    @FilterableId
+    private Long riskGradeId;
     private String remarks;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

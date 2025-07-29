@@ -1,6 +1,5 @@
 package com.catalis.core.lending.origination.interfaces.dtos.document.v1;
 
-import com.catalis.core.lending.origination.interfaces.enums.document.v1.DocumentTypeEnum;
 import com.catalis.core.utils.annotations.FilterableId;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -25,7 +24,9 @@ public class ApplicationDocumentDTO {
     @FilterableId
     private Long documentId;
 
-    private DocumentTypeEnum documentType;
+    @FilterableId
+    private Long documentTypeId;
+
     private Boolean isMandatory;
     private Boolean isReceived;
     private LocalDateTime receivedAt;
