@@ -41,6 +41,32 @@ The microservice is structured as a multi-module Maven project with the followin
 - **RESTful API**: Well-documented API with OpenAPI/Swagger annotations
 - **Pagination and Filtering**: Support for paginated results and advanced filtering
 
+## Data Model
+
+### Loan Application
+
+The core entity of the system that represents a customer's application for a loan.
+
+**Key Fields:**
+- `loanApplicationId`: Unique identifier for the loan application
+- `applicationNumber`: Auto-generated UUID that uniquely identifies the application
+- `applicationStatus`: Current status (DRAFT, SUBMITTED, UNDER_REVIEW, APPROVED, REJECTED)
+- `applicationSubStatus`: Additional status details (PENDING_DOCUMENTS, NEEDS_MANUAL_REVIEW, COMPLETE)
+- `applicationDate`: Date when the application was submitted
+- `submissionChannel`: Channel through which the application was submitted (BRANCH, ONLINE, MOBILE, DISTRIBUTOR)
+- `partyId`: Identifier for a known customer who launched the application (can be null for unknown customers)
+- `distributorId`: Identifier for a known distributor who launched the application (can be null if not submitted via distributor)
+- `note`: Additional notes or comments about the application
+
+**Relationships:**
+- One-to-many with Application Parties
+- One-to-many with Application Documents
+- One-to-many with Application Collaterals
+- One-to-many with Proposed Offers
+- One-to-many with Underwriting Scores
+- One-to-many with Underwriting Decisions
+- One-to-many with Loan Application Status History
+
 ## Prerequisites
 
 - Java Development Kit (JDK) 21
