@@ -1,7 +1,7 @@
 package com.catalis.core.lending.origination.models.entities.decision.v1;
 
-import com.catalis.core.lending.origination.interfaces.enums.decision.v1.DecisionCodeEnum;
-import com.catalis.core.lending.origination.interfaces.enums.score.v1.RiskGradeEnum;
+import com.catalis.core.lending.origination.models.entities.catalog.v1.DecisionCode;
+import com.catalis.core.lending.origination.models.entities.catalog.v1.RiskGrade;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,8 +29,10 @@ public class UnderwritingDecision {
     @Column("decision_date")
     private LocalDateTime decisionDate;
 
-    @Column("decision_code")
-    private DecisionCodeEnum decisionCode;
+    @Column("decision_code_id")
+    private Long decisionCodeId;
+    
+    private DecisionCode decisionCode;
 
     @Column("approved_amount")
     private BigDecimal approvedAmount;
@@ -41,8 +43,10 @@ public class UnderwritingDecision {
     @Column("tenor_months")
     private Integer tenorMonths;
 
-    @Column("risk_grade")
-    private RiskGradeEnum riskGrade;
+    @Column("risk_grade_id")
+    private Long riskGradeId;
+    
+    private RiskGrade riskGrade;
 
     @Column("remarks")
     private String remarks;

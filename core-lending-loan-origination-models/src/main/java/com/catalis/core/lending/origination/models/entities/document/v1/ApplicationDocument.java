@@ -1,6 +1,7 @@
 package com.catalis.core.lending.origination.models.entities.document.v1;
 
 import com.catalis.core.lending.origination.interfaces.enums.document.v1.DocumentTypeEnum;
+import com.catalis.core.lending.origination.models.entities.catalog.v1.DocumentType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
