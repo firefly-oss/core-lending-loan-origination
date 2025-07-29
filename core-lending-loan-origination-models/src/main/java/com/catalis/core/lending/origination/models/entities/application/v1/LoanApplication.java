@@ -13,6 +13,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Table("loan_application")
 @Data
@@ -25,7 +26,7 @@ public class LoanApplication {
     private Long loanApplicationId;
 
     @Column("application_number")
-    private String applicationNumber;
+    private UUID applicationNumber;
 
     @Column("application_status")
     private ApplicationStatusEnum applicationStatus;
@@ -38,6 +39,20 @@ public class LoanApplication {
 
     @Column("submission_channel")
     private SubmissionChannelEnum submissionChannel;
+    
+    /**
+     * Identifier for a known customer who launched the application.
+     * This field is null for unknown non-customers.
+     */
+    @Column("party_id")
+    private Long partyId;
+    
+    /**
+     * Identifier for a known distributor who launched the application.
+     * This field is null if not submitted via a distributor.
+     */
+    @Column("distributor_id")
+    private Long distributorId;
 
     @Column("note")
     private String note;
