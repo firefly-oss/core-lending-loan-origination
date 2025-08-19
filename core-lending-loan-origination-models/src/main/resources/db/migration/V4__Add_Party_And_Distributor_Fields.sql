@@ -26,6 +26,9 @@ UPDATE loan_application SET submission_channel_new = submission_channel::text::s
 ALTER TABLE loan_application DROP COLUMN submission_channel;
 ALTER TABLE loan_application RENAME COLUMN submission_channel_new TO submission_channel;
 
+-- Drop the dependent cast to avoid type drop failure
+DROP CAST IF EXISTS (varchar AS submission_channel);
+
 -- Drop the old type
 DROP TYPE submission_channel;
 
