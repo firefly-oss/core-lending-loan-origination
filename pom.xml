@@ -18,6 +18,7 @@
         <module>core-lending-loan-origination-interfaces</module>
         <module>core-lending-loan-origination-models</module>
         <module>core-lending-loan-origination-web</module>
+        <module>core-lending-loan-origination-sdk</module>
     </modules>
 
     <properties>
@@ -37,6 +38,11 @@
             <dependency>
                 <groupId>com.catalis</groupId>
                 <artifactId>core-lending-loan-origination-models</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.catalis</groupId>
+                <artifactId>core-lending-loan-origination-sdk</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
