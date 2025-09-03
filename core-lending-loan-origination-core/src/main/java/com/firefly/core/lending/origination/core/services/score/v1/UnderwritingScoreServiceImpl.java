@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @Service
 @Transactional
 public class UnderwritingScoreServiceImpl implements UnderwritingScoreService {
@@ -23,7 +25,7 @@ public class UnderwritingScoreServiceImpl implements UnderwritingScoreService {
     private UnderwritingScoreMapper mapper;
 
     @Override
-    public Mono<PaginationResponse<UnderwritingScoreDTO>> findAll(Long applicationId, PaginationRequest paginationRequest) {
+    public Mono<PaginationResponse<UnderwritingScoreDTO>> findAll(UUID applicationId, PaginationRequest paginationRequest) {
         return PaginationUtils.paginateQuery(
                 paginationRequest,
                 mapper::toDTO,
@@ -33,7 +35,7 @@ public class UnderwritingScoreServiceImpl implements UnderwritingScoreService {
     }
 
     @Override
-    public Mono<UnderwritingScoreDTO> createScore(Long applicationId, UnderwritingScoreDTO dto) {
+    public Mono<UnderwritingScoreDTO> createScore(UUID applicationId, UnderwritingScoreDTO dto) {
         UnderwritingScore entity = mapper.toEntity(dto);
         entity.setLoanApplicationId(applicationId);
         return repository.save(entity)
@@ -41,14 +43,14 @@ public class UnderwritingScoreServiceImpl implements UnderwritingScoreService {
     }
 
     @Override
-    public Mono<UnderwritingScoreDTO> getScore(Long applicationId, Long scoreId) {
+    public Mono<UnderwritingScoreDTO> getScore(UUID applicationId, UUID scoreId) {
         return repository.findById(scoreId)
                 .filter(score -> score.getLoanApplicationId().equals(applicationId))
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Mono<UnderwritingScoreDTO> updateScore(Long applicationId, Long scoreId, UnderwritingScoreDTO dto) {
+    public Mono<UnderwritingScoreDTO> updateScore(UUID applicationId, UUID scoreId, UnderwritingScoreDTO dto) {
         return repository.findById(scoreId)
                 .filter(score -> score.getLoanApplicationId().equals(applicationId))
                 .flatMap(existingScore -> {
@@ -61,7 +63,7 @@ public class UnderwritingScoreServiceImpl implements UnderwritingScoreService {
     }
 
     @Override
-    public Mono<Void> deleteScore(Long applicationId, Long scoreId) {
+    public Mono<Void> deleteScore(UUID applicationId, UUID scoreId) {
         return repository.findById(scoreId)
                 .filter(score -> score.getLoanApplicationId().equals(applicationId))
                 .flatMap(repository::delete);

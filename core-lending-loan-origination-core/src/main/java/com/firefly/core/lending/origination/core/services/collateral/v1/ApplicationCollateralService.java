@@ -5,6 +5,8 @@ import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.core.lending.origination.interfaces.dtos.collateral.v1.ApplicationCollateralDTO;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 public interface ApplicationCollateralService {
 
     /**
@@ -15,7 +17,7 @@ public interface ApplicationCollateralService {
      * @return a reactive Mono containing a paginated response with a list of ApplicationCollateralDTO objects
      *         representing the collateral items associated with the provided application ID
      */
-    Mono<PaginationResponse<ApplicationCollateralDTO>> findAll(Long applicationId, PaginationRequest paginationRequest);
+    Mono<PaginationResponse<ApplicationCollateralDTO>> findAll(UUID applicationId, PaginationRequest paginationRequest);
 
     /**
      * Creates a new collateral entry associated with a specific loan application.
@@ -24,7 +26,7 @@ public interface ApplicationCollateralService {
      * @param dto the data transfer object containing details of the collateral to be created
      * @return a reactive Mono containing the created ApplicationCollateralDTO representing the new collateral entry
      */
-    Mono<ApplicationCollateralDTO> createCollateral(Long applicationId, ApplicationCollateralDTO dto);
+    Mono<ApplicationCollateralDTO> createCollateral(UUID applicationId, ApplicationCollateralDTO dto);
 
     /**
      * Retrieves the details of a specific collateral associated with a loan application.
@@ -33,7 +35,7 @@ public interface ApplicationCollateralService {
      * @param collateralId the unique identifier of the collateral to be retrieved
      * @return a reactive Mono containing the ApplicationCollateralDTO object representing the details of the specified collateral
      */
-    Mono<ApplicationCollateralDTO> getCollateral(Long applicationId, Long collateralId);
+    Mono<ApplicationCollateralDTO> getCollateral(UUID applicationId, UUID collateralId);
 
     /**
      * Updates an existing collateral associated with a specific application and collateral ID.
@@ -43,7 +45,7 @@ public interface ApplicationCollateralService {
      * @param dto the data transfer object containing updated details for the application collateral
      * @return a Mono emitting the updated ApplicationCollateralDTO upon a successful update operation
      */
-    Mono<ApplicationCollateralDTO> updateCollateral(Long applicationId, Long collateralId, ApplicationCollateralDTO dto);
+    Mono<ApplicationCollateralDTO> updateCollateral(UUID applicationId, UUID collateralId, ApplicationCollateralDTO dto);
 
     /**
      * Deletes a specific collateral associated with a loan application.
@@ -52,5 +54,5 @@ public interface ApplicationCollateralService {
      * @param collateralId the unique identifier of the collateral to be deleted
      * @return a Mono signaling when the deletion operation has been completed
      */
-    Mono<Void> deleteCollateral(Long applicationId, Long collateralId);
+    Mono<Void> deleteCollateral(UUID applicationId, UUID collateralId);
 }

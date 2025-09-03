@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
-import reactor.core.publisher.Flux;
+
 import java.util.UUID;
 
 @Service
@@ -60,13 +60,13 @@ public class LoanApplicationsServiceImpl implements LoanApplicationsService {
     }
 
     @Override
-    public Mono<LoanApplicationDTO> getLoanApplication(Long applicationId) {
+    public Mono<LoanApplicationDTO> getLoanApplication(UUID applicationId) {
         return repository.findById(applicationId)
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Mono<LoanApplicationDTO> updateLoanApplication(Long applicationId, LoanApplicationDTO dto) {
+    public Mono<LoanApplicationDTO> updateLoanApplication(UUID applicationId, LoanApplicationDTO dto) {
         return repository.findById(applicationId)
                 .flatMap(existing -> {
                     LoanApplication updatedEntity = mapper.toEntity(dto);
@@ -77,7 +77,7 @@ public class LoanApplicationsServiceImpl implements LoanApplicationsService {
     }
 
     @Override
-    public Mono<Void> deleteLoanApplication(Long applicationId) {
+    public Mono<Void> deleteLoanApplication(UUID applicationId) {
         return repository.findById(applicationId)
                 .flatMap(repository::delete);
     }

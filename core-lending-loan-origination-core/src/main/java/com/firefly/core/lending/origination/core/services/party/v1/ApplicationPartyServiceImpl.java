@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @Service
 @Transactional
 public class ApplicationPartyServiceImpl implements ApplicationPartyService {
@@ -23,7 +25,7 @@ public class ApplicationPartyServiceImpl implements ApplicationPartyService {
     private ApplicationPartyMapper mapper;
 
     @Override
-    public Mono<PaginationResponse<ApplicationPartyDTO>> findAll(Long applicationId, PaginationRequest paginationRequest) {
+    public Mono<PaginationResponse<ApplicationPartyDTO>> findAll(UUID applicationId, PaginationRequest paginationRequest) {
         return PaginationUtils.paginateQuery(
                 paginationRequest,
                 mapper::toDTO,
@@ -33,7 +35,7 @@ public class ApplicationPartyServiceImpl implements ApplicationPartyService {
     }
 
     @Override
-    public Mono<ApplicationPartyDTO> createParty(Long applicationId, ApplicationPartyDTO dto) {
+    public Mono<ApplicationPartyDTO> createParty(UUID applicationId, ApplicationPartyDTO dto) {
         ApplicationParty entity = mapper.toEntity(dto);
         entity.setLoanApplicationId(applicationId);
         return repository.save(entity)
@@ -41,14 +43,14 @@ public class ApplicationPartyServiceImpl implements ApplicationPartyService {
     }
 
     @Override
-    public Mono<ApplicationPartyDTO> getParty(Long applicationId, Long partyId) {
+    public Mono<ApplicationPartyDTO> getParty(UUID applicationId, UUID partyId) {
         return repository.findById(partyId)
                 .filter(entity -> entity.getLoanApplicationId().equals(applicationId))
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Mono<ApplicationPartyDTO> updateParty(Long applicationId, Long partyId, ApplicationPartyDTO dto) {
+    public Mono<ApplicationPartyDTO> updateParty(UUID applicationId, UUID partyId, ApplicationPartyDTO dto) {
         return repository.findById(partyId)
                 .filter(entity -> entity.getLoanApplicationId().equals(applicationId))
                 .flatMap(existing -> {
@@ -61,7 +63,7 @@ public class ApplicationPartyServiceImpl implements ApplicationPartyService {
     }
 
     @Override
-    public Mono<Void> deleteParty(Long applicationId, Long partyId) {
+    public Mono<Void> deleteParty(UUID applicationId, UUID partyId) {
         return repository.findById(partyId)
                 .filter(entity -> entity.getLoanApplicationId().equals(applicationId))
                 .flatMap(entity -> repository.delete(entity));

@@ -8,6 +8,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class DocumentTypeServiceImpl implements DocumentTypeService {
     }
 
     @Override
-    public Mono<DocumentType> findById(Long id) {
+    public Mono<DocumentType> findById(UUID id) {
         return documentTypeRepository.findById(id);
     }
 
@@ -44,7 +45,7 @@ public class DocumentTypeServiceImpl implements DocumentTypeService {
     }
 
     @Override
-    public Mono<Void> deleteById(Long id) {
+    public Mono<Void> deleteById(UUID id) {
         return documentTypeRepository.deleteById(id);
     }
 }

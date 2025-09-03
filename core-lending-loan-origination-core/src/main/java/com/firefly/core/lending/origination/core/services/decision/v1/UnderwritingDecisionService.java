@@ -5,6 +5,8 @@ import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.core.lending.origination.interfaces.dtos.decision.v1.UnderwritingDecisionDTO;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 public interface UnderwritingDecisionService {
 
     /**
@@ -15,7 +17,7 @@ public interface UnderwritingDecisionService {
      * @return a reactive Mono containing a paginated response with a list of UnderwritingDecisionDTO objects
      *         representing the underwriting decisions associated with the provided loan application ID
      */
-    Mono<PaginationResponse<UnderwritingDecisionDTO>> findAll(Long applicationId, PaginationRequest paginationRequest);
+    Mono<PaginationResponse<UnderwritingDecisionDTO>> findAll(UUID applicationId, PaginationRequest paginationRequest);
 
     /**
      * Creates an underwriting decision for the specified loan application.
@@ -24,7 +26,7 @@ public interface UnderwritingDecisionService {
      * @param dto the data transfer object containing the details of the underwriting decision to create
      * @return a reactive Mono containing the created UnderwritingDecisionDTO object representing the underwriting decision
      */
-    Mono<UnderwritingDecisionDTO> createDecision(Long applicationId, UnderwritingDecisionDTO dto);
+    Mono<UnderwritingDecisionDTO> createDecision(UUID applicationId, UnderwritingDecisionDTO dto);
 
     /**
      * Retrieves the underwriting decision for a specific application and decision ID.
@@ -33,7 +35,7 @@ public interface UnderwritingDecisionService {
      * @param decisionId the unique identifier of the underwriting decision to be retrieved
      * @return a reactive Mono containing the UnderwritingDecisionDTO object with details of the specified underwriting decision
      */
-    Mono<UnderwritingDecisionDTO> getDecision(Long applicationId, Long decisionId);
+    Mono<UnderwritingDecisionDTO> getDecision(UUID applicationId, UUID decisionId);
 
     /**
      * Updates an existing underwriting decision associated with the specified application ID and decision ID.
@@ -43,7 +45,7 @@ public interface UnderwritingDecisionService {
      * @param dto the data transfer object containing updated details of the underwriting decision
      * @return a reactive Mono containing the updated UnderwritingDecisionDTO upon successful update
      */
-    Mono<UnderwritingDecisionDTO> updateDecision(Long applicationId, Long decisionId, UnderwritingDecisionDTO dto);
+    Mono<UnderwritingDecisionDTO> updateDecision(UUID applicationId, UUID decisionId, UnderwritingDecisionDTO dto);
 
     /**
      * Deletes a specific decision associated with a loan application.
@@ -52,5 +54,5 @@ public interface UnderwritingDecisionService {
      * @param decisionId the unique identifier of the decision to be deleted
      * @return a Mono signaling when the deletion operation has been completed
      */
-    Mono<Void> deleteDecision(Long applicationId, Long decisionId);
+    Mono<Void> deleteDecision(UUID applicationId, UUID decisionId);
 }

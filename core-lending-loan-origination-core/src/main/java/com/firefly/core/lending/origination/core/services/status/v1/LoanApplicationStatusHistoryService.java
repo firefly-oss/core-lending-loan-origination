@@ -5,6 +5,8 @@ import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.core.lending.origination.interfaces.dtos.status.v1.LoanApplicationStatusHistoryDTO;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 public interface LoanApplicationStatusHistoryService {
     /**
      * Retrieves a paginated list of loan application status history records for a specified loan application.
@@ -14,7 +16,7 @@ public interface LoanApplicationStatusHistoryService {
      * @return a reactive Mono containing a paginated response of loan application status history
      *         encapsulated in LoanApplicationStatusHistoryDTO objects
      */
-    Mono<PaginationResponse<LoanApplicationStatusHistoryDTO>> findAll(Long applicationId, PaginationRequest paginationRequest);
+    Mono<PaginationResponse<LoanApplicationStatusHistoryDTO>> findAll(UUID applicationId, PaginationRequest paginationRequest);
 
     /**
      * Creates a new status history entry for the specified loan application.
@@ -23,7 +25,7 @@ public interface LoanApplicationStatusHistoryService {
      * @param dto the details of the status history to be created, encapsulated in a LoanApplicationStatusHistoryDTO object
      * @return a Mono emitting the created LoanApplicationStatusHistoryDTO once the operation is successfully completed
      */
-    Mono<LoanApplicationStatusHistoryDTO> createStatusHistory(Long applicationId, LoanApplicationStatusHistoryDTO dto);
+    Mono<LoanApplicationStatusHistoryDTO> createStatusHistory(UUID applicationId, LoanApplicationStatusHistoryDTO dto);
 
     /**
      * Retrieves the status history of a loan application by its application ID and status history ID.
@@ -32,7 +34,7 @@ public interface LoanApplicationStatusHistoryService {
      * @param statusHistoryId the unique identifier of the specific status history to retrieve
      * @return a reactive Mono containing the LoanApplicationStatusHistoryDTO object with details of the requested status history
      */
-    Mono<LoanApplicationStatusHistoryDTO> getStatusHistory(Long applicationId, Long statusHistoryId);
+    Mono<LoanApplicationStatusHistoryDTO> getStatusHistory(UUID applicationId, UUID statusHistoryId);
 
     /**
      * Updates an existing status history entry for a given loan application.
@@ -42,7 +44,7 @@ public interface LoanApplicationStatusHistoryService {
      * @param dto the data transfer object containing the updated details of the status history
      * @return a Mono emitting the updated LoanApplicationStatusHistoryDTO reflecting the updated status history details
      */
-    Mono<LoanApplicationStatusHistoryDTO> updateStatusHistory(Long applicationId, Long statusHistoryId, LoanApplicationStatusHistoryDTO dto);
+    Mono<LoanApplicationStatusHistoryDTO> updateStatusHistory(UUID applicationId, UUID statusHistoryId, LoanApplicationStatusHistoryDTO dto);
 
     /**
      * Deletes a specific status history entry for a loan application.
@@ -51,5 +53,5 @@ public interface LoanApplicationStatusHistoryService {
      * @param statusHistoryId the unique identifier of the status history entry to be deleted
      * @return a Mono signaling when the deletion operation has been completed
      */
-    Mono<Void> deleteStatusHistory(Long applicationId, Long statusHistoryId);
+    Mono<Void> deleteStatusHistory(UUID applicationId, UUID statusHistoryId);
 }

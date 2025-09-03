@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @Service
 @Transactional
 public class ApplicationDocumentServiceImpl implements ApplicationDocumentService {
@@ -23,7 +25,7 @@ public class ApplicationDocumentServiceImpl implements ApplicationDocumentServic
     private ApplicationDocumentMapper mapper;
 
     @Override
-    public Mono<PaginationResponse<ApplicationDocumentDTO>> findAll(Long applicationId, PaginationRequest paginationRequest) {
+    public Mono<PaginationResponse<ApplicationDocumentDTO>> findAll(UUID applicationId, PaginationRequest paginationRequest) {
         return PaginationUtils.paginateQuery(
                 paginationRequest,
                 mapper::toDTO,
@@ -33,7 +35,7 @@ public class ApplicationDocumentServiceImpl implements ApplicationDocumentServic
     }
 
     @Override
-    public Mono<ApplicationDocumentDTO> createDocument(Long applicationId, ApplicationDocumentDTO dto) {
+    public Mono<ApplicationDocumentDTO> createDocument(UUID applicationId, ApplicationDocumentDTO dto) {
         ApplicationDocument entity = mapper.toEntity(dto);
         entity.setLoanApplicationId(applicationId);
         return repository.save(entity)
@@ -41,23 +43,18 @@ public class ApplicationDocumentServiceImpl implements ApplicationDocumentServic
     }
 
     @Override
-    public Mono<ApplicationDocumentDTO> getDocument(Long applicationId, Long documentId) {
+    public Mono<ApplicationDocumentDTO> getDocument(UUID applicationId, UUID documentId) {
         return repository.findById(documentId)
                 .filter(document -> document.getLoanApplicationId().equals(applicationId))
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Mono<ApplicationDocumentDTO> updateDocument(Long applicationId, Long documentId, ApplicationDocumentDTO dto) {
+    public Mono<ApplicationDocumentDTO> updateDocument(UUID applicationId, UUID documentId, ApplicationDocumentDTO dto) {
         return repository.findById(documentId)
                 .filter(document -> document.getLoanApplicationId().equals(applicationId))
                 .flatMap(existingDocument -> {
-                    // Convert documentTypeId to DocumentTypeEnum
-                    if (dto.getDocumentTypeId() != null) {
-                        existingDocument.setDocumentType(
-                            com.firefly.core.lending.origination.interfaces.enums.document.v1.DocumentTypeEnum.values()[dto.getDocumentTypeId().intValue()]
-                        );
-                    }
+                    existingDocument.setDocumentId(dto.getDocumentId());
                     existingDocument.setIsMandatory(dto.getIsMandatory());
                     existingDocument.setIsReceived(dto.getIsReceived());
                     existingDocument.setReceivedAt(dto.getReceivedAt());
@@ -67,7 +64,7 @@ public class ApplicationDocumentServiceImpl implements ApplicationDocumentServic
     }
 
     @Override
-    public Mono<Void> deleteDocument(Long applicationId, Long documentId) {
+    public Mono<Void> deleteDocument(UUID applicationId, UUID documentId) {
         return repository.findById(documentId)
                 .filter(document -> document.getLoanApplicationId().equals(applicationId))
                 .flatMap(repository::delete);

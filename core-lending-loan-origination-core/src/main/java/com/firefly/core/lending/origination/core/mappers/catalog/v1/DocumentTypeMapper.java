@@ -3,7 +3,6 @@ package com.firefly.core.lending.origination.core.mappers.catalog.v1;
 import com.firefly.core.lending.origination.interfaces.dtos.catalog.v1.DocumentTypeDTO;
 import com.firefly.core.lending.origination.models.entities.catalog.v1.DocumentType;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 

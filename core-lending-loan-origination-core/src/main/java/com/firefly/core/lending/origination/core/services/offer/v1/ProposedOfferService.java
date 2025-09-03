@@ -5,6 +5,8 @@ import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.core.lending.origination.interfaces.dtos.offer.v1.ProposedOfferDTO;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 public interface ProposedOfferService {
 
     /**
@@ -15,7 +17,7 @@ public interface ProposedOfferService {
      * @return a reactive Mono containing a paginated response with a list of ProposedOfferDTO objects
      *         representing the proposed offers associated with the provided application ID
      */
-    Mono<PaginationResponse<ProposedOfferDTO>> findAll(Long applicationId, PaginationRequest paginationRequest);
+    Mono<PaginationResponse<ProposedOfferDTO>> findAll(UUID applicationId, PaginationRequest paginationRequest);
 
     /**
      * Creates a proposed offer for the specified loan application.
@@ -24,7 +26,7 @@ public interface ProposedOfferService {
      * @param dto the data transfer object containing the details of the proposed offer to create
      * @return a reactive Mono containing the created ProposedOfferDTO object representing the proposed offer
      */
-    Mono<ProposedOfferDTO> createOffer(Long applicationId, ProposedOfferDTO dto);
+    Mono<ProposedOfferDTO> createOffer(UUID applicationId, ProposedOfferDTO dto);
 
     /**
      * Retrieves the details of a proposed loan offer associated with a specific application and offer ID.
@@ -33,7 +35,7 @@ public interface ProposedOfferService {
      * @param offerId the unique identifier of the proposed offer to be retrieved
      * @return a reactive Mono containing the ProposedOfferDTO object with details of the specified proposed offer
      */
-    Mono<ProposedOfferDTO> getOffer(Long applicationId, Long offerId);
+    Mono<ProposedOfferDTO> getOffer(UUID applicationId, UUID offerId);
 
     /**
      * Updates an existing proposed offer associated with the specified application ID and offer ID.
@@ -43,7 +45,7 @@ public interface ProposedOfferService {
      * @param dto the data transfer object containing the updated details of the proposed offer
      * @return a Mono emitting the updated ProposedOfferDTO upon successful update
      */
-    Mono<ProposedOfferDTO> updateOffer(Long applicationId, Long offerId, ProposedOfferDTO dto);
+    Mono<ProposedOfferDTO> updateOffer(UUID applicationId, UUID offerId, ProposedOfferDTO dto);
 
     /**
      * Deletes a specific offer associated with a loan application.
@@ -52,5 +54,5 @@ public interface ProposedOfferService {
      * @param offerId the unique identifier of the offer to be deleted
      * @return a Mono signaling when the deletion operation has been completed
      */
-    Mono<Void> deleteOffer(Long applicationId, Long offerId);
+    Mono<Void> deleteOffer(UUID applicationId, UUID offerId);
 }

@@ -4,10 +4,12 @@ import com.firefly.core.lending.origination.models.entities.catalog.v1.DocumentT
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 public interface DocumentTypeService {
     Flux<DocumentType> findAll();
-    Mono<DocumentType> findById(Long id);
+    Mono<DocumentType> findById(UUID id);
     Mono<DocumentType> findByCode(String code);
     Mono<DocumentType> save(DocumentType documentType);
-    Mono<Void> deleteById(Long id);
+    Mono<Void> deleteById(UUID id);
 }

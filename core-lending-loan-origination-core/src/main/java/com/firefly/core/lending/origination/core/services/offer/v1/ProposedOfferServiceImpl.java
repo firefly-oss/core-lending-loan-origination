@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @Service
 @Transactional
 public class ProposedOfferServiceImpl implements ProposedOfferService {
@@ -23,7 +25,7 @@ public class ProposedOfferServiceImpl implements ProposedOfferService {
     private ProposedOfferMapper mapper;
 
     @Override
-    public Mono<PaginationResponse<ProposedOfferDTO>> findAll(Long applicationId, PaginationRequest paginationRequest) {
+    public Mono<PaginationResponse<ProposedOfferDTO>> findAll(UUID applicationId, PaginationRequest paginationRequest) {
         return PaginationUtils.paginateQuery(
                 paginationRequest,
                 mapper::toDTO,
@@ -33,7 +35,7 @@ public class ProposedOfferServiceImpl implements ProposedOfferService {
     }
 
     @Override
-    public Mono<ProposedOfferDTO> createOffer(Long applicationId, ProposedOfferDTO dto) {
+    public Mono<ProposedOfferDTO> createOffer(UUID applicationId, ProposedOfferDTO dto) {
         ProposedOffer entity = mapper.toEntity(dto);
         entity.setLoanApplicationId(applicationId);
         return Mono.just(entity)
@@ -42,7 +44,7 @@ public class ProposedOfferServiceImpl implements ProposedOfferService {
     }
 
     @Override
-    public Mono<ProposedOfferDTO> getOffer(Long applicationId, Long offerId) {
+    public Mono<ProposedOfferDTO> getOffer(UUID applicationId, UUID offerId) {
         return repository.findById(offerId)
                 .filter(entity -> entity.getLoanApplicationId().equals(applicationId))
                 .map(mapper::toDTO)
@@ -50,7 +52,7 @@ public class ProposedOfferServiceImpl implements ProposedOfferService {
     }
 
     @Override
-    public Mono<ProposedOfferDTO> updateOffer(Long applicationId, Long offerId, ProposedOfferDTO dto) {
+    public Mono<ProposedOfferDTO> updateOffer(UUID applicationId, UUID offerId, ProposedOfferDTO dto) {
         return repository.findById(offerId)
                 .filter(entity -> entity.getLoanApplicationId().equals(applicationId))
                 .flatMap(existingEntity -> {
@@ -63,7 +65,7 @@ public class ProposedOfferServiceImpl implements ProposedOfferService {
     }
 
     @Override
-    public Mono<Void> deleteOffer(Long applicationId, Long offerId) {
+    public Mono<Void> deleteOffer(UUID applicationId, UUID offerId) {
         return repository.findById(offerId)
                 .filter(entity -> entity.getLoanApplicationId().equals(applicationId))
                 .switchIfEmpty(Mono.error(new IllegalArgumentException("Offer not found for the given application ID and offer ID")))

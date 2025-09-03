@@ -11,7 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
-import reactor.core.publisher.Flux;
+
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -24,7 +25,7 @@ public class ApplicationCollateralServiceImpl implements ApplicationCollateralSe
     private ApplicationCollateralMapper mapper;
 
     @Override
-    public Mono<PaginationResponse<ApplicationCollateralDTO>> findAll(Long applicationId, PaginationRequest paginationRequest) {
+    public Mono<PaginationResponse<ApplicationCollateralDTO>> findAll(UUID applicationId, PaginationRequest paginationRequest) {
         return PaginationUtils.paginateQuery(
                 paginationRequest,
                 mapper::toDTO,
@@ -34,7 +35,7 @@ public class ApplicationCollateralServiceImpl implements ApplicationCollateralSe
     }
 
     @Override
-    public Mono<ApplicationCollateralDTO> createCollateral(Long applicationId, ApplicationCollateralDTO dto) {
+    public Mono<ApplicationCollateralDTO> createCollateral(UUID applicationId, ApplicationCollateralDTO dto) {
         dto.setLoanApplicationId(applicationId);
         ApplicationCollateral entity = mapper.toEntity(dto);
         return repository.save(entity)
@@ -42,14 +43,14 @@ public class ApplicationCollateralServiceImpl implements ApplicationCollateralSe
     }
 
     @Override
-    public Mono<ApplicationCollateralDTO> getCollateral(Long applicationId, Long collateralId) {
+    public Mono<ApplicationCollateralDTO> getCollateral(UUID applicationId, UUID collateralId) {
         return repository.findById(collateralId)
                 .filter(entity -> entity.getLoanApplicationId().equals(applicationId))
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Mono<ApplicationCollateralDTO> updateCollateral(Long applicationId, Long collateralId, ApplicationCollateralDTO dto) {
+    public Mono<ApplicationCollateralDTO> updateCollateral(UUID applicationId, UUID collateralId, ApplicationCollateralDTO dto) {
         return repository.findById(collateralId)
                 .filter(entity -> entity.getLoanApplicationId().equals(applicationId))
                 .flatMap(existingEntity -> {
@@ -62,7 +63,7 @@ public class ApplicationCollateralServiceImpl implements ApplicationCollateralSe
     }
 
     @Override
-    public Mono<Void> deleteCollateral(Long applicationId, Long collateralId) {
+    public Mono<Void> deleteCollateral(UUID applicationId, UUID collateralId) {
         return repository.findById(collateralId)
                 .filter(entity -> entity.getLoanApplicationId().equals(applicationId))
                 .flatMap(repository::delete);

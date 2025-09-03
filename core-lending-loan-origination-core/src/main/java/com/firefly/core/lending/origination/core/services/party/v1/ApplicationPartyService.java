@@ -5,6 +5,8 @@ import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.core.lending.origination.interfaces.dtos.party.v1.ApplicationPartyDTO;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 public interface ApplicationPartyService {
 
     /**
@@ -15,7 +17,7 @@ public interface ApplicationPartyService {
      * @return a reactive Mono containing a paginated response with a list of ApplicationPartyDTO objects
      *         representing the details of the application parties associated with the provided application ID
      */
-    Mono<PaginationResponse<ApplicationPartyDTO>> findAll(Long applicationId, PaginationRequest paginationRequest);
+    Mono<PaginationResponse<ApplicationPartyDTO>> findAll(UUID applicationId, PaginationRequest paginationRequest);
 
     /**
      * Creates a new party associated with a specific loan application.
@@ -24,7 +26,7 @@ public interface ApplicationPartyService {
      * @param dto the data transfer object containing details of the party to be created
      * @return a reactive Mono containing the created ApplicationPartyDTO representing the new party
      */
-    Mono<ApplicationPartyDTO> createParty(Long applicationId, ApplicationPartyDTO dto);
+    Mono<ApplicationPartyDTO> createParty(UUID applicationId, ApplicationPartyDTO dto);
 
     /**
      * Retrieves details of a specific party associated with a loan application.
@@ -33,7 +35,7 @@ public interface ApplicationPartyService {
      * @param partyId the unique identifier of the party to be retrieved.
      * @return a reactive Mono containing the ApplicationPartyDTO object with details of the specified party.
      */
-    Mono<ApplicationPartyDTO> getParty(Long applicationId, Long partyId);
+    Mono<ApplicationPartyDTO> getParty(UUID applicationId, UUID partyId);
 
     /**
      * Updates an existing application party with the provided details.
@@ -43,7 +45,7 @@ public interface ApplicationPartyService {
      * @param dto the data transfer object containing updated details for the application party
      * @return a Mono emitting the updated ApplicationPartyDTO upon successful update
      */
-    Mono<ApplicationPartyDTO> updateParty(Long applicationId, Long partyId, ApplicationPartyDTO dto);
+    Mono<ApplicationPartyDTO> updateParty(UUID applicationId, UUID partyId, ApplicationPartyDTO dto);
 
     /**
      * Deletes a specific party associated with a loan application.
@@ -52,5 +54,5 @@ public interface ApplicationPartyService {
      * @param partyId the unique identifier of the party to be deleted
      * @return a Mono signaling when the deletion operation has been completed
      */
-    Mono<Void> deleteParty(Long applicationId, Long partyId);
+    Mono<Void> deleteParty(UUID applicationId, UUID partyId);
 }

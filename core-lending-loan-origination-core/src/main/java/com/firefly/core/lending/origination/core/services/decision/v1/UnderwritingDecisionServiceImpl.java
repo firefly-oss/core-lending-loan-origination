@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @Service
 @Transactional
 public class UnderwritingDecisionServiceImpl implements UnderwritingDecisionService {
@@ -23,7 +25,7 @@ public class UnderwritingDecisionServiceImpl implements UnderwritingDecisionServ
     private UnderwritingDecisionMapper mapper;
 
     @Override
-    public Mono<PaginationResponse<UnderwritingDecisionDTO>> findAll(Long applicationId, PaginationRequest paginationRequest) {
+    public Mono<PaginationResponse<UnderwritingDecisionDTO>> findAll(UUID applicationId, PaginationRequest paginationRequest) {
         return PaginationUtils.paginateQuery(
                 paginationRequest,
                 mapper::toDTO,
@@ -33,7 +35,7 @@ public class UnderwritingDecisionServiceImpl implements UnderwritingDecisionServ
     }
 
     @Override
-    public Mono<UnderwritingDecisionDTO> createDecision(Long applicationId, UnderwritingDecisionDTO dto) {
+    public Mono<UnderwritingDecisionDTO> createDecision(UUID applicationId, UnderwritingDecisionDTO dto) {
         dto.setLoanApplicationId(applicationId);
         UnderwritingDecision entity = mapper.toEntity(dto);
         return repository.save(entity)
@@ -41,14 +43,14 @@ public class UnderwritingDecisionServiceImpl implements UnderwritingDecisionServ
     }
 
     @Override
-    public Mono<UnderwritingDecisionDTO> getDecision(Long applicationId, Long decisionId) {
+    public Mono<UnderwritingDecisionDTO> getDecision(UUID applicationId, UUID decisionId) {
         return repository.findById(decisionId)
                 .filter(entity -> entity.getLoanApplicationId().equals(applicationId))
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Mono<UnderwritingDecisionDTO> updateDecision(Long applicationId, Long decisionId, UnderwritingDecisionDTO dto) {
+    public Mono<UnderwritingDecisionDTO> updateDecision(UUID applicationId, UUID decisionId, UnderwritingDecisionDTO dto) {
         return repository.findById(decisionId)
                 .filter(entity -> entity.getLoanApplicationId().equals(applicationId))
                 .flatMap(existingEntity -> {
@@ -61,7 +63,7 @@ public class UnderwritingDecisionServiceImpl implements UnderwritingDecisionServ
     }
 
     @Override
-    public Mono<Void> deleteDecision(Long applicationId, Long decisionId) {
+    public Mono<Void> deleteDecision(UUID applicationId, UUID decisionId) {
         return repository.findById(decisionId)
                 .filter(entity -> entity.getLoanApplicationId().equals(applicationId))
                 .flatMap(repository::delete);

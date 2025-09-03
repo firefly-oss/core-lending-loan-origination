@@ -8,6 +8,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class DecisionCodeServiceImpl implements DecisionCodeService {
     }
 
     @Override
-    public Mono<DecisionCode> findById(Long id) {
+    public Mono<DecisionCode> findById(UUID id) {
         return decisionCodeRepository.findById(id);
     }
 
@@ -44,7 +45,7 @@ public class DecisionCodeServiceImpl implements DecisionCodeService {
     }
 
     @Override
-    public Mono<Void> deleteById(Long id) {
+    public Mono<Void> deleteById(UUID id) {
         return decisionCodeRepository.deleteById(id);
     }
 }

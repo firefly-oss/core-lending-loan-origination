@@ -5,6 +5,8 @@ import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.core.lending.origination.interfaces.dtos.score.v1.UnderwritingScoreDTO;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 public interface UnderwritingScoreService {
 
     /**
@@ -15,7 +17,7 @@ public interface UnderwritingScoreService {
      * @return a reactive Mono containing a pagitated response with a list of UnderwritingScoreDTO objects
      *         representing the underwriting scores associated with the provided application ID
      */
-    Mono<PaginationResponse<UnderwritingScoreDTO>> findAll(Long applicationId, PaginationRequest paginationRequest);
+    Mono<PaginationResponse<UnderwritingScoreDTO>> findAll(UUID applicationId, PaginationRequest paginationRequest);
 
     /**
      * Creates a new underwriting score for the specified loan application.
@@ -24,7 +26,7 @@ public interface UnderwritingScoreService {
      * @param dto the data transfer object containing the details of the underwriting score to be created
      * @return a reactive Mono containing the created UnderwritingScoreDTO object representing the underwriting score
      */
-    Mono<UnderwritingScoreDTO> createScore(Long applicationId, UnderwritingScoreDTO dto);
+    Mono<UnderwritingScoreDTO> createScore(UUID applicationId, UnderwritingScoreDTO dto);
 
     /**
      * Retrieves the underwriting score associated with a specific application ID and score ID.
@@ -33,7 +35,7 @@ public interface UnderwritingScoreService {
      * @param scoreId the unique identifier of the underwriting score to retrieve
      * @return a reactive Mono containing the UnderwritingScoreDTO object with details of the requested underwriting score
      */
-    Mono<UnderwritingScoreDTO> getScore(Long applicationId, Long scoreId);
+    Mono<UnderwritingScoreDTO> getScore(UUID applicationId, UUID scoreId);
 
     /**
      * Updates an existing underwriting score associated with the specified application ID and score ID.
@@ -43,7 +45,7 @@ public interface UnderwritingScoreService {
      * @param dto the data transfer object containing updated details for the underwriting score
      * @return a Mono emitting the updated UnderwritingScoreDTO object upon successful update
      */
-    Mono<UnderwritingScoreDTO> updateScore(Long applicationId, Long scoreId, UnderwritingScoreDTO dto);
+    Mono<UnderwritingScoreDTO> updateScore(UUID applicationId, UUID scoreId, UnderwritingScoreDTO dto);
 
     /**
      * Deletes a specific score associated with a loan application.
@@ -52,5 +54,5 @@ public interface UnderwritingScoreService {
      * @param scoreId the unique identifier of the score to be deleted
      * @return a Mono signaling when the deletion operation has been completed
      */
-    Mono<Void> deleteScore(Long applicationId, Long scoreId);
+    Mono<Void> deleteScore(UUID applicationId, UUID scoreId);
 }

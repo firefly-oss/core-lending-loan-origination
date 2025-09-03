@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @Service
 @Transactional
 public class LoanApplicationStatusHistoryServiceImpl implements LoanApplicationStatusHistoryService {
@@ -23,7 +25,7 @@ public class LoanApplicationStatusHistoryServiceImpl implements LoanApplicationS
     private LoanApplicationStatusHistoryMapper mapper;
 
     @Override
-    public Mono<PaginationResponse<LoanApplicationStatusHistoryDTO>> findAll(Long applicationId, PaginationRequest paginationRequest) {
+    public Mono<PaginationResponse<LoanApplicationStatusHistoryDTO>> findAll(UUID applicationId, PaginationRequest paginationRequest) {
         return PaginationUtils.paginateQuery(
                 paginationRequest,
                 mapper::toDTO,
@@ -33,7 +35,7 @@ public class LoanApplicationStatusHistoryServiceImpl implements LoanApplicationS
     }
 
     @Override
-    public Mono<LoanApplicationStatusHistoryDTO> createStatusHistory(Long applicationId, LoanApplicationStatusHistoryDTO dto) {
+    public Mono<LoanApplicationStatusHistoryDTO> createStatusHistory(UUID applicationId, LoanApplicationStatusHistoryDTO dto) {
         LoanApplicationStatusHistory entity = mapper.toEntity(dto);
         entity.setLoanApplicationId(applicationId);
         return repository.save(entity)
@@ -41,14 +43,14 @@ public class LoanApplicationStatusHistoryServiceImpl implements LoanApplicationS
     }
 
     @Override
-    public Mono<LoanApplicationStatusHistoryDTO> getStatusHistory(Long applicationId, Long statusHistoryId) {
+    public Mono<LoanApplicationStatusHistoryDTO> getStatusHistory(UUID applicationId, UUID statusHistoryId) {
         return repository.findById(statusHistoryId)
                 .filter(entity -> entity.getLoanApplicationId().equals(applicationId))
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Mono<LoanApplicationStatusHistoryDTO> updateStatusHistory(Long applicationId, Long statusHistoryId, LoanApplicationStatusHistoryDTO dto) {
+    public Mono<LoanApplicationStatusHistoryDTO> updateStatusHistory(UUID applicationId, UUID statusHistoryId, LoanApplicationStatusHistoryDTO dto) {
         return repository.findById(statusHistoryId)
                 .filter(entity -> entity.getLoanApplicationId().equals(applicationId))
                 .flatMap(existingEntity -> {
@@ -60,7 +62,7 @@ public class LoanApplicationStatusHistoryServiceImpl implements LoanApplicationS
     }
 
     @Override
-    public Mono<Void> deleteStatusHistory(Long applicationId, Long statusHistoryId) {
+    public Mono<Void> deleteStatusHistory(UUID applicationId, UUID statusHistoryId) {
         return repository.findById(statusHistoryId)
                 .filter(entity -> entity.getLoanApplicationId().equals(applicationId))
                 .flatMap(repository::delete);

@@ -6,6 +6,8 @@ import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.core.lending.origination.interfaces.dtos.application.v1.LoanApplicationDTO;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 public interface LoanApplicationsService {
     /**
      * Filters loan applications based on the provided filter criteria.
@@ -38,7 +40,7 @@ public interface LoanApplicationsService {
      * @param applicationId the unique identifier of the loan application to be retrieved
      * @return a reactive Mono containing the LoanApplicationDTO object with details of the requested loan application
      */
-    Mono<LoanApplicationDTO> getLoanApplication(Long applicationId);
+    Mono<LoanApplicationDTO> getLoanApplication(UUID applicationId);
 
     /**
      * Updates an existing loan application with the provided data.
@@ -47,7 +49,7 @@ public interface LoanApplicationsService {
      * @param dto the data transfer object containing updated loan application details
      * @return a {@link Mono} emitting the updated {@link LoanApplicationDTO} upon successful update
      */
-    Mono<LoanApplicationDTO> updateLoanApplication(Long applicationId, LoanApplicationDTO dto);
+    Mono<LoanApplicationDTO> updateLoanApplication(UUID applicationId, LoanApplicationDTO dto);
 
     /**
      * Deletes a loan application by its unique identifier.
@@ -55,5 +57,5 @@ public interface LoanApplicationsService {
      * @param applicationId the unique identifier of the loan application to be deleted
      * @return a Mono signaling when the deletion is completed
      */
-    Mono<Void> deleteLoanApplication(Long applicationId);
+    Mono<Void> deleteLoanApplication(UUID applicationId);
 }

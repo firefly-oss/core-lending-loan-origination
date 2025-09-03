@@ -5,6 +5,8 @@ import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.core.lending.origination.interfaces.dtos.document.v1.ApplicationDocumentDTO;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 public interface ApplicationDocumentService {
 
     /**
@@ -15,7 +17,7 @@ public interface ApplicationDocumentService {
      * @return a reactive Mono containing a paginated response with a list of ApplicationDocumentDTO objects
      *         representing the details of the application documents associated with the provided application ID
      */
-    Mono<PaginationResponse<ApplicationDocumentDTO>> findAll(Long applicationId, PaginationRequest paginationRequest);
+    Mono<PaginationResponse<ApplicationDocumentDTO>> findAll(UUID applicationId, PaginationRequest paginationRequest);
 
     /**
      * Creates a new document associated with a specific loan application.
@@ -24,7 +26,7 @@ public interface ApplicationDocumentService {
      * @param dto the data transfer object containing details of the document to be created
      * @return a reactive Mono containing the created ApplicationDocumentDTO representing the new document
      */
-    Mono<ApplicationDocumentDTO> createDocument(Long applicationId, ApplicationDocumentDTO dto);
+    Mono<ApplicationDocumentDTO> createDocument(UUID applicationId, ApplicationDocumentDTO dto);
 
     /**
      * Retrieves a specific document associated with a loan application.
@@ -33,7 +35,7 @@ public interface ApplicationDocumentService {
      * @param documentId the unique identifier of the document to be retrieved
      * @return a reactive Mono containing the ApplicationDocumentDTO object with details of the requested document
      */
-    Mono<ApplicationDocumentDTO> getDocument(Long applicationId, Long documentId);
+    Mono<ApplicationDocumentDTO> getDocument(UUID applicationId, UUID documentId);
 
     /**
      * Updates an existing document associated with a specific application and document ID.
@@ -43,7 +45,7 @@ public interface ApplicationDocumentService {
      * @param dto the data transfer object containing the updated details for the application document
      * @return a Mono emitting the updated ApplicationDocumentDTO upon a successful update operation
      */
-    Mono<ApplicationDocumentDTO> updateDocument(Long applicationId, Long documentId, ApplicationDocumentDTO dto);
+    Mono<ApplicationDocumentDTO> updateDocument(UUID applicationId, UUID documentId, ApplicationDocumentDTO dto);
 
     /**
      * Deletes a specific document associated with a loan application.
@@ -52,5 +54,5 @@ public interface ApplicationDocumentService {
      * @param documentId the unique identifier of the document to be deleted
      * @return a Mono signaling when the deletion operation has been completed
      */
-    Mono<Void> deleteDocument(Long applicationId, Long documentId);
+    Mono<Void> deleteDocument(UUID applicationId, UUID documentId);
 }
