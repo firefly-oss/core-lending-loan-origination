@@ -1,13 +1,15 @@
 package com.firefly.core.lending.origination.interfaces.dtos.document.v1;
 
-import com.firefly.core.utils.annotations.FilterableId;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.firefly.core.utils.annotations.FilterableId;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -16,18 +18,24 @@ import java.time.LocalDateTime;
 public class ApplicationDocumentDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long applicationDocumentId;
+    private UUID applicationDocumentId;
 
     @FilterableId
-    private Long loanApplicationId;
+    @NotNull(message = "Loan application ID is required")
+    private UUID loanApplicationId;
 
     @FilterableId
-    private Long documentId;
+    @NotNull(message = "Document ID is required")
+    private UUID documentId;
 
     @FilterableId
-    private Long documentTypeId;
+    @NotNull(message = "Document type ID is required")
+    private UUID documentTypeId;
 
+    @NotNull(message = "Mandatory flag is required")
     private Boolean isMandatory;
+
+    @NotNull(message = "Received flag is required")
     private Boolean isReceived;
     private LocalDateTime receivedAt;
     private LocalDateTime createdAt;
