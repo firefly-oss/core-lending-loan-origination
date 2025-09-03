@@ -39,8 +39,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -59,8 +59,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -91,8 +91,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -108,14 +108,14 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: statusHistoryId
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -134,14 +134,14 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: statusHistoryId
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -172,14 +172,14 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: statusHistoryId
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -195,14 +195,14 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: scoreId
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -221,14 +221,14 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: scoreId
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -259,14 +259,14 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: scoreId
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -282,14 +282,14 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: partyId
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -308,14 +308,14 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: partyId
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -346,14 +346,14 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: partyId
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -369,14 +369,14 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: documentId
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -395,14 +395,14 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: documentId
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -433,14 +433,14 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: documentId
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -456,14 +456,14 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: decisionId
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -482,14 +482,14 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: decisionId
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -520,14 +520,14 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: decisionId
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -543,14 +543,14 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: collateralId
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -569,14 +569,14 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: collateralId
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -607,14 +607,14 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: collateralId
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -628,8 +628,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -646,8 +646,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -676,8 +676,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: No Content
@@ -691,8 +691,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -709,8 +709,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -739,8 +739,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: No Content
@@ -845,15 +845,13 @@ paths:
           description: Exact filter for party id
           required: false
           schema:
-            type: integer
-            format: int32
+            type: string
         - name: filters.distributorId
           in: query
           description: Exact filter for distributor id
           required: false
           schema:
-            type: integer
-            format: int32
+            type: string
         - name: filters.note
           in: query
           description: Exact filter for note
@@ -947,8 +945,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: pageNumber
           in: query
           description: The zero-based page number to retrieve.
@@ -1006,8 +1004,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -1039,8 +1037,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: pageNumber
           in: query
           description: The zero-based page number to retrieve.
@@ -1098,8 +1096,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -1131,8 +1129,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: pageNumber
           in: query
           description: The zero-based page number to retrieve.
@@ -1190,8 +1188,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -1223,8 +1221,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: pageNumber
           in: query
           description: The zero-based page number to retrieve.
@@ -1282,8 +1280,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -1315,8 +1313,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: pageNumber
           in: query
           description: The zero-based page number to retrieve.
@@ -1374,8 +1372,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -1407,8 +1405,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: pageNumber
           in: query
           description: The zero-based page number to retrieve.
@@ -1466,8 +1464,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -1656,11 +1654,16 @@ paths:
 components:
   schemas:
     LoanApplicationDTO:
+      required:
+        - applicationDate
+        - applicationStatus
+        - applicationSubStatus
+        - submissionChannel
       type: object
       properties:
         loanApplicationId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         applicationNumber:
           type: string
@@ -1690,12 +1693,14 @@ components:
             - MOBILE
             - DISTRIBUTOR
         partyId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         distributorId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         note:
+          maxLength: 1000
+          minLength: 0
           type: string
         createdAt:
           type: string
@@ -1704,15 +1709,21 @@ components:
           type: string
           format: date-time
     LoanApplicationStatusHistoryDTO:
+      required:
+        - changedAt
+        - changedBy
+        - loanApplicationId
+        - newStatus
+        - oldStatus
       type: object
       properties:
         statusHistoryId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         loanApplicationId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         oldStatus:
           type: string
           enum:
@@ -1730,11 +1741,15 @@ components:
             - APPROVED
             - REJECTED
         changeReason:
+          maxLength: 500
+          minLength: 0
           type: string
         changedAt:
           type: string
           format: date-time
         changedBy:
+          maxLength: 100
+          minLength: 0
           type: string
         createdAt:
           type: string
@@ -1743,20 +1758,33 @@ components:
           type: string
           format: date-time
     UnderwritingScoreDTO:
+      required:
+        - loanApplicationId
+        - scoreValue
+        - scorecardName
+        - scoringTimestamp
       type: object
       properties:
         underwritingScoreId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         loanApplicationId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         scoreValue:
+          maximum: 1000
+          exclusiveMaximum: false
+          minimum: 0
+          exclusiveMinimum: false
           type: number
         scorecardName:
+          maxLength: 100
+          minLength: 0
           type: string
         reasonCodes:
+          maxLength: 2000
+          minLength: 0
           type: string
         scoringTimestamp:
           type: string
@@ -1768,18 +1796,23 @@ components:
           type: string
           format: date-time
     ApplicationPartyDTO:
+      required:
+        - employmentType
+        - loanApplicationId
+        - partyId
+        - roleCode
       type: object
       properties:
         applicationPartyId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         loanApplicationId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         partyId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         roleCode:
           type: string
           enum:
@@ -1787,6 +1820,10 @@ components:
             - CO_APPLICANT
             - GUARANTOR
         sharePercentage:
+          maximum: 100
+          exclusiveMaximum: false
+          minimum: 0
+          exclusiveMinimum: false
           type: number
         annualIncome:
           type: number
@@ -1807,21 +1844,27 @@ components:
           type: string
           format: date-time
     ApplicationDocumentDTO:
+      required:
+        - documentId
+        - documentTypeId
+        - isMandatory
+        - isReceived
+        - loanApplicationId
       type: object
       properties:
         applicationDocumentId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         loanApplicationId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         documentId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         documentTypeId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         isMandatory:
           type: boolean
         isReceived:
@@ -1836,32 +1879,44 @@ components:
           type: string
           format: date-time
     UnderwritingDecisionDTO:
+      required:
+        - decisionCodeId
+        - decisionDate
+        - loanApplicationId
       type: object
       properties:
         underwritingDecisionId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         loanApplicationId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         decisionDate:
           type: string
           format: date-time
         decisionCodeId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         approvedAmount:
           type: number
         approvedInterestRate:
+          maximum: 100
+          exclusiveMaximum: false
+          minimum: 0
+          exclusiveMinimum: false
           type: number
         tenorMonths:
+          maximum: 360
+          minimum: 1
           type: integer
           format: int32
         riskGradeId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         remarks:
+          maxLength: 1000
+          minLength: 0
           type: string
         createdAt:
           type: string
@@ -1870,15 +1925,19 @@ components:
           type: string
           format: date-time
     ApplicationCollateralDTO:
+      required:
+        - collateralType
+        - isPrimaryCollateral
+        - loanApplicationId
       type: object
       properties:
         applicationCollateralId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         loanApplicationId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         collateralType:
           type: string
           enum:
@@ -1889,6 +1948,8 @@ components:
         estimatedValue:
           type: number
         ownershipDetails:
+          maxLength: 500
+          minLength: 0
           type: string
         isPrimaryCollateral:
           type: boolean
@@ -1902,8 +1963,8 @@ components:
       type: object
       properties:
         documentTypeId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         code:
           type: string
         name:
@@ -1922,8 +1983,8 @@ components:
       type: object
       properties:
         decisionCodeId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         code:
           type: string
         name:
