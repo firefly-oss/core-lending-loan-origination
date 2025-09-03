@@ -9,6 +9,7 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Table("application_sub_status")
 @Data
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 public class ApplicationSubStatus {
     @Id
     @Column("application_sub_status_id")
-    private Long applicationSubStatusId;
+    private UUID applicationSubStatusId;
 
     @Column("code")
     private String code;

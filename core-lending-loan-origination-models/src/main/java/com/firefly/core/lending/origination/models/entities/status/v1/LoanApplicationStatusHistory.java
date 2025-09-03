@@ -10,6 +10,7 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Table("loan_application_status_history")
 @Data
@@ -19,10 +20,10 @@ import java.time.LocalDateTime;
 public class LoanApplicationStatusHistory {
     @Id
     @Column("status_history_id")
-    private Long statusHistoryId;
+    private UUID statusHistoryId;
 
     @Column("loan_application_id")
-    private Long loanApplicationId;
+    private UUID loanApplicationId;
 
     @Column("old_status")
     private ApplicationStatusEnum oldStatus;

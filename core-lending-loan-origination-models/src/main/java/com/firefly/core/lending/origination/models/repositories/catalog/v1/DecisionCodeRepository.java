@@ -5,7 +5,9 @@ import com.firefly.core.lending.origination.models.repositories.BaseRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @Repository
-public interface DecisionCodeRepository extends BaseRepository<DecisionCode, Long> {
+public interface DecisionCodeRepository extends BaseRepository<DecisionCode, UUID> {
     Mono<DecisionCode> findByCode(String code);
 }

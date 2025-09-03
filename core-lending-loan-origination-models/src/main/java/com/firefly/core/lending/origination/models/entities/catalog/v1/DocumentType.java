@@ -9,6 +9,7 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Table("document_type")
 @Data
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 public class DocumentType {
     @Id
     @Column("document_type_id")
-    private Long documentTypeId;
+    private UUID documentTypeId;
 
     @Column("code")
     private String code;

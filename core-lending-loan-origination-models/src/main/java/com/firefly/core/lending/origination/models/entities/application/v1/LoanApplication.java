@@ -1,8 +1,8 @@
 package com.firefly.core.lending.origination.models.entities.application.v1;
 
 import com.firefly.core.lending.origination.interfaces.enums.application.v1.ApplicationStatusEnum;
-import com.firefly.core.lending.origination.interfaces.enums.status.v1.ApplicationSubStatusEnum;
 import com.firefly.core.lending.origination.interfaces.enums.application.v1.SubmissionChannelEnum;
+import com.firefly.core.lending.origination.interfaces.enums.status.v1.ApplicationSubStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,7 +23,7 @@ import java.util.UUID;
 public class LoanApplication {
     @Id
     @Column("loan_application_id")
-    private Long loanApplicationId;
+    private UUID loanApplicationId;
 
     @Column("application_number")
     private UUID applicationNumber;
@@ -45,14 +45,14 @@ public class LoanApplication {
      * This field is null for unknown non-customers.
      */
     @Column("party_id")
-    private Long partyId;
+    private UUID partyId;
     
     /**
      * Identifier for a known distributor who launched the application.
      * This field is null if not submitted via a distributor.
      */
     @Column("distributor_id")
-    private Long distributorId;
+    private UUID distributorId;
 
     @Column("note")
     private String note;

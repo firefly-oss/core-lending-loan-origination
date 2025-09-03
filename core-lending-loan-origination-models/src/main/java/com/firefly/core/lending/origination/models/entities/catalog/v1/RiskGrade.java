@@ -9,6 +9,7 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Table("risk_grade")
 @Data
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 public class RiskGrade {
     @Id
     @Column("risk_grade_id")
-    private Long riskGradeId;
+    private UUID riskGradeId;
 
     @Column("code")
     private String code;

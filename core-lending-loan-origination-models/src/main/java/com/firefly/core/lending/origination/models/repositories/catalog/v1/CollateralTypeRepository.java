@@ -5,7 +5,9 @@ import com.firefly.core.lending.origination.models.repositories.BaseRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @Repository
-public interface CollateralTypeRepository extends BaseRepository<CollateralType, Long> {
+public interface CollateralTypeRepository extends BaseRepository<CollateralType, UUID> {
     Mono<CollateralType> findByCode(String code);
 }

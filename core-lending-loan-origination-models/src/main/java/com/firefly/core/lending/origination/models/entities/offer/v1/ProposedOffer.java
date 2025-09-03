@@ -11,6 +11,7 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Table("proposed_offer")
 @Data
@@ -20,13 +21,13 @@ import java.time.LocalDateTime;
 public class ProposedOffer {
     @Id
     @Column("proposed_offer_id")
-    private Long proposedOfferId;
+    private UUID proposedOfferId;
 
     @Column("loan_application_id")
-    private Long loanApplicationId;
+    private UUID loanApplicationId;
 
     @Column("product_id")
-    private Long productId;
+    private UUID productId;
 
     @Column("requested_amount")
     private BigDecimal requestedAmount;

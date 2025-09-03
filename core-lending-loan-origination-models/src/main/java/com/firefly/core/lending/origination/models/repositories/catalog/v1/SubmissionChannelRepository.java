@@ -5,7 +5,9 @@ import com.firefly.core.lending.origination.models.repositories.BaseRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @Repository
-public interface SubmissionChannelRepository extends BaseRepository<SubmissionChannel, Long> {
+public interface SubmissionChannelRepository extends BaseRepository<SubmissionChannel, UUID> {
     Mono<SubmissionChannel> findByCode(String code);
 }

@@ -9,6 +9,7 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Table("decision_code")
 @Data
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 public class DecisionCode {
     @Id
     @Column("decision_code_id")
-    private Long decisionCodeId;
+    private UUID decisionCodeId;
 
     @Column("code")
     private String code;

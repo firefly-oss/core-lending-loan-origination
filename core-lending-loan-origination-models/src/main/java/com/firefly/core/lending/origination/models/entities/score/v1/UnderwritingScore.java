@@ -10,6 +10,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Table("underwriting_score")
 @Data
@@ -19,10 +20,10 @@ import java.time.LocalDateTime;
 public class UnderwritingScore {
     @Id
     @Column("underwriting_score_id")
-    private Long underwritingScoreId;
+    private UUID underwritingScoreId;
 
     @Column("loan_application_id")
-    private Long loanApplicationId;
+    private UUID loanApplicationId;
 
     @Column("score_value")
     private BigDecimal scoreValue;

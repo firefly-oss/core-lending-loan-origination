@@ -11,6 +11,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Table("application_collateral")
 @Data
@@ -20,10 +21,10 @@ import java.time.LocalDateTime;
 public class ApplicationCollateral {
     @Id
     @Column("application_collateral_id")
-    private Long applicationCollateralId;
+    private UUID applicationCollateralId;
 
     @Column("loan_application_id")
-    private Long loanApplicationId;
+    private UUID loanApplicationId;
 
     @Column("collateral_type")
     private CollateralTypeEnum collateralType;

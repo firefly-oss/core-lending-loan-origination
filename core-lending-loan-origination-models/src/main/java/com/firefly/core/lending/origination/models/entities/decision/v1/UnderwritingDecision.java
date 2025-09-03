@@ -12,6 +12,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Table("underwriting_decision")
 @Data
@@ -21,16 +22,16 @@ import java.time.LocalDateTime;
 public class UnderwritingDecision {
     @Id
     @Column("underwriting_decision_id")
-    private Long underwritingDecisionId;
+    private UUID underwritingDecisionId;
 
     @Column("loan_application_id")
-    private Long loanApplicationId;
+    private UUID loanApplicationId;
 
     @Column("decision_date")
     private LocalDateTime decisionDate;
 
     @Column("decision_code_id")
-    private Long decisionCodeId;
+    private UUID decisionCodeId;
     
     private DecisionCode decisionCode;
 
@@ -44,7 +45,7 @@ public class UnderwritingDecision {
     private Integer tenorMonths;
 
     @Column("risk_grade_id")
-    private Long riskGradeId;
+    private UUID riskGradeId;
     
     private RiskGrade riskGrade;
 

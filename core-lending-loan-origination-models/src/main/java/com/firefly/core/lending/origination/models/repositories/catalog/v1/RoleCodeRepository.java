@@ -5,7 +5,9 @@ import com.firefly.core.lending.origination.models.repositories.BaseRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @Repository
-public interface RoleCodeRepository extends BaseRepository<RoleCode, Long> {
+public interface RoleCodeRepository extends BaseRepository<RoleCode, UUID> {
     Mono<RoleCode> findByCode(String code);
 }

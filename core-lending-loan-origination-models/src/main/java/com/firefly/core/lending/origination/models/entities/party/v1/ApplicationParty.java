@@ -12,6 +12,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Table("application_party")
 @Data
@@ -21,13 +22,13 @@ import java.time.LocalDateTime;
 public class ApplicationParty {
     @Id
     @Column("application_party_id")
-    private Long applicationPartyId;
+    private UUID applicationPartyId;
 
     @Column("loan_application_id")
-    private Long loanApplicationId;
+    private UUID loanApplicationId;
 
     @Column("party_id")
-    private Long partyId;
+    private UUID partyId;
 
     @Column("role_code")
     private RoleCodeEnum roleCode;

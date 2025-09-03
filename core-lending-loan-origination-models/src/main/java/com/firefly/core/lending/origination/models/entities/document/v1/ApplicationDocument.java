@@ -1,7 +1,6 @@
 package com.firefly.core.lending.origination.models.entities.document.v1;
 
 import com.firefly.core.lending.origination.interfaces.enums.document.v1.DocumentTypeEnum;
-import com.firefly.core.lending.origination.models.entities.catalog.v1.DocumentType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +10,7 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Table("application_document")
 @Data
@@ -20,13 +20,13 @@ import java.time.LocalDateTime;
 public class ApplicationDocument {
     @Id
     @Column("application_document_id")
-    private Long applicationDocumentId;
+    private UUID applicationDocumentId;
 
     @Column("loan_application_id")
-    private Long loanApplicationId;
+    private UUID loanApplicationId;
 
     @Column("document_id")
-    private Long documentId;
+    private UUID documentId;
 
     @Column("document_type")
     private DocumentTypeEnum documentType;
