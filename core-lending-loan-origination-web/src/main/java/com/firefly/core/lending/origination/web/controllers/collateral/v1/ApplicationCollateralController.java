@@ -6,11 +6,14 @@ import com.firefly.core.lending.origination.core.services.collateral.v1.Applicat
 import com.firefly.core.lending.origination.interfaces.dtos.collateral.v1.ApplicationCollateralDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/loan-applications/{applicationId}/collaterals")
@@ -23,7 +26,7 @@ public class ApplicationCollateralController {
     @GetMapping
     @Operation(summary = "List collaterals", description = "Retrieves a paginated list of collateral items for a loan application.")
     public Mono<ResponseEntity<PaginationResponse<ApplicationCollateralDTO>>> findAllCollaterals(
-            @PathVariable Long applicationId,
+            @PathVariable UUID applicationId,
             @ParameterObject @ModelAttribute PaginationRequest paginationRequest) {
         return service.findAll(applicationId, paginationRequest)
                 .map(ResponseEntity::ok);
@@ -32,8 +35,8 @@ public class ApplicationCollateralController {
     @PostMapping
     @Operation(summary = "Add a collateral item", description = "Adds a new collateral record to the application.")
     public Mono<ResponseEntity<ApplicationCollateralDTO>> createCollateral(
-            @PathVariable Long applicationId,
-            @RequestBody ApplicationCollateralDTO dto) {
+            @PathVariable UUID applicationId,
+            @Valid @RequestBody ApplicationCollateralDTO dto) {
         return service.createCollateral(applicationId, dto)
                 .map(ResponseEntity::ok);
     }
@@ -41,8 +44,8 @@ public class ApplicationCollateralController {
     @GetMapping("/{collateralId}")
     @Operation(summary = "Get a collateral item", description = "Fetch a specific collateral record by ID.")
     public Mono<ResponseEntity<ApplicationCollateralDTO>> getCollateral(
-            @PathVariable Long applicationId,
-            @PathVariable Long collateralId) {
+            @PathVariable UUID applicationId,
+            @PathVariable UUID collateralId) {
         return service.getCollateral(applicationId, collateralId)
                 .map(ResponseEntity::ok);
     }
@@ -50,9 +53,9 @@ public class ApplicationCollateralController {
     @PutMapping("/{collateralId}")
     @Operation(summary = "Update a collateral item", description = "Updates the details of an existing collateral record.")
     public Mono<ResponseEntity<ApplicationCollateralDTO>> updateCollateral(
-            @PathVariable Long applicationId,
-            @PathVariable Long collateralId,
-            @RequestBody ApplicationCollateralDTO dto) {
+            @PathVariable UUID applicationId,
+            @PathVariable UUID collateralId,
+            @Valid @RequestBody ApplicationCollateralDTO dto) {
         return service.updateCollateral(applicationId, collateralId, dto)
                 .map(ResponseEntity::ok);
     }
@@ -60,8 +63,8 @@ public class ApplicationCollateralController {
     @DeleteMapping("/{collateralId}")
     @Operation(summary = "Delete a collateral item", description = "Removes a collateral record from the application.")
     public Mono<ResponseEntity<Void>> deleteCollateral(
-            @PathVariable Long applicationId,
-            @PathVariable Long collateralId) {
+            @PathVariable UUID applicationId,
+            @PathVariable UUID collateralId) {
         return service.deleteCollateral(applicationId, collateralId)
                 .then(Mono.just(ResponseEntity.noContent().build()));
     }

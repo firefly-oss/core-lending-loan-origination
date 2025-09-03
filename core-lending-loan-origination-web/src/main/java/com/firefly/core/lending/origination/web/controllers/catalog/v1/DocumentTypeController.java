@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import jakarta.validation.Valid;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/v1/document-types")
 @RequiredArgsConstructor
@@ -21,7 +24,7 @@ public class DocumentTypeController {
     }
 
     @GetMapping("/{id}")
-    public Mono<DocumentType> getDocumentTypeById(@PathVariable Long id) {
+    public Mono<DocumentType> getDocumentTypeById(@PathVariable UUID id) {
         return documentTypeService.findById(id);
     }
 
@@ -32,19 +35,19 @@ public class DocumentTypeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<DocumentType> createDocumentType(@RequestBody DocumentType documentType) {
+    public Mono<DocumentType> createDocumentType(@Valid @RequestBody DocumentType documentType) {
         return documentTypeService.save(documentType);
     }
 
     @PutMapping("/{id}")
-    public Mono<DocumentType> updateDocumentType(@PathVariable Long id, @RequestBody DocumentType documentType) {
+    public Mono<DocumentType> updateDocumentType(@PathVariable UUID id, @Valid @RequestBody DocumentType documentType) {
         documentType.setDocumentTypeId(id);
         return documentTypeService.save(documentType);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Mono<Void> deleteDocumentType(@PathVariable Long id) {
+    public Mono<Void> deleteDocumentType(@PathVariable UUID id) {
         return documentTypeService.deleteById(id);
     }
 }

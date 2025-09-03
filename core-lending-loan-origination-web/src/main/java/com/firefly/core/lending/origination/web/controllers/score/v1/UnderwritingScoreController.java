@@ -6,11 +6,14 @@ import com.firefly.core.lending.origination.core.services.score.v1.UnderwritingS
 import com.firefly.core.lending.origination.interfaces.dtos.score.v1.UnderwritingScoreDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/loan-applications/{applicationId}/scores")
@@ -23,7 +26,7 @@ public class UnderwritingScoreController {
     @GetMapping
     @Operation(summary = "List scores", description = "Retrieves a paginated list of underwriting scores for a loan application.")
     public Mono<ResponseEntity<PaginationResponse<UnderwritingScoreDTO>>> findAllScores(
-            @PathVariable Long applicationId,
+            @PathVariable UUID applicationId,
             @ParameterObject @ModelAttribute PaginationRequest paginationRequest) {
         return service.findAll(applicationId, paginationRequest)
                 .map(ResponseEntity::ok);
@@ -32,8 +35,8 @@ public class UnderwritingScoreController {
     @PostMapping
     @Operation(summary = "Create a new score", description = "Adds a new underwriting score record.")
     public Mono<ResponseEntity<UnderwritingScoreDTO>> createScore(
-            @PathVariable Long applicationId,
-            @RequestBody UnderwritingScoreDTO dto) {
+            @PathVariable UUID applicationId,
+            @Valid @RequestBody UnderwritingScoreDTO dto) {
         return service.createScore(applicationId, dto)
                 .map(score -> ResponseEntity.status(201).body(score));
     }
@@ -41,8 +44,8 @@ public class UnderwritingScoreController {
     @GetMapping("/{scoreId}")
     @Operation(summary = "Get a score", description = "Fetch a specific underwriting score record by ID.")
     public Mono<ResponseEntity<UnderwritingScoreDTO>> getScore(
-            @PathVariable Long applicationId,
-            @PathVariable Long scoreId) {
+            @PathVariable UUID applicationId,
+            @PathVariable UUID scoreId) {
         return service.getScore(applicationId, scoreId)
                 .map(ResponseEntity::ok);
     }
@@ -50,9 +53,9 @@ public class UnderwritingScoreController {
     @PutMapping("/{scoreId}")
     @Operation(summary = "Update a score", description = "Updates an existing underwriting score record.")
     public Mono<ResponseEntity<UnderwritingScoreDTO>> updateScore(
-            @PathVariable Long applicationId,
-            @PathVariable Long scoreId,
-            @RequestBody UnderwritingScoreDTO dto) {
+            @PathVariable UUID applicationId,
+            @PathVariable UUID scoreId,
+            @Valid @RequestBody UnderwritingScoreDTO dto) {
         return service.updateScore(applicationId, scoreId, dto)
                 .map(ResponseEntity::ok);
     }
@@ -60,8 +63,8 @@ public class UnderwritingScoreController {
     @DeleteMapping("/{scoreId}")
     @Operation(summary = "Delete a score", description = "Removes a scoring record from the application.")
     public Mono<ResponseEntity<Void>> deleteScore(
-            @PathVariable Long applicationId,
-            @PathVariable Long scoreId) {
+            @PathVariable UUID applicationId,
+            @PathVariable UUID scoreId) {
         return service.deleteScore(applicationId, scoreId)
                 .then(Mono.just(ResponseEntity.noContent().build()));
     }

@@ -7,11 +7,14 @@ import com.firefly.core.lending.origination.core.services.application.v1.LoanApp
 import com.firefly.core.lending.origination.interfaces.dtos.application.v1.LoanApplicationDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/loan-applications")
@@ -38,27 +41,27 @@ public class LoanApplicationsController {
 
     @PostMapping
     @Operation(summary = "Create a new loan application", description = "Creates a new loan application record.")
-    public Mono<ResponseEntity<LoanApplicationDTO>> createLoanApplication(@RequestBody LoanApplicationDTO dto) {
+    public Mono<ResponseEntity<LoanApplicationDTO>> createLoanApplication(@Valid @RequestBody LoanApplicationDTO dto) {
         return service.createLoanApplication(dto).map(ResponseEntity::ok);
     }
 
     @GetMapping("/{applicationId}")
     @Operation(summary = "Get loan application by ID", description = "Retrieves a specific loan application.")
-    public Mono<ResponseEntity<LoanApplicationDTO>> getLoanApplication(@PathVariable Long applicationId) {
+    public Mono<ResponseEntity<LoanApplicationDTO>> getLoanApplication(@PathVariable UUID applicationId) {
         return service.getLoanApplication(applicationId).map(ResponseEntity::ok);
     }
 
     @PutMapping("/{applicationId}")
     @Operation(summary = "Update loan application", description = "Updates an existing loan application record.")
     public Mono<ResponseEntity<LoanApplicationDTO>> updateLoanApplication(
-            @PathVariable Long applicationId,
-            @RequestBody LoanApplicationDTO dto) {
+            @PathVariable UUID applicationId,
+            @Valid @RequestBody LoanApplicationDTO dto) {
         return service.updateLoanApplication(applicationId, dto).map(ResponseEntity::ok);
     }
 
     @DeleteMapping("/{applicationId}")
     @Operation(summary = "Delete loan application", description = "Deletes a loan application by ID.")
-    public Mono<ResponseEntity<Void>> deleteLoanApplication(@PathVariable Long applicationId) {
+    public Mono<ResponseEntity<Void>> deleteLoanApplication(@PathVariable UUID applicationId) {
         return service.deleteLoanApplication(applicationId).map(ResponseEntity::ok);
     }
 }

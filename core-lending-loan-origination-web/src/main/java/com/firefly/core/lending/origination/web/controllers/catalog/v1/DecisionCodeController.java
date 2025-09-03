@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import jakarta.validation.Valid;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/v1/decision-codes")
 @RequiredArgsConstructor
@@ -21,7 +24,7 @@ public class DecisionCodeController {
     }
 
     @GetMapping("/{id}")
-    public Mono<DecisionCode> getDecisionCodeById(@PathVariable Long id) {
+    public Mono<DecisionCode> getDecisionCodeById(@PathVariable UUID id) {
         return decisionCodeService.findById(id);
     }
 
@@ -32,19 +35,19 @@ public class DecisionCodeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<DecisionCode> createDecisionCode(@RequestBody DecisionCode decisionCode) {
+    public Mono<DecisionCode> createDecisionCode(@Valid @RequestBody DecisionCode decisionCode) {
         return decisionCodeService.save(decisionCode);
     }
 
     @PutMapping("/{id}")
-    public Mono<DecisionCode> updateDecisionCode(@PathVariable Long id, @RequestBody DecisionCode decisionCode) {
+    public Mono<DecisionCode> updateDecisionCode(@PathVariable UUID id, @Valid @RequestBody DecisionCode decisionCode) {
         decisionCode.setDecisionCodeId(id);
         return decisionCodeService.save(decisionCode);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Mono<Void> deleteDecisionCode(@PathVariable Long id) {
+    public Mono<Void> deleteDecisionCode(@PathVariable UUID id) {
         return decisionCodeService.deleteById(id);
     }
 }
