@@ -19,10 +19,21 @@ package com.firefly.core.lending.origination.core.mappers.application.v1;
 
 import com.firefly.core.lending.origination.interfaces.dtos.application.v1.LoanApplicationDTO;
 import com.firefly.core.lending.origination.models.entities.application.v1.LoanApplication;
-import org.mapstruct.Mapper;
+import org.mapstruct.*;
 
-@Mapper(componentModel = "spring")
+@Mapper(
+    componentModel = MappingConstants.ComponentModel.SPRING,
+    unmappedTargetPolicy = ReportingPolicy.IGNORE
+)
 public interface LoanApplicationMapper {
+    
+    @Mapping(target = "applicationSubStatusId", source = "applicationSubStatusId")
     LoanApplicationDTO toDTO(LoanApplication entity);
+    
     LoanApplication toEntity(LoanApplicationDTO dto);
+
+    @Mapping(target = "createdAt", ignore = true)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updateEntityFromDto(LoanApplicationDTO dto, @MappingTarget LoanApplication entity);
+
 }

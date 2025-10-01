@@ -86,9 +86,8 @@ public class LoanApplicationsServiceImpl implements LoanApplicationsService {
     public Mono<LoanApplicationDTO> updateLoanApplication(UUID applicationId, LoanApplicationDTO dto) {
         return repository.findById(applicationId)
                 .flatMap(existing -> {
-                    LoanApplication updatedEntity = mapper.toEntity(dto);
-                    updatedEntity.setLoanApplicationId(existing.getLoanApplicationId());
-                    return repository.save(updatedEntity);
+                    mapper.updateEntityFromDto(dto, existing);
+                    return repository.save(existing);
                 })
                 .map(mapper::toDTO);
     }

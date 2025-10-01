@@ -1,2148 +1,3983 @@
-openapi: 3.0.1
-info:
-  title: core-lending-loan-origination
-  description: Loan Origination Core Application
-  contact:
-    name: Firefly Software Solutions Inc
-    email: dev@getfirefly.io
-  version: 1.0.0
-servers:
-  - url: http://core.getfirefly.io/loan-origination
-    description: Development Environment
-  - url: /
-    description: Local Development Environment
-tags:
-  - name: UnderwritingDecision
-    description: Manage underwriting decisions for a loan application
-  - name: LoanApplicationStatusHistory
-    description: Manage status history records for a loan application
-  - name: LoanApplications
-    description: Operations on Loan Applications
-  - name: ApplicationParty
-    description: Manage parties for a loan application
-  - name: ApplicationDocument
-    description: Manage documents for a loan application
-  - name: UnderwritingScore
-    description: Manage underwriting score records for a loan application
-  - name: ApplicationCollateral
-    description: Manage collateral items for a loan application
-paths:
-  /api/v1/loan-applications/{applicationId}:
-    get:
-      tags:
-        - LoanApplications
-      summary: Get loan application by ID
-      description: Retrieves a specific loan application.
-      operationId: getLoanApplication
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/LoanApplicationDTO'
-    put:
-      tags:
-        - LoanApplications
-      summary: Update loan application
-      description: Updates an existing loan application record.
-      operationId: updateLoanApplication
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Idempotency-Key
-          in: header
-          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
-          required: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LoanApplicationDTO'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/LoanApplicationDTO'
-    delete:
-      tags:
-        - LoanApplications
-      summary: Delete loan application
-      description: Deletes a loan application by ID.
-      operationId: deleteLoanApplication
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: OK
-  /api/v1/loan-applications/{applicationId}/status-history/{statusHistoryId}:
-    get:
-      tags:
-        - LoanApplicationStatusHistory
-      summary: Get a status record
-      description: Retrieves a specific status history record.
-      operationId: getStatusHistory
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: statusHistoryId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/LoanApplicationStatusHistoryDTO'
-    put:
-      tags:
-        - LoanApplicationStatusHistory
-      summary: Update a status record
-      description: Updates an existing status history record.
-      operationId: updateStatusHistory
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: statusHistoryId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Idempotency-Key
-          in: header
-          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
-          required: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LoanApplicationStatusHistoryDTO'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/LoanApplicationStatusHistoryDTO'
-    delete:
-      tags:
-        - LoanApplicationStatusHistory
-      summary: Delete a status record
-      description: Removes a status history entry.
-      operationId: deleteStatusHistory
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: statusHistoryId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: OK
-  /api/v1/loan-applications/{applicationId}/scores/{scoreId}:
-    get:
-      tags:
-        - UnderwritingScore
-      summary: Get a score
-      description: Fetch a specific underwriting score record by ID.
-      operationId: getScore
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: scoreId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/UnderwritingScoreDTO'
-    put:
-      tags:
-        - UnderwritingScore
-      summary: Update a score
-      description: Updates an existing underwriting score record.
-      operationId: updateScore
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: scoreId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Idempotency-Key
-          in: header
-          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
-          required: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UnderwritingScoreDTO'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/UnderwritingScoreDTO'
-    delete:
-      tags:
-        - UnderwritingScore
-      summary: Delete a score
-      description: Removes a scoring record from the application.
-      operationId: deleteScore
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: scoreId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: OK
-  /api/v1/loan-applications/{applicationId}/parties/{partyId}:
-    get:
-      tags:
-        - ApplicationParty
-      summary: Get a party
-      description: Fetches details of a specific party associated with the application.
-      operationId: getParty
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: partyId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/ApplicationPartyDTO'
-    put:
-      tags:
-        - ApplicationParty
-      summary: Update a party
-      description: Updates a party's information.
-      operationId: updateParty
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: partyId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Idempotency-Key
-          in: header
-          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
-          required: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ApplicationPartyDTO'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/ApplicationPartyDTO'
-    delete:
-      tags:
-        - ApplicationParty
-      summary: Remove a party
-      description: Deletes the association of a party from the application.
-      operationId: deleteParty
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: partyId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: OK
-  /api/v1/loan-applications/{applicationId}/documents/{documentId}:
-    get:
-      tags:
-        - ApplicationDocument
-      summary: Get a document
-      description: Fetch a specific document record by ID.
-      operationId: getDocument
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: documentId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/ApplicationDocumentDTO'
-    put:
-      tags:
-        - ApplicationDocument
-      summary: Update a document record
-      description: Updates metadata for an existing document.
-      operationId: updateDocument
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: documentId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Idempotency-Key
-          in: header
-          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
-          required: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ApplicationDocumentDTO'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/ApplicationDocumentDTO'
-    delete:
-      tags:
-        - ApplicationDocument
-      summary: Delete a document record
-      description: Removes a document record from the application.
-      operationId: deleteDocument
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: documentId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: OK
-  /api/v1/loan-applications/{applicationId}/decisions/{decisionId}:
-    get:
-      tags:
-        - UnderwritingDecision
-      summary: Get a decision
-      description: Fetch a specific underwriting decision record by ID.
-      operationId: getDecision
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: decisionId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/UnderwritingDecisionDTO'
-    put:
-      tags:
-        - UnderwritingDecision
-      summary: Update a decision
-      description: Updates an existing underwriting decision record.
-      operationId: updateDecision
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: decisionId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Idempotency-Key
-          in: header
-          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
-          required: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UnderwritingDecisionDTO'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/UnderwritingDecisionDTO'
-    delete:
-      tags:
-        - UnderwritingDecision
-      summary: Delete a decision
-      description: Removes a decision record from the application.
-      operationId: deleteDecision
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: decisionId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: OK
-  /api/v1/loan-applications/{applicationId}/collaterals/{collateralId}:
-    get:
-      tags:
-        - ApplicationCollateral
-      summary: Get a collateral item
-      description: Fetch a specific collateral record by ID.
-      operationId: getCollateral
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: collateralId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/ApplicationCollateralDTO'
-    put:
-      tags:
-        - ApplicationCollateral
-      summary: Update a collateral item
-      description: Updates the details of an existing collateral record.
-      operationId: updateCollateral
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: collateralId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Idempotency-Key
-          in: header
-          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
-          required: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ApplicationCollateralDTO'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/ApplicationCollateralDTO'
-    delete:
-      tags:
-        - ApplicationCollateral
-      summary: Delete a collateral item
-      description: Removes a collateral record from the application.
-      operationId: deleteCollateral
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: collateralId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: OK
-  /api/v1/document-types/{id}:
-    get:
-      tags:
-        - document-type-controller
-      operationId: getDocumentTypeById
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/DocumentType'
-    put:
-      tags:
-        - document-type-controller
-      operationId: updateDocumentType
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Idempotency-Key
-          in: header
-          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
-          required: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DocumentType'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/DocumentType'
-    delete:
-      tags:
-        - document-type-controller
-      operationId: deleteDocumentType
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '204':
-          description: No Content
-  /api/v1/decision-codes/{id}:
-    get:
-      tags:
-        - decision-code-controller
-      operationId: getDecisionCodeById
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/DecisionCode'
-    put:
-      tags:
-        - decision-code-controller
-      operationId: updateDecisionCode
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Idempotency-Key
-          in: header
-          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
-          required: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DecisionCode'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/DecisionCode'
-    delete:
-      tags:
-        - decision-code-controller
-      operationId: deleteDecisionCode
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '204':
-          description: No Content
-  /api/v1/loan-applications:
-    get:
-      tags:
-        - LoanApplications
-      summary: Filter loan applications
-      description: Returns a paginated list of loan applications using filtering.
-      operationId: filterLoanApplications
-      parameters:
-        - name: pagination.pageNumber
-          in: query
-          description: Page number (0-based)
-          required: false
-          schema:
-            type: integer
-            format: int32
-            default: 0
-        - name: pagination.pageSize
-          in: query
-          description: Number of items per page
-          required: false
-          schema:
-            type: integer
-            format: int32
-            default: 10
-        - name: pagination.sortBy
-          in: query
-          description: Field to sort by
-          required: false
-          schema:
-            type: string
-        - name: pagination.sortDirection
-          in: query
-          description: Sort direction (ASC or DESC)
-          required: false
-          schema:
-            type: string
-            default: DESC
-        - name: options.caseInsensitiveStrings
-          in: query
-          description: Enable case-insensitive string filtering
-          required: false
-          schema:
-            type: boolean
-            default: false
-        - name: options.includeInheritedFields
-          in: query
-          description: Include fields from parent classes
-          required: false
-          schema:
-            type: boolean
-            default: false
-        - name: filters.applicationNumber
-          in: query
-          description: Exact filter for application number
-          required: false
-          schema:
-            type: string
-        - name: filters.applicationStatus
-          in: query
-          description: Exact filter for application status
-          required: false
-          schema:
-            type: string
-            enum:
-              - DRAFT
-              - SUBMITTED
-              - UNDER_REVIEW
-              - APPROVED
-              - REJECTED
-        - name: filters.applicationSubStatus
-          in: query
-          description: Exact filter for application sub status
-          required: false
-          schema:
-            type: string
-            enum:
-              - PENDING_DOCUMENTS
-              - NEEDS_MANUAL_REVIEW
-              - COMPLETE
-        - name: filters.applicationDate
-          in: query
-          description: Exact filter for application date
-          required: false
-          schema:
-            type: string
-        - name: filters.submissionChannel
-          in: query
-          description: Exact filter for submission channel
-          required: false
-          schema:
-            type: string
-            enum:
-              - BRANCH
-              - ONLINE
-              - MOBILE
-              - DISTRIBUTOR
-        - name: filters.partyId
-          in: query
-          description: Exact filter for party id
-          required: false
-          schema:
-            type: string
-        - name: filters.distributorId
-          in: query
-          description: Exact filter for distributor id
-          required: false
-          schema:
-            type: string
-        - name: filters.note
-          in: query
-          description: Exact filter for note
-          required: false
-          schema:
-            type: string
-        - name: filters.createdAt
-          in: query
-          description: Exact filter for created at
-          required: false
-          schema:
-            type: string
-            format: date-time
-        - name: rangeFilters.ranges[createdAt].from
-          in: query
-          description: Filter created at from value
-          required: false
-          schema:
-            type: string
-            format: date-time
-        - name: rangeFilters.ranges[createdAt].to
-          in: query
-          description: Filter created at to value
-          required: false
-          schema:
-            type: string
-            format: date-time
-        - name: filters.updatedAt
-          in: query
-          description: Exact filter for updated at
-          required: false
-          schema:
-            type: string
-            format: date-time
-        - name: rangeFilters.ranges[updatedAt].from
-          in: query
-          description: Filter updated at from value
-          required: false
-          schema:
-            type: string
-            format: date-time
-        - name: rangeFilters.ranges[updatedAt].to
-          in: query
-          description: Filter updated at to value
-          required: false
-          schema:
-            type: string
-            format: date-time
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/PaginationResponseLoanApplicationDTO'
-    post:
-      tags:
-        - LoanApplications
-      summary: Create a new loan application
-      description: Creates a new loan application record.
-      operationId: createLoanApplication
-      parameters:
-        - name: X-Idempotency-Key
-          in: header
-          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
-          required: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LoanApplicationDTO'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/LoanApplicationDTO'
-  /api/v1/loan-applications/{applicationId}/status-history:
-    get:
-      tags:
-        - LoanApplicationStatusHistory
-      summary: List status history
-      description: Retrieves a paginated list of status history entries for a loan application.
-      operationId: findAllStatusHistory
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: pageNumber
-          in: query
-          description: The zero-based page number to retrieve.
-          required: false
-          schema:
-            type: string
-            description: The zero-based page number to retrieve.
-            example: 0
-            default: '0'
-          example: 0
-        - name: pageSize
-          in: query
-          description: The number of items per page.
-          required: false
-          schema:
-            type: string
-            description: The number of items per page.
-            example: 10
-            default: '10'
-          example: 10
-        - name: sortBy
-          in: query
-          description: The field to sort the results by.
-          required: false
-          schema:
-            type: string
-            description: The field to sort the results by.
-            example: name
-          example: name
-        - name: sortDirection
-          in: query
-          description: The direction of sorting, either ASC or DESC.
-          required: false
-          schema:
-            type: string
-            description: The direction of sorting, either ASC or DESC.
-            example: DESC
-            default: DESC
-          example: DESC
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/PaginationResponseLoanApplicationStatusHistoryDTO'
-    post:
-      tags:
-        - LoanApplicationStatusHistory
-      summary: Create a status record
-      description: Creates a new status history record for a loan application.
-      operationId: createStatusHistory
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Idempotency-Key
-          in: header
-          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
-          required: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LoanApplicationStatusHistoryDTO'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/LoanApplicationStatusHistoryDTO'
-  /api/v1/loan-applications/{applicationId}/scores:
-    get:
-      tags:
-        - UnderwritingScore
-      summary: List scores
-      description: Retrieves a paginated list of underwriting scores for a loan application.
-      operationId: findAllScores
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: pageNumber
-          in: query
-          description: The zero-based page number to retrieve.
-          required: false
-          schema:
-            type: string
-            description: The zero-based page number to retrieve.
-            example: 0
-            default: '0'
-          example: 0
-        - name: pageSize
-          in: query
-          description: The number of items per page.
-          required: false
-          schema:
-            type: string
-            description: The number of items per page.
-            example: 10
-            default: '10'
-          example: 10
-        - name: sortBy
-          in: query
-          description: The field to sort the results by.
-          required: false
-          schema:
-            type: string
-            description: The field to sort the results by.
-            example: name
-          example: name
-        - name: sortDirection
-          in: query
-          description: The direction of sorting, either ASC or DESC.
-          required: false
-          schema:
-            type: string
-            description: The direction of sorting, either ASC or DESC.
-            example: DESC
-            default: DESC
-          example: DESC
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/PaginationResponseUnderwritingScoreDTO'
-    post:
-      tags:
-        - UnderwritingScore
-      summary: Create a new score
-      description: Adds a new underwriting score record.
-      operationId: createScore
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Idempotency-Key
-          in: header
-          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
-          required: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UnderwritingScoreDTO'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/UnderwritingScoreDTO'
-  /api/v1/loan-applications/{applicationId}/parties:
-    get:
-      tags:
-        - ApplicationParty
-      summary: List parties
-      description: Retrieves a paginated list of parties tied to a loan application.
-      operationId: findAllParties
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: pageNumber
-          in: query
-          description: The zero-based page number to retrieve.
-          required: false
-          schema:
-            type: string
-            description: The zero-based page number to retrieve.
-            example: 0
-            default: '0'
-          example: 0
-        - name: pageSize
-          in: query
-          description: The number of items per page.
-          required: false
-          schema:
-            type: string
-            description: The number of items per page.
-            example: 10
-            default: '10'
-          example: 10
-        - name: sortBy
-          in: query
-          description: The field to sort the results by.
-          required: false
-          schema:
-            type: string
-            description: The field to sort the results by.
-            example: name
-          example: name
-        - name: sortDirection
-          in: query
-          description: The direction of sorting, either ASC or DESC.
-          required: false
-          schema:
-            type: string
-            description: The direction of sorting, either ASC or DESC.
-            example: DESC
-            default: DESC
-          example: DESC
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/PaginationResponseApplicationPartyDTO'
-    post:
-      tags:
-        - ApplicationParty
-      summary: Add a new party
-      description: Adds a new party (co-applicant, guarantor, etc.) to the application.
-      operationId: createParty
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Idempotency-Key
-          in: header
-          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
-          required: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ApplicationPartyDTO'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/ApplicationPartyDTO'
-  /api/v1/loan-applications/{applicationId}/documents:
-    get:
-      tags:
-        - ApplicationDocument
-      summary: List documents
-      description: Retrieves a paginated list of documents for a loan application.
-      operationId: findAllDocuments
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: pageNumber
-          in: query
-          description: The zero-based page number to retrieve.
-          required: false
-          schema:
-            type: string
-            description: The zero-based page number to retrieve.
-            example: 0
-            default: '0'
-          example: 0
-        - name: pageSize
-          in: query
-          description: The number of items per page.
-          required: false
-          schema:
-            type: string
-            description: The number of items per page.
-            example: 10
-            default: '10'
-          example: 10
-        - name: sortBy
-          in: query
-          description: The field to sort the results by.
-          required: false
-          schema:
-            type: string
-            description: The field to sort the results by.
-            example: name
-          example: name
-        - name: sortDirection
-          in: query
-          description: The direction of sorting, either ASC or DESC.
-          required: false
-          schema:
-            type: string
-            description: The direction of sorting, either ASC or DESC.
-            example: DESC
-            default: DESC
-          example: DESC
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/PaginationResponseApplicationDocumentDTO'
-    post:
-      tags:
-        - ApplicationDocument
-      summary: Add a document record
-      description: Adds a new document record for the application.
-      operationId: createDocument
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Idempotency-Key
-          in: header
-          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
-          required: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ApplicationDocumentDTO'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/ApplicationDocumentDTO'
-  /api/v1/loan-applications/{applicationId}/decisions:
-    get:
-      tags:
-        - UnderwritingDecision
-      summary: List decisions
-      description: Retrieves a paginated list of underwriting decisions for a loan application.
-      operationId: findAllDecisions
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: pageNumber
-          in: query
-          description: The zero-based page number to retrieve.
-          required: false
-          schema:
-            type: string
-            description: The zero-based page number to retrieve.
-            example: 0
-            default: '0'
-          example: 0
-        - name: pageSize
-          in: query
-          description: The number of items per page.
-          required: false
-          schema:
-            type: string
-            description: The number of items per page.
-            example: 10
-            default: '10'
-          example: 10
-        - name: sortBy
-          in: query
-          description: The field to sort the results by.
-          required: false
-          schema:
-            type: string
-            description: The field to sort the results by.
-            example: name
-          example: name
-        - name: sortDirection
-          in: query
-          description: The direction of sorting, either ASC or DESC.
-          required: false
-          schema:
-            type: string
-            description: The direction of sorting, either ASC or DESC.
-            example: DESC
-            default: DESC
-          example: DESC
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/PaginationResponseUnderwritingDecisionDTO'
-    post:
-      tags:
-        - UnderwritingDecision
-      summary: Create a new decision
-      description: Records a new underwriting decision (APPROVED, REJECTED, etc.).
-      operationId: createDecision
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Idempotency-Key
-          in: header
-          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
-          required: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UnderwritingDecisionDTO'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/UnderwritingDecisionDTO'
-  /api/v1/loan-applications/{applicationId}/collaterals:
-    get:
-      tags:
-        - ApplicationCollateral
-      summary: List collaterals
-      description: Retrieves a paginated list of collateral items for a loan application.
-      operationId: findAllCollaterals
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: pageNumber
-          in: query
-          description: The zero-based page number to retrieve.
-          required: false
-          schema:
-            type: string
-            description: The zero-based page number to retrieve.
-            example: 0
-            default: '0'
-          example: 0
-        - name: pageSize
-          in: query
-          description: The number of items per page.
-          required: false
-          schema:
-            type: string
-            description: The number of items per page.
-            example: 10
-            default: '10'
-          example: 10
-        - name: sortBy
-          in: query
-          description: The field to sort the results by.
-          required: false
-          schema:
-            type: string
-            description: The field to sort the results by.
-            example: name
-          example: name
-        - name: sortDirection
-          in: query
-          description: The direction of sorting, either ASC or DESC.
-          required: false
-          schema:
-            type: string
-            description: The direction of sorting, either ASC or DESC.
-            example: DESC
-            default: DESC
-          example: DESC
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/PaginationResponseApplicationCollateralDTO'
-    post:
-      tags:
-        - ApplicationCollateral
-      summary: Add a collateral item
-      description: Adds a new collateral record to the application.
-      operationId: createCollateral
-      parameters:
-        - name: applicationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: X-Idempotency-Key
-          in: header
-          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
-          required: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ApplicationCollateralDTO'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/ApplicationCollateralDTO'
-  /api/v1/document-types:
-    get:
-      tags:
-        - document-type-controller
-      operationId: getAllDocumentTypes
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/DocumentType'
-    post:
-      tags:
-        - document-type-controller
-      operationId: createDocumentType
-      parameters:
-        - name: X-Idempotency-Key
-          in: header
-          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
-          required: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DocumentType'
-        required: true
-      responses:
-        '201':
-          description: Created
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/DocumentType'
-  /api/v1/decision-codes:
-    get:
-      tags:
-        - decision-code-controller
-      operationId: getAllDecisionCodes
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/DecisionCode'
-    post:
-      tags:
-        - decision-code-controller
-      operationId: createDecisionCode
-      parameters:
-        - name: X-Idempotency-Key
-          in: header
-          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
-          required: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DecisionCode'
-        required: true
-      responses:
-        '201':
-          description: Created
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/DecisionCode'
-  /api/v1/loan-applications/all:
-    get:
-      tags:
-        - LoanApplications
-      summary: List all loan applications
-      description: Returns a paginated list of loan applications without specific filters.
-      operationId: listLoanApplications
-      parameters:
-        - name: pageNumber
-          in: query
-          description: The zero-based page number to retrieve.
-          required: false
-          schema:
-            type: string
-            description: The zero-based page number to retrieve.
-            example: 0
-            default: '0'
-          example: 0
-        - name: pageSize
-          in: query
-          description: The number of items per page.
-          required: false
-          schema:
-            type: string
-            description: The number of items per page.
-            example: 10
-            default: '10'
-          example: 10
-        - name: sortBy
-          in: query
-          description: The field to sort the results by.
-          required: false
-          schema:
-            type: string
-            description: The field to sort the results by.
-            example: name
-          example: name
-        - name: sortDirection
-          in: query
-          description: The direction of sorting, either ASC or DESC.
-          required: false
-          schema:
-            type: string
-            description: The direction of sorting, either ASC or DESC.
-            example: DESC
-            default: DESC
-          example: DESC
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/PaginationResponseLoanApplicationDTO'
-  /api/v1/document-types/code/{code}:
-    get:
-      tags:
-        - document-type-controller
-      operationId: getDocumentTypeByCode
-      parameters:
-        - name: code
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/DocumentType'
-  /api/v1/decision-codes/code/{code}:
-    get:
-      tags:
-        - decision-code-controller
-      operationId: getDecisionCodeByCode
-      parameters:
-        - name: code
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/DecisionCode'
-components:
-  schemas:
-    LoanApplicationDTO:
-      required:
-        - applicationDate
-        - applicationStatus
-        - applicationSubStatus
-        - submissionChannel
-      type: object
-      properties:
-        loanApplicationId:
-          type: string
-          format: uuid
-          readOnly: true
-        applicationNumber:
-          type: string
-          format: uuid
-        applicationStatus:
-          type: string
-          enum:
-            - DRAFT
-            - SUBMITTED
-            - UNDER_REVIEW
-            - APPROVED
-            - REJECTED
-        applicationSubStatus:
-          type: string
-          enum:
-            - PENDING_DOCUMENTS
-            - NEEDS_MANUAL_REVIEW
-            - COMPLETE
-        applicationDate:
-          type: string
-          format: date
-        submissionChannel:
-          type: string
-          enum:
-            - BRANCH
-            - ONLINE
-            - MOBILE
-            - DISTRIBUTOR
-        partyId:
-          type: string
-          format: uuid
-        distributorId:
-          type: string
-          format: uuid
-        note:
-          maxLength: 1000
-          minLength: 0
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    LoanApplicationStatusHistoryDTO:
-      required:
-        - changedAt
-        - changedBy
-        - loanApplicationId
-        - newStatus
-        - oldStatus
-      type: object
-      properties:
-        statusHistoryId:
-          type: string
-          format: uuid
-          readOnly: true
-        loanApplicationId:
-          type: string
-          format: uuid
-        oldStatus:
-          type: string
-          enum:
-            - DRAFT
-            - SUBMITTED
-            - UNDER_REVIEW
-            - APPROVED
-            - REJECTED
-        newStatus:
-          type: string
-          enum:
-            - DRAFT
-            - SUBMITTED
-            - UNDER_REVIEW
-            - APPROVED
-            - REJECTED
-        changeReason:
-          maxLength: 500
-          minLength: 0
-          type: string
-        changedAt:
-          type: string
-          format: date-time
-        changedBy:
-          maxLength: 100
-          minLength: 0
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    UnderwritingScoreDTO:
-      required:
-        - loanApplicationId
-        - scoreValue
-        - scorecardName
-        - scoringTimestamp
-      type: object
-      properties:
-        underwritingScoreId:
-          type: string
-          format: uuid
-          readOnly: true
-        loanApplicationId:
-          type: string
-          format: uuid
-        scoreValue:
-          maximum: 1000
-          exclusiveMaximum: false
-          minimum: 0
-          exclusiveMinimum: false
-          type: number
-        scorecardName:
-          maxLength: 100
-          minLength: 0
-          type: string
-        reasonCodes:
-          maxLength: 2000
-          minLength: 0
-          type: string
-        scoringTimestamp:
-          type: string
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    ApplicationPartyDTO:
-      required:
-        - employmentType
-        - loanApplicationId
-        - partyId
-        - roleCode
-      type: object
-      properties:
-        applicationPartyId:
-          type: string
-          format: uuid
-          readOnly: true
-        loanApplicationId:
-          type: string
-          format: uuid
-        partyId:
-          type: string
-          format: uuid
-        roleCode:
-          type: string
-          enum:
-            - PRIMARY_APPLICANT
-            - CO_APPLICANT
-            - GUARANTOR
-        sharePercentage:
-          maximum: 100
-          exclusiveMaximum: false
-          minimum: 0
-          exclusiveMinimum: false
-          type: number
-        annualIncome:
-          type: number
-        monthlyExpenses:
-          type: number
-        employmentType:
-          type: string
-          enum:
-            - SALARIED
-            - SELF_EMPLOYED
-            - UNEMPLOYED
-            - RETIRED
-            - OTHER
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    ApplicationDocumentDTO:
-      required:
-        - documentId
-        - documentTypeId
-        - isMandatory
-        - isReceived
-        - loanApplicationId
-      type: object
-      properties:
-        applicationDocumentId:
-          type: string
-          format: uuid
-          readOnly: true
-        loanApplicationId:
-          type: string
-          format: uuid
-        documentId:
-          type: string
-          format: uuid
-        documentTypeId:
-          type: string
-          format: uuid
-        isMandatory:
-          type: boolean
-        isReceived:
-          type: boolean
-        receivedAt:
-          type: string
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    UnderwritingDecisionDTO:
-      required:
-        - decisionCodeId
-        - decisionDate
-        - loanApplicationId
-      type: object
-      properties:
-        underwritingDecisionId:
-          type: string
-          format: uuid
-          readOnly: true
-        loanApplicationId:
-          type: string
-          format: uuid
-        decisionDate:
-          type: string
-          format: date-time
-        decisionCodeId:
-          type: string
-          format: uuid
-        approvedAmount:
-          type: number
-        approvedInterestRate:
-          maximum: 100
-          exclusiveMaximum: false
-          minimum: 0
-          exclusiveMinimum: false
-          type: number
-        tenorMonths:
-          maximum: 360
-          minimum: 1
-          type: integer
-          format: int32
-        riskGradeId:
-          type: string
-          format: uuid
-        remarks:
-          maxLength: 1000
-          minLength: 0
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    ApplicationCollateralDTO:
-      required:
-        - collateralType
-        - isPrimaryCollateral
-        - loanApplicationId
-      type: object
-      properties:
-        applicationCollateralId:
-          type: string
-          format: uuid
-          readOnly: true
-        loanApplicationId:
-          type: string
-          format: uuid
-        collateralType:
-          type: string
-          enum:
-            - REAL_ESTATE
-            - VEHICLE
-            - FINANCIAL_ASSET
-            - OTHER
-        estimatedValue:
-          type: number
-        ownershipDetails:
-          maxLength: 500
-          minLength: 0
-          type: string
-        isPrimaryCollateral:
-          type: boolean
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    DocumentType:
-      type: object
-      properties:
-        documentTypeId:
-          type: string
-          format: uuid
-        code:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        isActive:
-          type: boolean
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    DecisionCode:
-      type: object
-      properties:
-        decisionCodeId:
-          type: string
-          format: uuid
-        code:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        isActive:
-          type: boolean
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    PaginationResponseLoanApplicationDTO:
-      type: object
-      properties:
-        content:
-          type: array
-          description: The list of items for the current page.
-          items:
-            $ref: '#/components/schemas/LoanApplicationDTO'
-        totalElements:
-          type: integer
-          description: The total number of elements across all pages.
-          format: int64
-        totalPages:
-          type: integer
-          description: The total number of pages based on the data size and page size.
-          format: int32
-        currentPage:
-          type: integer
-          description: The current page number, typically zero-based.
-          format: int32
-      description: Represents a paginated response containing a list of items and pagination metadata.
-    PaginationResponseLoanApplicationStatusHistoryDTO:
-      type: object
-      properties:
-        content:
-          type: array
-          description: The list of items for the current page.
-          items:
-            $ref: '#/components/schemas/LoanApplicationStatusHistoryDTO'
-        totalElements:
-          type: integer
-          description: The total number of elements across all pages.
-          format: int64
-        totalPages:
-          type: integer
-          description: The total number of pages based on the data size and page size.
-          format: int32
-        currentPage:
-          type: integer
-          description: The current page number, typically zero-based.
-          format: int32
-      description: Represents a paginated response containing a list of items and pagination metadata.
-    PaginationResponseUnderwritingScoreDTO:
-      type: object
-      properties:
-        content:
-          type: array
-          description: The list of items for the current page.
-          items:
-            $ref: '#/components/schemas/UnderwritingScoreDTO'
-        totalElements:
-          type: integer
-          description: The total number of elements across all pages.
-          format: int64
-        totalPages:
-          type: integer
-          description: The total number of pages based on the data size and page size.
-          format: int32
-        currentPage:
-          type: integer
-          description: The current page number, typically zero-based.
-          format: int32
-      description: Represents a paginated response containing a list of items and pagination metadata.
-    PaginationResponseApplicationPartyDTO:
-      type: object
-      properties:
-        content:
-          type: array
-          description: The list of items for the current page.
-          items:
-            $ref: '#/components/schemas/ApplicationPartyDTO'
-        totalElements:
-          type: integer
-          description: The total number of elements across all pages.
-          format: int64
-        totalPages:
-          type: integer
-          description: The total number of pages based on the data size and page size.
-          format: int32
-        currentPage:
-          type: integer
-          description: The current page number, typically zero-based.
-          format: int32
-      description: Represents a paginated response containing a list of items and pagination metadata.
-    PaginationResponseApplicationDocumentDTO:
-      type: object
-      properties:
-        content:
-          type: array
-          description: The list of items for the current page.
-          items:
-            $ref: '#/components/schemas/ApplicationDocumentDTO'
-        totalElements:
-          type: integer
-          description: The total number of elements across all pages.
-          format: int64
-        totalPages:
-          type: integer
-          description: The total number of pages based on the data size and page size.
-          format: int32
-        currentPage:
-          type: integer
-          description: The current page number, typically zero-based.
-          format: int32
-      description: Represents a paginated response containing a list of items and pagination metadata.
-    PaginationResponseUnderwritingDecisionDTO:
-      type: object
-      properties:
-        content:
-          type: array
-          description: The list of items for the current page.
-          items:
-            $ref: '#/components/schemas/UnderwritingDecisionDTO'
-        totalElements:
-          type: integer
-          description: The total number of elements across all pages.
-          format: int64
-        totalPages:
-          type: integer
-          description: The total number of pages based on the data size and page size.
-          format: int32
-        currentPage:
-          type: integer
-          description: The current page number, typically zero-based.
-          format: int32
-      description: Represents a paginated response containing a list of items and pagination metadata.
-    PaginationResponseApplicationCollateralDTO:
-      type: object
-      properties:
-        content:
-          type: array
-          description: The list of items for the current page.
-          items:
-            $ref: '#/components/schemas/ApplicationCollateralDTO'
-        totalElements:
-          type: integer
-          description: The total number of elements across all pages.
-          format: int64
-        totalPages:
-          type: integer
-          description: The total number of pages based on the data size and page size.
-          format: int32
-        currentPage:
-          type: integer
-          description: The current page number, typically zero-based.
-          format: int32
-      description: Represents a paginated response containing a list of items and pagination metadata.
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "core-lending-loan-origination",
+    "description": "Loan Origination Core Application",
+    "contact": {
+      "name": "Firefly Software Solutions Inc",
+      "email": "dev@getfirefly.io"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://core.getfirefly.io/loan-origination",
+      "description": "Development Environment"
+    },
+    {
+      "url": "/",
+      "description": "Local Development Environment"
+    }
+  ],
+  "tags": [
+    {
+      "name": "ApplicationStatus",
+      "description": "Operations on Application Statuses"
+    },
+    {
+      "name": "UnderwritingDecision",
+      "description": "Manage underwriting decisions for a loan application"
+    },
+    {
+      "name": "LoanApplicationStatusHistory",
+      "description": "Manage status history records for a loan application"
+    },
+    {
+      "name": "LoanApplications",
+      "description": "Operations on Loan Applications"
+    },
+    {
+      "name": "ApplicationParty",
+      "description": "Manage parties for a loan application"
+    },
+    {
+      "name": "ApplicationDocument",
+      "description": "Manage documents for a loan application"
+    },
+    {
+      "name": "ProposedOffer",
+      "description": "Manage proposed loan offers for a loan application"
+    },
+    {
+      "name": "UnderwritingScore",
+      "description": "Manage underwriting score records for a loan application"
+    },
+    {
+      "name": "ApplicationCollateral",
+      "description": "Manage collateral items for a loan application"
+    }
+  ],
+  "paths": {
+    "/api/v1/loan-applications/{applicationId}": {
+      "get": {
+        "tags": [
+          "LoanApplications"
+        ],
+        "summary": "Get loan application by ID",
+        "description": "Retrieves a specific loan application.",
+        "operationId": "getLoanApplication",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoanApplicationDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "LoanApplications"
+        ],
+        "summary": "Update loan application",
+        "description": "Updates an existing loan application record.",
+        "operationId": "updateLoanApplication",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "description": "Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoanApplicationDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoanApplicationDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "LoanApplications"
+        ],
+        "summary": "Delete loan application",
+        "description": "Deletes a loan application by ID.",
+        "operationId": "deleteLoanApplication",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/loan-applications/{applicationId}/status-history/{statusHistoryId}": {
+      "get": {
+        "tags": [
+          "LoanApplicationStatusHistory"
+        ],
+        "summary": "Get a status record",
+        "description": "Retrieves a specific status history record.",
+        "operationId": "getStatusHistory",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "statusHistoryId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoanApplicationStatusHistoryDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "LoanApplicationStatusHistory"
+        ],
+        "summary": "Update a status record",
+        "description": "Updates an existing status history record.",
+        "operationId": "updateStatusHistory",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "statusHistoryId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "description": "Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoanApplicationStatusHistoryDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoanApplicationStatusHistoryDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "LoanApplicationStatusHistory"
+        ],
+        "summary": "Delete a status record",
+        "description": "Removes a status history entry.",
+        "operationId": "deleteStatusHistory",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "statusHistoryId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/loan-applications/{applicationId}/scores/{scoreId}": {
+      "get": {
+        "tags": [
+          "UnderwritingScore"
+        ],
+        "summary": "Get a score",
+        "description": "Fetch a specific underwriting score record by ID.",
+        "operationId": "getScore",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "scoreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnderwritingScoreDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "UnderwritingScore"
+        ],
+        "summary": "Update a score",
+        "description": "Updates an existing underwriting score record.",
+        "operationId": "updateScore",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "scoreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "description": "Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UnderwritingScoreDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnderwritingScoreDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "UnderwritingScore"
+        ],
+        "summary": "Delete a score",
+        "description": "Removes a scoring record from the application.",
+        "operationId": "deleteScore",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "scoreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/loan-applications/{applicationId}/parties/{partyId}": {
+      "get": {
+        "tags": [
+          "ApplicationParty"
+        ],
+        "summary": "Get a party",
+        "description": "Fetches details of a specific party associated with the application.",
+        "operationId": "getParty",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "partyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationPartyDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ApplicationParty"
+        ],
+        "summary": "Update a party",
+        "description": "Updates a party's information.",
+        "operationId": "updateParty",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "partyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "description": "Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationPartyDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationPartyDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ApplicationParty"
+        ],
+        "summary": "Remove a party",
+        "description": "Deletes the association of a party from the application.",
+        "operationId": "deleteParty",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "partyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/loan-applications/{applicationId}/offers/{offerId}": {
+      "get": {
+        "tags": [
+          "ProposedOffer"
+        ],
+        "summary": "Get an offer",
+        "description": "Fetch a specific offer record by ID.",
+        "operationId": "getOffer",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "offerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProposedOfferDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ProposedOffer"
+        ],
+        "summary": "Update an offer",
+        "description": "Updates the details of an existing proposed offer.",
+        "operationId": "updateOffer",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "offerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "description": "Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProposedOfferDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProposedOfferDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ProposedOffer"
+        ],
+        "summary": "Delete an offer",
+        "description": "Removes a proposed offer from the application.",
+        "operationId": "deleteOffer",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "offerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/loan-applications/{applicationId}/documents/{documentId}": {
+      "get": {
+        "tags": [
+          "ApplicationDocument"
+        ],
+        "summary": "Get a document",
+        "description": "Fetch a specific document record by ID.",
+        "operationId": "getDocument",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "documentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationDocumentDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ApplicationDocument"
+        ],
+        "summary": "Update a document record",
+        "description": "Updates metadata for an existing document.",
+        "operationId": "updateDocument",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "documentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "description": "Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationDocumentDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationDocumentDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ApplicationDocument"
+        ],
+        "summary": "Delete a document record",
+        "description": "Removes a document record from the application.",
+        "operationId": "deleteDocument",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "documentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/loan-applications/{applicationId}/decisions/{decisionId}": {
+      "get": {
+        "tags": [
+          "UnderwritingDecision"
+        ],
+        "summary": "Get a decision",
+        "description": "Fetch a specific underwriting decision record by ID.",
+        "operationId": "getDecision",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "decisionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnderwritingDecisionDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "UnderwritingDecision"
+        ],
+        "summary": "Update a decision",
+        "description": "Updates an existing underwriting decision record.",
+        "operationId": "updateDecision",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "decisionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "description": "Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UnderwritingDecisionDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnderwritingDecisionDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "UnderwritingDecision"
+        ],
+        "summary": "Delete a decision",
+        "description": "Removes a decision record from the application.",
+        "operationId": "deleteDecision",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "decisionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/loan-applications/{applicationId}/collaterals/{collateralId}": {
+      "get": {
+        "tags": [
+          "ApplicationCollateral"
+        ],
+        "summary": "Get a collateral item",
+        "description": "Fetch a specific collateral record by ID.",
+        "operationId": "getCollateral",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "collateralId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationCollateralDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ApplicationCollateral"
+        ],
+        "summary": "Update a collateral item",
+        "description": "Updates the details of an existing collateral record.",
+        "operationId": "updateCollateral",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "collateralId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "description": "Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationCollateralDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationCollateralDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ApplicationCollateral"
+        ],
+        "summary": "Delete a collateral item",
+        "description": "Removes a collateral record from the application.",
+        "operationId": "deleteCollateral",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "collateralId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/document-types/{id}": {
+      "get": {
+        "tags": [
+          "document-type-controller"
+        ],
+        "operationId": "getDocumentTypeById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentType"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "document-type-controller"
+        ],
+        "operationId": "updateDocumentType",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "description": "Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentType"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentType"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "document-type-controller"
+        ],
+        "operationId": "deleteDocumentType",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/v1/decision-codes/{id}": {
+      "get": {
+        "tags": [
+          "decision-code-controller"
+        ],
+        "operationId": "getDecisionCodeById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecisionCode"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "decision-code-controller"
+        ],
+        "operationId": "updateDecisionCode",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "description": "Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DecisionCode"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecisionCode"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "decision-code-controller"
+        ],
+        "operationId": "deleteDecisionCode",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/v1/application-statuses/{applicationStatusId}": {
+      "get": {
+        "tags": [
+          "ApplicationStatus"
+        ],
+        "summary": "Get application status by ID",
+        "description": "Retrieves a specific application status.",
+        "operationId": "getApplicationStatus",
+        "parameters": [
+          {
+            "name": "applicationStatusId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationStatusDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ApplicationStatus"
+        ],
+        "summary": "Update application status",
+        "description": "Updates an existing application status record.",
+        "operationId": "updateApplicationStatus",
+        "parameters": [
+          {
+            "name": "applicationStatusId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "description": "Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationStatusDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationStatusDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ApplicationStatus"
+        ],
+        "summary": "Delete application status",
+        "description": "Deletes an application status by ID.",
+        "operationId": "deleteApplicationStatus",
+        "parameters": [
+          {
+            "name": "applicationStatusId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/loan-applications": {
+      "get": {
+        "tags": [
+          "LoanApplications"
+        ],
+        "summary": "Filter loan applications",
+        "description": "Returns a paginated list of loan applications using filtering.",
+        "operationId": "filterLoanApplications",
+        "parameters": [
+          {
+            "name": "pagination.pageNumber",
+            "in": "query",
+            "description": "Page number (0-based)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "pagination.pageSize",
+            "in": "query",
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          },
+          {
+            "name": "pagination.sortBy",
+            "in": "query",
+            "description": "Field to sort by",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pagination.sortDirection",
+            "in": "query",
+            "description": "Sort direction (ASC or DESC)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "DESC"
+            }
+          },
+          {
+            "name": "options.caseInsensitiveStrings",
+            "in": "query",
+            "description": "Enable case-insensitive string filtering",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "options.includeInheritedFields",
+            "in": "query",
+            "description": "Include fields from parent classes",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "filters.applicationNumber",
+            "in": "query",
+            "description": "Exact filter for application number",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filters.applicationStatusId",
+            "in": "query",
+            "description": "Exact filter for application status id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filters.applicationSubStatusId",
+            "in": "query",
+            "description": "Exact filter for application sub status id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filters.applicationDate",
+            "in": "query",
+            "description": "Exact filter for application date",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filters.submissionChannelId",
+            "in": "query",
+            "description": "Exact filter for submission channel id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filters.partyId",
+            "in": "query",
+            "description": "Exact filter for party id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filters.distributorId",
+            "in": "query",
+            "description": "Exact filter for distributor id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filters.note",
+            "in": "query",
+            "description": "Exact filter for note",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filters.createdAt",
+            "in": "query",
+            "description": "Exact filter for created at",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "rangeFilters.ranges[createdAt].from",
+            "in": "query",
+            "description": "Filter created at from value",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "rangeFilters.ranges[createdAt].to",
+            "in": "query",
+            "description": "Filter created at to value",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "filters.updatedAt",
+            "in": "query",
+            "description": "Exact filter for updated at",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "rangeFilters.ranges[updatedAt].from",
+            "in": "query",
+            "description": "Filter updated at from value",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "rangeFilters.ranges[updatedAt].to",
+            "in": "query",
+            "description": "Filter updated at to value",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginationResponseLoanApplicationDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "LoanApplications"
+        ],
+        "summary": "Create a new loan application",
+        "description": "Creates a new loan application record.",
+        "operationId": "createLoanApplication",
+        "parameters": [
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "description": "Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoanApplicationDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoanApplicationDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/loan-applications/{applicationId}/status-history": {
+      "get": {
+        "tags": [
+          "LoanApplicationStatusHistory"
+        ],
+        "summary": "List status history",
+        "description": "Retrieves a paginated list of status history entries for a loan application.",
+        "operationId": "findAllStatusHistory",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "The zero-based page number to retrieve.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The zero-based page number to retrieve.",
+              "example": 0,
+              "default": "0"
+            },
+            "example": 0
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "The number of items per page.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The number of items per page.",
+              "example": 10,
+              "default": "10"
+            },
+            "example": 10
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "The field to sort the results by.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The field to sort the results by.",
+              "example": "name"
+            },
+            "example": "name"
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "description": "The direction of sorting, either ASC or DESC.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The direction of sorting, either ASC or DESC.",
+              "example": "DESC",
+              "default": "DESC"
+            },
+            "example": "DESC"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginationResponseLoanApplicationStatusHistoryDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "LoanApplicationStatusHistory"
+        ],
+        "summary": "Create a status record",
+        "description": "Creates a new status history record for a loan application.",
+        "operationId": "createStatusHistory",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "description": "Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoanApplicationStatusHistoryDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoanApplicationStatusHistoryDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/loan-applications/{applicationId}/scores": {
+      "get": {
+        "tags": [
+          "UnderwritingScore"
+        ],
+        "summary": "List scores",
+        "description": "Retrieves a paginated list of underwriting scores for a loan application.",
+        "operationId": "findAllScores",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "The zero-based page number to retrieve.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The zero-based page number to retrieve.",
+              "example": 0,
+              "default": "0"
+            },
+            "example": 0
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "The number of items per page.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The number of items per page.",
+              "example": 10,
+              "default": "10"
+            },
+            "example": 10
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "The field to sort the results by.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The field to sort the results by.",
+              "example": "name"
+            },
+            "example": "name"
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "description": "The direction of sorting, either ASC or DESC.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The direction of sorting, either ASC or DESC.",
+              "example": "DESC",
+              "default": "DESC"
+            },
+            "example": "DESC"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginationResponseUnderwritingScoreDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "UnderwritingScore"
+        ],
+        "summary": "Create a new score",
+        "description": "Adds a new underwriting score record.",
+        "operationId": "createScore",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "description": "Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UnderwritingScoreDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnderwritingScoreDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/loan-applications/{applicationId}/parties": {
+      "get": {
+        "tags": [
+          "ApplicationParty"
+        ],
+        "summary": "List parties",
+        "description": "Retrieves a paginated list of parties tied to a loan application.",
+        "operationId": "findAllParties",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "The zero-based page number to retrieve.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The zero-based page number to retrieve.",
+              "example": 0,
+              "default": "0"
+            },
+            "example": 0
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "The number of items per page.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The number of items per page.",
+              "example": 10,
+              "default": "10"
+            },
+            "example": 10
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "The field to sort the results by.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The field to sort the results by.",
+              "example": "name"
+            },
+            "example": "name"
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "description": "The direction of sorting, either ASC or DESC.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The direction of sorting, either ASC or DESC.",
+              "example": "DESC",
+              "default": "DESC"
+            },
+            "example": "DESC"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginationResponseApplicationPartyDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ApplicationParty"
+        ],
+        "summary": "Add a new party",
+        "description": "Adds a new party (co-applicant, guarantor, etc.) to the application.",
+        "operationId": "createParty",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "description": "Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationPartyDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationPartyDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/loan-applications/{applicationId}/offers": {
+      "get": {
+        "tags": [
+          "ProposedOffer"
+        ],
+        "summary": "List offers",
+        "description": "Retrieves a paginated list of proposed offers for a loan application.",
+        "operationId": "findAllOffers",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "The zero-based page number to retrieve.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The zero-based page number to retrieve.",
+              "example": 0,
+              "default": "0"
+            },
+            "example": 0
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "The number of items per page.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The number of items per page.",
+              "example": 10,
+              "default": "10"
+            },
+            "example": 10
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "The field to sort the results by.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The field to sort the results by.",
+              "example": "name"
+            },
+            "example": "name"
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "description": "The direction of sorting, either ASC or DESC.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The direction of sorting, either ASC or DESC.",
+              "example": "DESC",
+              "default": "DESC"
+            },
+            "example": "DESC"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginationResponseProposedOfferDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ProposedOffer"
+        ],
+        "summary": "Create a new offer",
+        "description": "Adds a new proposed offer to a loan application.",
+        "operationId": "createOffer",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "description": "Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProposedOfferDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProposedOfferDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/loan-applications/{applicationId}/documents": {
+      "get": {
+        "tags": [
+          "ApplicationDocument"
+        ],
+        "summary": "List documents",
+        "description": "Retrieves a paginated list of documents for a loan application.",
+        "operationId": "findAllDocuments",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "The zero-based page number to retrieve.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The zero-based page number to retrieve.",
+              "example": 0,
+              "default": "0"
+            },
+            "example": 0
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "The number of items per page.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The number of items per page.",
+              "example": 10,
+              "default": "10"
+            },
+            "example": 10
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "The field to sort the results by.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The field to sort the results by.",
+              "example": "name"
+            },
+            "example": "name"
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "description": "The direction of sorting, either ASC or DESC.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The direction of sorting, either ASC or DESC.",
+              "example": "DESC",
+              "default": "DESC"
+            },
+            "example": "DESC"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginationResponseApplicationDocumentDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ApplicationDocument"
+        ],
+        "summary": "Add a document record",
+        "description": "Adds a new document record for the application.",
+        "operationId": "createDocument",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "description": "Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationDocumentDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationDocumentDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/loan-applications/{applicationId}/decisions": {
+      "get": {
+        "tags": [
+          "UnderwritingDecision"
+        ],
+        "summary": "List decisions",
+        "description": "Retrieves a paginated list of underwriting decisions for a loan application.",
+        "operationId": "findAllDecisions",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "The zero-based page number to retrieve.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The zero-based page number to retrieve.",
+              "example": 0,
+              "default": "0"
+            },
+            "example": 0
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "The number of items per page.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The number of items per page.",
+              "example": 10,
+              "default": "10"
+            },
+            "example": 10
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "The field to sort the results by.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The field to sort the results by.",
+              "example": "name"
+            },
+            "example": "name"
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "description": "The direction of sorting, either ASC or DESC.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The direction of sorting, either ASC or DESC.",
+              "example": "DESC",
+              "default": "DESC"
+            },
+            "example": "DESC"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginationResponseUnderwritingDecisionDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "UnderwritingDecision"
+        ],
+        "summary": "Create a new decision",
+        "description": "Records a new underwriting decision (APPROVED, REJECTED, etc.).",
+        "operationId": "createDecision",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "description": "Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UnderwritingDecisionDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnderwritingDecisionDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/loan-applications/{applicationId}/collaterals": {
+      "get": {
+        "tags": [
+          "ApplicationCollateral"
+        ],
+        "summary": "List collaterals",
+        "description": "Retrieves a paginated list of collateral items for a loan application.",
+        "operationId": "findAllCollaterals",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "The zero-based page number to retrieve.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The zero-based page number to retrieve.",
+              "example": 0,
+              "default": "0"
+            },
+            "example": 0
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "The number of items per page.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The number of items per page.",
+              "example": 10,
+              "default": "10"
+            },
+            "example": 10
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "The field to sort the results by.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The field to sort the results by.",
+              "example": "name"
+            },
+            "example": "name"
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "description": "The direction of sorting, either ASC or DESC.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The direction of sorting, either ASC or DESC.",
+              "example": "DESC",
+              "default": "DESC"
+            },
+            "example": "DESC"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginationResponseApplicationCollateralDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ApplicationCollateral"
+        ],
+        "summary": "Add a collateral item",
+        "description": "Adds a new collateral record to the application.",
+        "operationId": "createCollateral",
+        "parameters": [
+          {
+            "name": "applicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "description": "Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationCollateralDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationCollateralDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/document-types": {
+      "get": {
+        "tags": [
+          "document-type-controller"
+        ],
+        "operationId": "getAllDocumentTypes",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocumentType"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "document-type-controller"
+        ],
+        "operationId": "createDocumentType",
+        "parameters": [
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "description": "Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentType"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentType"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/decision-codes": {
+      "get": {
+        "tags": [
+          "decision-code-controller"
+        ],
+        "operationId": "getAllDecisionCodes",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DecisionCode"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "decision-code-controller"
+        ],
+        "operationId": "createDecisionCode",
+        "parameters": [
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "description": "Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DecisionCode"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecisionCode"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/application-statuses": {
+      "get": {
+        "tags": [
+          "ApplicationStatus"
+        ],
+        "summary": "Filter application statuses",
+        "description": "Returns a paginated list of application statuses using filtering.",
+        "operationId": "filterApplicationStatuses",
+        "parameters": [
+          {
+            "name": "pagination.pageNumber",
+            "in": "query",
+            "description": "Page number (0-based)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "pagination.pageSize",
+            "in": "query",
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          },
+          {
+            "name": "pagination.sortBy",
+            "in": "query",
+            "description": "Field to sort by",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pagination.sortDirection",
+            "in": "query",
+            "description": "Sort direction (ASC or DESC)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "DESC"
+            }
+          },
+          {
+            "name": "options.caseInsensitiveStrings",
+            "in": "query",
+            "description": "Enable case-insensitive string filtering",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "options.includeInheritedFields",
+            "in": "query",
+            "description": "Include fields from parent classes",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "filters.code",
+            "in": "query",
+            "description": "Exact filter for code",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filters.name",
+            "in": "query",
+            "description": "Exact filter for name",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filters.description",
+            "in": "query",
+            "description": "Exact filter for description",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filters.isActive",
+            "in": "query",
+            "description": "Exact filter for is active",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "filters.createdAt",
+            "in": "query",
+            "description": "Exact filter for created at",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "rangeFilters.ranges[createdAt].from",
+            "in": "query",
+            "description": "Filter created at from value",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "rangeFilters.ranges[createdAt].to",
+            "in": "query",
+            "description": "Filter created at to value",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "filters.updatedAt",
+            "in": "query",
+            "description": "Exact filter for updated at",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "rangeFilters.ranges[updatedAt].from",
+            "in": "query",
+            "description": "Filter updated at from value",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "rangeFilters.ranges[updatedAt].to",
+            "in": "query",
+            "description": "Filter updated at to value",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginationResponseApplicationStatusDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ApplicationStatus"
+        ],
+        "summary": "Create a new application status",
+        "description": "Creates a new application status record.",
+        "operationId": "createApplicationStatus",
+        "parameters": [
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "description": "Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationStatusDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationStatusDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/loan-applications/all": {
+      "get": {
+        "tags": [
+          "LoanApplications"
+        ],
+        "summary": "List all loan applications",
+        "description": "Returns a paginated list of loan applications without specific filters.",
+        "operationId": "listLoanApplications",
+        "parameters": [
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "The zero-based page number to retrieve.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The zero-based page number to retrieve.",
+              "example": 0,
+              "default": "0"
+            },
+            "example": 0
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "The number of items per page.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The number of items per page.",
+              "example": 10,
+              "default": "10"
+            },
+            "example": 10
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "The field to sort the results by.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The field to sort the results by.",
+              "example": "name"
+            },
+            "example": "name"
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "description": "The direction of sorting, either ASC or DESC.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The direction of sorting, either ASC or DESC.",
+              "example": "DESC",
+              "default": "DESC"
+            },
+            "example": "DESC"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginationResponseLoanApplicationDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/document-types/code/{code}": {
+      "get": {
+        "tags": [
+          "document-type-controller"
+        ],
+        "operationId": "getDocumentTypeByCode",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentType"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/decision-codes/code/{code}": {
+      "get": {
+        "tags": [
+          "decision-code-controller"
+        ],
+        "operationId": "getDecisionCodeByCode",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecisionCode"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/application-statuses/code/{code}": {
+      "get": {
+        "tags": [
+          "ApplicationStatus"
+        ],
+        "summary": "Get application status by code",
+        "description": "Retrieves a specific application status by its code.",
+        "operationId": "getApplicationStatusByCode",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationStatusDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/application-statuses/all": {
+      "get": {
+        "tags": [
+          "ApplicationStatus"
+        ],
+        "summary": "List all application statuses",
+        "description": "Returns a paginated list of application statuses without specific filters.",
+        "operationId": "listApplicationStatuses",
+        "parameters": [
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "The zero-based page number to retrieve.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The zero-based page number to retrieve.",
+              "example": 0,
+              "default": "0"
+            },
+            "example": 0
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "The number of items per page.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The number of items per page.",
+              "example": 10,
+              "default": "10"
+            },
+            "example": 10
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "The field to sort the results by.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The field to sort the results by.",
+              "example": "name"
+            },
+            "example": "name"
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "description": "The direction of sorting, either ASC or DESC.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The direction of sorting, either ASC or DESC.",
+              "example": "DESC",
+              "default": "DESC"
+            },
+            "example": "DESC"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginationResponseApplicationStatusDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LoanApplicationDTO": {
+        "required": [
+          "applicationDate",
+          "applicationStatusId",
+          "applicationSubStatusId",
+          "submissionChannelId"
+        ],
+        "type": "object",
+        "properties": {
+          "loanApplicationId": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "applicationNumber": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "applicationStatusId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "applicationSubStatusId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "applicationDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "submissionChannelId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "partyId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "distributorId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "note": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "LoanApplicationStatusHistoryDTO": {
+        "required": [
+          "changedAt",
+          "changedBy",
+          "loanApplicationId",
+          "newStatus",
+          "oldStatus"
+        ],
+        "type": "object",
+        "properties": {
+          "statusHistoryId": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "loanApplicationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "oldStatus": {
+            "type": "string",
+            "enum": [
+              "DRAFT",
+              "SUBMITTED",
+              "UNDER_REVIEW",
+              "APPROVED",
+              "REJECTED",
+              "CANCELLED"
+            ]
+          },
+          "newStatus": {
+            "type": "string",
+            "enum": [
+              "DRAFT",
+              "SUBMITTED",
+              "UNDER_REVIEW",
+              "APPROVED",
+              "REJECTED",
+              "CANCELLED"
+            ]
+          },
+          "changeReason": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string"
+          },
+          "changedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "changedBy": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "UnderwritingScoreDTO": {
+        "required": [
+          "loanApplicationId",
+          "scoreValue",
+          "scorecardName",
+          "scoringTimestamp"
+        ],
+        "type": "object",
+        "properties": {
+          "underwritingScoreId": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "loanApplicationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "scoreValue": {
+            "maximum": 1000,
+            "exclusiveMaximum": false,
+            "minimum": 0,
+            "exclusiveMinimum": false,
+            "type": "number"
+          },
+          "scorecardName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "reasonCodes": {
+            "maxLength": 2000,
+            "minLength": 0,
+            "type": "string"
+          },
+          "scoringTimestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ApplicationPartyDTO": {
+        "required": [
+          "employmentTypeId",
+          "loanApplicationId",
+          "partyId",
+          "roleCodeId"
+        ],
+        "type": "object",
+        "properties": {
+          "applicationPartyId": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "loanApplicationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "partyId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "roleCodeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sharePercentage": {
+            "maximum": 100,
+            "exclusiveMaximum": false,
+            "minimum": 0,
+            "exclusiveMinimum": false,
+            "type": "number"
+          },
+          "annualIncome": {
+            "type": "number"
+          },
+          "monthlyExpenses": {
+            "type": "number"
+          },
+          "employmentTypeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ProposedOfferDTO": {
+        "required": [
+          "loanApplicationId",
+          "productId",
+          "requestedAmount",
+          "requestedInterestRate",
+          "requestedTenorMonths"
+        ],
+        "type": "object",
+        "properties": {
+          "proposedOfferId": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "loanApplicationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "productId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "requestedAmount": {
+            "type": "number"
+          },
+          "requestedTenorMonths": {
+            "maximum": 360,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "requestedInterestRate": {
+            "maximum": 100,
+            "exclusiveMaximum": false,
+            "minimum": 0,
+            "exclusiveMinimum": false,
+            "type": "number"
+          },
+          "validUntil": {
+            "type": "string",
+            "format": "date"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ApplicationDocumentDTO": {
+        "required": [
+          "documentId",
+          "documentTypeId",
+          "isMandatory",
+          "isReceived",
+          "loanApplicationId"
+        ],
+        "type": "object",
+        "properties": {
+          "applicationDocumentId": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "loanApplicationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "documentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "documentTypeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "isMandatory": {
+            "type": "boolean"
+          },
+          "isReceived": {
+            "type": "boolean"
+          },
+          "receivedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "UnderwritingDecisionDTO": {
+        "required": [
+          "decisionCodeId",
+          "decisionDate",
+          "loanApplicationId"
+        ],
+        "type": "object",
+        "properties": {
+          "underwritingDecisionId": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "loanApplicationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "decisionDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "decisionCodeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "approvedAmount": {
+            "type": "number"
+          },
+          "approvedInterestRate": {
+            "maximum": 100,
+            "exclusiveMaximum": false,
+            "minimum": 0,
+            "exclusiveMinimum": false,
+            "type": "number"
+          },
+          "tenorMonths": {
+            "maximum": 360,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "riskGradeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "remarks": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ApplicationCollateralDTO": {
+        "required": [
+          "collateralTypeId",
+          "isPrimaryCollateral",
+          "loanApplicationId"
+        ],
+        "type": "object",
+        "properties": {
+          "applicationCollateralId": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "loanApplicationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "collateralTypeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "estimatedValue": {
+            "type": "number"
+          },
+          "ownershipDetails": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string"
+          },
+          "isPrimaryCollateral": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "DocumentType": {
+        "type": "object",
+        "properties": {
+          "documentTypeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "DecisionCode": {
+        "type": "object",
+        "properties": {
+          "decisionCodeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ApplicationStatusDTO": {
+        "required": [
+          "code",
+          "isActive",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "applicationStatusId": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "code": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          }
+        }
+      },
+      "PaginationResponseLoanApplicationDTO": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "description": "The list of items for the current page.",
+            "items": {
+              "$ref": "#/components/schemas/LoanApplicationDTO"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "description": "The total number of elements across all pages.",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "description": "The total number of pages based on the data size and page size.",
+            "format": "int32"
+          },
+          "currentPage": {
+            "type": "integer",
+            "description": "The current page number, typically zero-based.",
+            "format": "int32"
+          }
+        },
+        "description": "Represents a paginated response containing a list of items and pagination metadata."
+      },
+      "PaginationResponseLoanApplicationStatusHistoryDTO": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "description": "The list of items for the current page.",
+            "items": {
+              "$ref": "#/components/schemas/LoanApplicationStatusHistoryDTO"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "description": "The total number of elements across all pages.",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "description": "The total number of pages based on the data size and page size.",
+            "format": "int32"
+          },
+          "currentPage": {
+            "type": "integer",
+            "description": "The current page number, typically zero-based.",
+            "format": "int32"
+          }
+        },
+        "description": "Represents a paginated response containing a list of items and pagination metadata."
+      },
+      "PaginationResponseUnderwritingScoreDTO": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "description": "The list of items for the current page.",
+            "items": {
+              "$ref": "#/components/schemas/UnderwritingScoreDTO"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "description": "The total number of elements across all pages.",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "description": "The total number of pages based on the data size and page size.",
+            "format": "int32"
+          },
+          "currentPage": {
+            "type": "integer",
+            "description": "The current page number, typically zero-based.",
+            "format": "int32"
+          }
+        },
+        "description": "Represents a paginated response containing a list of items and pagination metadata."
+      },
+      "PaginationResponseApplicationPartyDTO": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "description": "The list of items for the current page.",
+            "items": {
+              "$ref": "#/components/schemas/ApplicationPartyDTO"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "description": "The total number of elements across all pages.",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "description": "The total number of pages based on the data size and page size.",
+            "format": "int32"
+          },
+          "currentPage": {
+            "type": "integer",
+            "description": "The current page number, typically zero-based.",
+            "format": "int32"
+          }
+        },
+        "description": "Represents a paginated response containing a list of items and pagination metadata."
+      },
+      "PaginationResponseProposedOfferDTO": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "description": "The list of items for the current page.",
+            "items": {
+              "$ref": "#/components/schemas/ProposedOfferDTO"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "description": "The total number of elements across all pages.",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "description": "The total number of pages based on the data size and page size.",
+            "format": "int32"
+          },
+          "currentPage": {
+            "type": "integer",
+            "description": "The current page number, typically zero-based.",
+            "format": "int32"
+          }
+        },
+        "description": "Represents a paginated response containing a list of items and pagination metadata."
+      },
+      "PaginationResponseApplicationDocumentDTO": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "description": "The list of items for the current page.",
+            "items": {
+              "$ref": "#/components/schemas/ApplicationDocumentDTO"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "description": "The total number of elements across all pages.",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "description": "The total number of pages based on the data size and page size.",
+            "format": "int32"
+          },
+          "currentPage": {
+            "type": "integer",
+            "description": "The current page number, typically zero-based.",
+            "format": "int32"
+          }
+        },
+        "description": "Represents a paginated response containing a list of items and pagination metadata."
+      },
+      "PaginationResponseUnderwritingDecisionDTO": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "description": "The list of items for the current page.",
+            "items": {
+              "$ref": "#/components/schemas/UnderwritingDecisionDTO"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "description": "The total number of elements across all pages.",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "description": "The total number of pages based on the data size and page size.",
+            "format": "int32"
+          },
+          "currentPage": {
+            "type": "integer",
+            "description": "The current page number, typically zero-based.",
+            "format": "int32"
+          }
+        },
+        "description": "Represents a paginated response containing a list of items and pagination metadata."
+      },
+      "PaginationResponseApplicationCollateralDTO": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "description": "The list of items for the current page.",
+            "items": {
+              "$ref": "#/components/schemas/ApplicationCollateralDTO"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "description": "The total number of elements across all pages.",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "description": "The total number of pages based on the data size and page size.",
+            "format": "int32"
+          },
+          "currentPage": {
+            "type": "integer",
+            "description": "The current page number, typically zero-based.",
+            "format": "int32"
+          }
+        },
+        "description": "Represents a paginated response containing a list of items and pagination metadata."
+      },
+      "PaginationResponseApplicationStatusDTO": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "description": "The list of items for the current page.",
+            "items": {
+              "$ref": "#/components/schemas/ApplicationStatusDTO"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "description": "The total number of elements across all pages.",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "description": "The total number of pages based on the data size and page size.",
+            "format": "int32"
+          },
+          "currentPage": {
+            "type": "integer",
+            "description": "The current page number, typically zero-based.",
+            "format": "int32"
+          }
+        },
+        "description": "Represents a paginated response containing a list of items and pagination metadata."
+      }
+    }
+  }
+}

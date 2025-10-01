@@ -33,7 +33,7 @@ import reactor.core.publisher.Mono;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/loan-applications/{applicationId}/offers")
+@RequestMapping("/api/v1/loan-applications/{applicationId}/offers")
 @RequiredArgsConstructor
 @Tag(name = "ProposedOffer", description = "Manage proposed loan offers for a loan application")
 public class ProposedOfferController {

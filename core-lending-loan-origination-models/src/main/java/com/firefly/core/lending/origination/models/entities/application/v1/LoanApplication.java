@@ -17,9 +17,6 @@
 
 package com.firefly.core.lending.origination.models.entities.application.v1;
 
-import com.firefly.core.lending.origination.interfaces.enums.application.v1.ApplicationStatusEnum;
-import com.firefly.core.lending.origination.interfaces.enums.application.v1.SubmissionChannelEnum;
-import com.firefly.core.lending.origination.interfaces.enums.status.v1.ApplicationSubStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,17 +42,17 @@ public class LoanApplication {
     @Column("application_number")
     private UUID applicationNumber;
 
-    @Column("application_status")
-    private ApplicationStatusEnum applicationStatus;
+    @Column("application_status_id")
+    private UUID applicationStatusId;
 
-    @Column("application_sub_status")
-    private ApplicationSubStatusEnum applicationSubStatus;
+    @Column("application_sub_status_id")
+    private UUID applicationSubStatusId;
 
     @Column("application_date")
     private LocalDate applicationDate;
 
-    @Column("submission_channel")
-    private SubmissionChannelEnum submissionChannel;
+    @Column("submission_channel_id")
+    private UUID submissionChannelId;
     
     /**
      * Identifier for a known customer who launched the application.

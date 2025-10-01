@@ -17,7 +17,6 @@
 
 package com.firefly.core.lending.origination.models.entities.document.v1;
 
-import com.firefly.core.lending.origination.interfaces.enums.document.v1.DocumentTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,8 +44,8 @@ public class ApplicationDocument {
     @Column("document_id")
     private UUID documentId;
 
-    @Column("document_type")
-    private DocumentTypeEnum documentType;
+    @Column("document_type_id")
+    private UUID documentTypeId;
 
     @Column("is_mandatory")
     private Boolean isMandatory;

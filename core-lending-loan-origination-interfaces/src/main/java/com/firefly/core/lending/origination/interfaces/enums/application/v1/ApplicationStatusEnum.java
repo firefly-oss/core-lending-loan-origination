@@ -22,5 +22,6 @@ public enum ApplicationStatusEnum {
     SUBMITTED,
     UNDER_REVIEW,
     APPROVED,
-    REJECTED
+    REJECTED,
+    CANCELLED
 }

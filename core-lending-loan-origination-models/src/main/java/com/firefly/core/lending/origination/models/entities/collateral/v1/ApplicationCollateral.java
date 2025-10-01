@@ -17,7 +17,6 @@
 
 package com.firefly.core.lending.origination.models.entities.collateral.v1;
 
-import com.firefly.core.lending.origination.interfaces.enums.collateral.v1.CollateralTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -43,8 +42,8 @@ public class ApplicationCollateral {
     @Column("loan_application_id")
     private UUID loanApplicationId;
 
-    @Column("collateral_type")
-    private CollateralTypeEnum collateralType;
+    @Column("collateral_type_id")
+    private UUID collateralTypeId;
 
     @Column("estimated_value")
     private BigDecimal estimatedValue;

@@ -18,9 +18,6 @@
 package com.firefly.core.lending.origination.interfaces.dtos.application.v1;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.firefly.core.lending.origination.interfaces.enums.application.v1.ApplicationStatusEnum;
-import com.firefly.core.lending.origination.interfaces.enums.application.v1.SubmissionChannelEnum;
-import com.firefly.core.lending.origination.interfaces.enums.status.v1.ApplicationSubStatusEnum;
 import com.firefly.core.utils.annotations.FilterableId;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -44,18 +41,21 @@ public class LoanApplicationDTO {
 
     private UUID applicationNumber;
 
-    @NotNull(message = "Application status is required")
-    private ApplicationStatusEnum applicationStatus;
+    @FilterableId
+    @NotNull(message = "Application status ID is required")
+    private UUID applicationStatusId;
 
-    @NotNull(message = "Application sub-status is required")
-    private ApplicationSubStatusEnum applicationSubStatus;
+    @FilterableId
+    @NotNull(message = "Application sub-status ID is required")
+    private UUID applicationSubStatusId;
 
     @NotNull(message = "Application date is required")
     @PastOrPresent(message = "Application date cannot be in the future")
     private LocalDate applicationDate;
 
-    @NotNull(message = "Submission channel is required")
-    private SubmissionChannelEnum submissionChannel;
+    @FilterableId
+    @NotNull(message = "Submission channel ID is required")
+    private UUID submissionChannelId;
     
     /**
      * Identifier for a known customer who launched the application.

@@ -15,12 +15,11 @@
  */
 
 
-package com.firefly.core.lending.origination.core.mappers.document.v1;
+package com.firefly.core.lending.origination.core.mappers.catalog.v1;
 
-import com.firefly.core.lending.origination.interfaces.dtos.document.v1.ApplicationDocumentDTO;
-import com.firefly.core.lending.origination.models.entities.document.v1.ApplicationDocument;
+import com.firefly.core.lending.origination.interfaces.dtos.catalog.v1.ApplicationStatusDTO;
+import com.firefly.core.lending.origination.models.entities.catalog.v1.ApplicationStatus;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 
@@ -28,10 +27,9 @@ import org.mapstruct.ReportingPolicy;
     componentModel = MappingConstants.ComponentModel.SPRING,
     unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
-public interface ApplicationDocumentMapper {
+public interface ApplicationStatusMapper {
     
-    @Mapping(target = "documentTypeId", source = "documentTypeId")
-    ApplicationDocumentDTO toDTO(ApplicationDocument entity);
+    ApplicationStatusDTO toDTO(ApplicationStatus entity);
     
-    ApplicationDocument toEntity(ApplicationDocumentDTO dto);
+    ApplicationStatus toEntity(ApplicationStatusDTO dto);
 }
