@@ -12,6 +12,8 @@ servers:
   - url: /
     description: Local Development Environment
 tags:
+  - name: Application External Bank Accounts
+    description: Manage external bank accounts for loan applications
   - name: ApplicationStatus
     description: Operations on Application Statuses
   - name: UnderwritingDecision
@@ -1021,6 +1023,102 @@ paths:
       responses:
         '200':
           description: OK
+  /api/v1/loan-applications/{applicationId}/external-bank-accounts/{externalBankAccountId}:
+    get:
+      tags:
+        - Application External Bank Accounts
+      summary: Get an external bank account by ID
+      operationId: get
+      parameters:
+        - name: applicationId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: externalBankAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApplicationExternalBankAccountDTO'
+    put:
+      tags:
+        - Application External Bank Accounts
+      summary: Update an external bank account
+      operationId: update
+      parameters:
+        - name: applicationId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: externalBankAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationExternalBankAccountDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApplicationExternalBankAccountDTO'
+    delete:
+      tags:
+        - Application External Bank Accounts
+      summary: Delete an external bank account
+      operationId: delete
+      parameters:
+        - name: applicationId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: externalBankAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
   /api/v1/loan-applications/{applicationId}/exceptions/{exceptionId}:
     get:
       tags:
@@ -2185,6 +2283,48 @@ paths:
           required: false
           schema:
             type: string
+        - name: filters.disbursementMethodType
+          in: query
+          description: Exact filter for disbursement method type
+          required: false
+          schema:
+            type: string
+            enum:
+              - INTERNAL_ACCOUNT
+              - EXTERNAL_ACCOUNT
+        - name: filters.disbursementInternalAccountId
+          in: query
+          description: Exact filter for disbursement internal account id
+          required: false
+          schema:
+            type: string
+        - name: filters.disbursementExternalBankAccountId
+          in: query
+          description: Exact filter for disbursement external bank account id
+          required: false
+          schema:
+            type: string
+        - name: filters.repaymentMethodType
+          in: query
+          description: Exact filter for repayment method type
+          required: false
+          schema:
+            type: string
+            enum:
+              - INTERNAL_ACCOUNT
+              - EXTERNAL_ACCOUNT
+        - name: filters.repaymentInternalAccountId
+          in: query
+          description: Exact filter for repayment internal account id
+          required: false
+          schema:
+            type: string
+        - name: filters.repaymentExternalBankAccountId
+          in: query
+          description: Exact filter for repayment external bank account id
+          required: false
+          schema:
+            type: string
         - name: filters.note
           in: query
           description: Exact filter for note
@@ -3154,6 +3294,68 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/ApplicationExternalCallDTO'
+  /api/v1/loan-applications/{applicationId}/external-bank-accounts:
+    get:
+      tags:
+        - Application External Bank Accounts
+      summary: List all external bank accounts for a loan application
+      operationId: findAll
+      parameters:
+        - name: applicationId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: paginationRequest
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/PaginationRequest'
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PaginationResponseApplicationExternalBankAccountDTO'
+    post:
+      tags:
+        - Application External Bank Accounts
+      summary: Create a new external bank account
+      operationId: create
+      parameters:
+        - name: applicationId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationExternalBankAccountDTO'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApplicationExternalBankAccountDTO'
   /api/v1/loan-applications/{applicationId}/exceptions:
     get:
       tags:
@@ -4358,6 +4560,28 @@ components:
           type: string
         sourceSystem:
           type: string
+        disbursementMethodType:
+          type: string
+          enum:
+            - INTERNAL_ACCOUNT
+            - EXTERNAL_ACCOUNT
+        disbursementInternalAccountId:
+          type: string
+          format: uuid
+        disbursementExternalBankAccountId:
+          type: string
+          format: uuid
+        repaymentMethodType:
+          type: string
+          enum:
+            - INTERNAL_ACCOUNT
+            - EXTERNAL_ACCOUNT
+        repaymentInternalAccountId:
+          type: string
+          format: uuid
+        repaymentExternalBankAccountId:
+          type: string
+          format: uuid
         note:
           maxLength: 1000
           minLength: 0
@@ -4772,6 +4996,87 @@ components:
         createdAt:
           type: string
           format: date-time
+    ApplicationExternalBankAccountDTO:
+      required:
+        - accountHolderName
+        - accountNumber
+        - accountUsageType
+        - bankName
+        - loanApplicationId
+      type: object
+      properties:
+        externalBankAccountId:
+          type: string
+          format: uuid
+          readOnly: true
+        loanApplicationId:
+          type: string
+          format: uuid
+        accountUsageType:
+          type: string
+          enum:
+            - DISBURSEMENT
+            - REPAYMENT
+            - BOTH
+        accountHolderName:
+          maxLength: 200
+          minLength: 0
+          type: string
+        bankName:
+          maxLength: 200
+          minLength: 0
+          type: string
+        bankCode:
+          maxLength: 50
+          minLength: 0
+          type: string
+        branchCode:
+          maxLength: 50
+          minLength: 0
+          type: string
+        accountNumber:
+          maxLength: 50
+          minLength: 0
+          type: string
+        accountType:
+          maxLength: 50
+          minLength: 0
+          type: string
+        currencyCode:
+          maxLength: 3
+          minLength: 0
+          type: string
+        iban:
+          maxLength: 34
+          minLength: 0
+          type: string
+        routingNumber:
+          maxLength: 50
+          minLength: 0
+          type: string
+        isVerified:
+          type: boolean
+        verificationMethod:
+          maxLength: 50
+          minLength: 0
+          type: string
+        verifiedAt:
+          type: string
+          format: date-time
+        isPrimary:
+          type: boolean
+        notes:
+          maxLength: 500
+          minLength: 0
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
     ApplicationExceptionDTO:
       required:
         - loanApplicationId
@@ -4849,10 +5154,6 @@ components:
           maxLength: 200
           minLength: 0
           type: string
-        documentUrl:
-          maxLength: 500
-          minLength: 0
-          type: string
         fileSizeBytes:
           type: integer
           format: int64
@@ -4876,7 +5177,7 @@ components:
           type: string
         expiryDate:
           type: string
-          format: date-time
+          format: date
         createdAt:
           type: string
           format: date-time
@@ -5359,6 +5660,52 @@ components:
           description: The list of items for the current page.
           items:
             $ref: '#/components/schemas/ApplicationExternalCallDTO'
+        totalElements:
+          type: integer
+          description: The total number of elements across all pages.
+          format: int64
+        totalPages:
+          type: integer
+          description: The total number of pages based on the data size and page size.
+          format: int32
+        currentPage:
+          type: integer
+          description: The current page number, typically zero-based.
+          format: int32
+      description: Represents a paginated response containing a list of items and pagination metadata.
+    PaginationRequest:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          description: The zero-based page number to retrieve.
+          format: int32
+          example: 0
+          default: 0
+        pageSize:
+          type: integer
+          description: The number of items per page.
+          format: int32
+          example: 10
+          default: 10
+        sortBy:
+          type: string
+          description: The field to sort the results by.
+          example: name
+        sortDirection:
+          type: string
+          description: The direction of sorting, either ASC or DESC.
+          example: DESC
+          default: DESC
+      description: Represents a pagination request for retrieving paginated results, including page number, size, sort field, and direction.
+    PaginationResponseApplicationExternalBankAccountDTO:
+      type: object
+      properties:
+        content:
+          type: array
+          description: The list of items for the current page.
+          items:
+            $ref: '#/components/schemas/ApplicationExternalBankAccountDTO'
         totalElements:
           type: integer
           description: The total number of elements across all pages.
