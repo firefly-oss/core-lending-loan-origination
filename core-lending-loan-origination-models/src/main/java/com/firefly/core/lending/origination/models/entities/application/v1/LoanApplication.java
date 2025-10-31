@@ -17,6 +17,7 @@
 
 package com.firefly.core.lending.origination.models.entities.application.v1;
 
+import com.firefly.core.lending.origination.interfaces.enums.payment.v1.PaymentMethodTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -171,6 +172,55 @@ public class LoanApplication {
      */
     @Column("source_system")
     private String sourceSystem;
+
+    /**
+     * Method type for loan disbursement.
+     * - INTERNAL_ACCOUNT: Disburse to an account within the Firefly core banking system
+     * - EXTERNAL_ACCOUNT: Disburse to an external bank account (stored in application_external_bank_account)
+     */
+    @Column("disbursement_method_type")
+    private PaymentMethodTypeEnum disbursementMethodType;
+
+    /**
+     * Internal account ID for disbursement (ONLY when disbursementMethodType = INTERNAL_ACCOUNT).
+     * References an account in the Firefly core banking system.
+     * Must be null when disbursementMethodType = EXTERNAL_ACCOUNT.
+     */
+    @Column("disbursement_internal_account_id")
+    private UUID disbursementInternalAccountId;
+
+    /**
+     * External bank account ID for disbursement (ONLY when disbursementMethodType = EXTERNAL_ACCOUNT).
+     * References application_external_bank_account table.
+     * Must be null when disbursementMethodType = INTERNAL_ACCOUNT.
+     */
+    @Column("disbursement_external_bank_account_id")
+    private UUID disbursementExternalBankAccountId;
+
+    /**
+     * Method type for loan repayment/installment collection.
+     * - INTERNAL_ACCOUNT: Collect payments from an account within the Firefly core banking system
+     * - EXTERNAL_ACCOUNT: Collect payments via direct debit/domiciliación from external bank account
+     */
+    @Column("repayment_method_type")
+    private PaymentMethodTypeEnum repaymentMethodType;
+
+    /**
+     * Internal account ID for repayment (ONLY when repaymentMethodType = INTERNAL_ACCOUNT).
+     * References an account in the Firefly core banking system from which installments will be debited.
+     * Must be null when repaymentMethodType = EXTERNAL_ACCOUNT.
+     */
+    @Column("repayment_internal_account_id")
+    private UUID repaymentInternalAccountId;
+
+    /**
+     * External bank account ID for repayment (ONLY when repaymentMethodType = EXTERNAL_ACCOUNT).
+     * References application_external_bank_account table.
+     * Used for setting up direct debit/domiciliación.
+     * Must be null when repaymentMethodType = INTERNAL_ACCOUNT.
+     */
+    @Column("repayment_external_bank_account_id")
+    private UUID repaymentExternalBankAccountId;
 
     @Column("note")
     private String note;
