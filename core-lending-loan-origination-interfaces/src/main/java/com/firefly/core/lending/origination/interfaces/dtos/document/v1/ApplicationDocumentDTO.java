@@ -26,6 +26,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -60,9 +61,6 @@ public class ApplicationDocumentDTO {
     @Size(max = 200, message = "Document name cannot exceed 200 characters")
     private String documentName;
 
-    @Size(max = 500, message = "Document URL cannot exceed 500 characters")
-    private String documentUrl;
-
     private Long fileSizeBytes;
 
     @Size(max = 100, message = "MIME type cannot exceed 100 characters")
@@ -79,7 +77,7 @@ public class ApplicationDocumentDTO {
     @Size(max = 500, message = "Rejection reason cannot exceed 500 characters")
     private String rejectionReason;
 
-    private LocalDateTime expiryDate;
+    private LocalDate expiryDate;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

@@ -64,12 +64,6 @@ public class ApplicationDocument {
     private String documentName;
 
     /**
-     * URL or path where the document is stored.
-     */
-    @Column("document_url")
-    private String documentUrl;
-
-    /**
      * Size of the document file in bytes.
      */
     @Column("file_size_bytes")
