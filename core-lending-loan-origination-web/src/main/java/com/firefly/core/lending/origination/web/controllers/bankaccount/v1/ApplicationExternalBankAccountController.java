@@ -17,7 +17,8 @@
 
 package com.firefly.core.lending.origination.web.controllers.bankaccount.v1;
 
-import com.firefly.common.core.queries.PagedResponse;
+import com.firefly.common.core.queries.PaginationRequest;
+import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.core.lending.origination.core.services.bankaccount.v1.ApplicationExternalBankAccountService;
 import com.firefly.core.lending.origination.interfaces.dtos.bankaccount.v1.ApplicationExternalBankAccountDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,10 +33,10 @@ import java.util.UUID;
 
 /**
  * REST controller for managing external bank accounts associated with loan applications.
- * 
+ *
  * <p>This controller handles EXTERNAL bank accounts (accounts outside the Firefly core banking system)
  * used for loan disbursement and/or repayment via direct debit/domiciliación.</p>
- * 
+ *
  * <p>For internal accounts (within Firefly), use the payment method fields in LoanApplication directly.</p>
  */
 @RestController
@@ -43,16 +44,15 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Tag(name = "Application External Bank Accounts", description = "Manage external bank accounts for loan applications")
 public class ApplicationExternalBankAccountController {
-    
+
     private final ApplicationExternalBankAccountService service;
-    
+
     @GetMapping
     @Operation(summary = "List all external bank accounts for a loan application")
-    public Mono<PagedResponse<ApplicationExternalBankAccountDTO>> findAll(
+    public Mono<PaginationResponse<ApplicationExternalBankAccountDTO>> findAll(
             @PathVariable UUID applicationId,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size) {
-        return service.findAll(applicationId, page, size);
+            PaginationRequest paginationRequest) {
+        return service.findAll(applicationId, paginationRequest);
     }
     
     @PostMapping

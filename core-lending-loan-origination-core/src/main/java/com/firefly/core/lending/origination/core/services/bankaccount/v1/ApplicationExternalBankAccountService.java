@@ -17,7 +17,8 @@
 
 package com.firefly.core.lending.origination.core.services.bankaccount.v1;
 
-import com.firefly.common.core.queries.PagedResponse;
+import com.firefly.common.core.queries.PaginationRequest;
+import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.core.lending.origination.interfaces.dtos.bankaccount.v1.ApplicationExternalBankAccountDTO;
 import reactor.core.publisher.Mono;
 
@@ -27,11 +28,11 @@ import java.util.UUID;
  * Service interface for managing external bank accounts associated with loan applications.
  */
 public interface ApplicationExternalBankAccountService {
-    
+
     /**
      * Find all external bank accounts for a specific loan application with pagination.
      */
-    Mono<PagedResponse<ApplicationExternalBankAccountDTO>> findAll(UUID loanApplicationId, int page, int size);
+    Mono<PaginationResponse<ApplicationExternalBankAccountDTO>> findAll(UUID loanApplicationId, PaginationRequest paginationRequest);
     
     /**
      * Create a new external bank account.

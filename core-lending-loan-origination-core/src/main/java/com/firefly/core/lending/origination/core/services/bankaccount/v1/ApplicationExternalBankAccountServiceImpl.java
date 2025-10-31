@@ -17,14 +17,14 @@
 
 package com.firefly.core.lending.origination.core.services.bankaccount.v1;
 
-import com.firefly.common.core.queries.PagedResponse;
+import com.firefly.common.core.queries.PaginationRequest;
+import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.common.core.queries.PaginationUtils;
 import com.firefly.core.lending.origination.core.mappers.bankaccount.v1.ApplicationExternalBankAccountMapper;
 import com.firefly.core.lending.origination.interfaces.dtos.bankaccount.v1.ApplicationExternalBankAccountDTO;
 import com.firefly.core.lending.origination.models.entities.bankaccount.v1.ApplicationExternalBankAccount;
 import com.firefly.core.lending.origination.models.repositories.bankaccount.v1.ApplicationExternalBankAccountRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -37,24 +37,18 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class ApplicationExternalBankAccountServiceImpl implements ApplicationExternalBankAccountService {
-    
+
     private final ApplicationExternalBankAccountRepository repository;
     private final ApplicationExternalBankAccountMapper mapper;
-    
+
     @Override
-    public Mono<PagedResponse<ApplicationExternalBankAccountDTO>> findAll(UUID loanApplicationId, int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        
-        return repository.findByLoanApplicationId(loanApplicationId)
-                .map(mapper::toDTO)
-                .collectList()
-                .zipWith(repository.findByLoanApplicationId(loanApplicationId).count())
-                .map(tuple -> PaginationUtils.createPagedResponse(
-                        tuple.getT1(),
-                        page,
-                        size,
-                        tuple.getT2()
-                ));
+    public Mono<PaginationResponse<ApplicationExternalBankAccountDTO>> findAll(UUID loanApplicationId, PaginationRequest paginationRequest) {
+        return PaginationUtils.paginateQuery(
+                paginationRequest,
+                mapper::toDTO,
+                pageable -> repository.findByLoanApplicationId(loanApplicationId),
+                () -> repository.findByLoanApplicationId(loanApplicationId).count()
+        );
     }
     
     @Override
