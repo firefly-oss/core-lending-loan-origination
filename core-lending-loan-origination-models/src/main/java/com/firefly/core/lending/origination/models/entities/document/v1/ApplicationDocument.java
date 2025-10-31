@@ -25,6 +25,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -55,6 +56,60 @@ public class ApplicationDocument {
 
     @Column("received_at")
     private LocalDateTime receivedAt;
+
+    /**
+     * Name of the document.
+     */
+    @Column("document_name")
+    private String documentName;
+
+    /**
+     * URL or path where the document is stored.
+     */
+    @Column("document_url")
+    private String documentUrl;
+
+    /**
+     * Size of the document file in bytes.
+     */
+    @Column("file_size_bytes")
+    private Long fileSizeBytes;
+
+    /**
+     * MIME type of the document.
+     */
+    @Column("mime_type")
+    private String mimeType;
+
+    /**
+     * Verification status of the document.
+     */
+    @Column("verification_status")
+    private String verificationStatus; // PENDING, VERIFIED, REJECTED
+
+    /**
+     * User who verified the document.
+     */
+    @Column("verified_by")
+    private String verifiedBy;
+
+    /**
+     * Timestamp when the document was verified.
+     */
+    @Column("verified_at")
+    private LocalDateTime verifiedAt;
+
+    /**
+     * Reason for document rejection.
+     */
+    @Column("rejection_reason")
+    private String rejectionReason;
+
+    /**
+     * Expiry date for documents that expire (e.g., ID, insurance).
+     */
+    @Column("expiry_date")
+    private LocalDate expiryDate;
 
     @Column("created_at")
     private LocalDateTime createdAt;

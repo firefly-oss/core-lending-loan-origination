@@ -68,6 +68,110 @@ public class LoanApplication {
     @Column("distributor_id")
     private UUID distributorId;
 
+    /**
+     * Identifier for the distributor agency associated with the application.
+     * This field is null if not submitted via a distributor agency.
+     */
+    @Column("distributor_agency_id")
+    private UUID distributorAgencyId;
+
+    /**
+     * Identifier for the distributor agent associated with the application.
+     * This field is null if not submitted via a distributor agent.
+     */
+    @Column("distributor_agent_id")
+    private UUID distributorAgentId;
+
+    /**
+     * Business unit responsible for this application.
+     */
+    @Column("business_unit")
+    private String businessUnit;
+
+    /**
+     * Branch where the application was originated.
+     */
+    @Column("branch_id")
+    private UUID branchId;
+
+    /**
+     * Purpose of the loan.
+     */
+    @Column("loan_purpose")
+    private String loanPurpose;
+
+    /**
+     * Detailed description of the loan purpose.
+     */
+    @Column("loan_purpose_description")
+    private String loanPurposeDescription;
+
+    /**
+     * Timestamp when the application was submitted.
+     */
+    @Column("submitted_at")
+    private LocalDateTime submittedAt;
+
+    /**
+     * Timestamp of the first review.
+     */
+    @Column("first_review_at")
+    private LocalDateTime firstReviewAt;
+
+    /**
+     * Due date for making a decision on this application.
+     */
+    @Column("decision_due_date")
+    private LocalDate decisionDueDate;
+
+    /**
+     * Expected closing date for the loan.
+     */
+    @Column("expected_closing_date")
+    private LocalDate expectedClosingDate;
+
+    /**
+     * Loan officer assigned to this application.
+     */
+    @Column("loan_officer_id")
+    private UUID loanOfficerId;
+
+    /**
+     * Timestamp when the loan officer was assigned.
+     */
+    @Column("assigned_at")
+    private LocalDateTime assignedAt;
+
+    /**
+     * Flag indicating if this is a rush/urgent application.
+     */
+    @Column("is_rush")
+    private Boolean isRush;
+
+    /**
+     * Flag indicating if this application has exceptions.
+     */
+    @Column("is_exception")
+    private Boolean isException;
+
+    /**
+     * Flag indicating if manual review is required.
+     */
+    @Column("requires_manual_review")
+    private Boolean requiresManualReview;
+
+    /**
+     * External reference number from another system.
+     */
+    @Column("external_reference_number")
+    private String externalReferenceNumber;
+
+    /**
+     * Source system that originated this application.
+     */
+    @Column("source_system")
+    private String sourceSystem;
+
     @Column("note")
     private String note;
 

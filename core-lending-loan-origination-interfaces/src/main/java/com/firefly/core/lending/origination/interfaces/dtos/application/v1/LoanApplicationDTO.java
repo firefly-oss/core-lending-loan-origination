@@ -71,6 +71,42 @@ public class LoanApplicationDTO {
     @FilterableId
     private UUID distributorId;
 
+    /**
+     * Identifier for the distributor agency associated with the application.
+     * This field is null if not submitted via a distributor agency.
+     */
+    @FilterableId
+    private UUID distributorAgencyId;
+
+    /**
+     * Identifier for the distributor agent associated with the application.
+     * This field is null if not submitted via a distributor agent.
+     */
+    @FilterableId
+    private UUID distributorAgentId;
+
+    private String businessUnit;
+
+    @FilterableId
+    private UUID branchId;
+
+    private String loanPurpose;
+    private String loanPurposeDescription;
+    private LocalDateTime submittedAt;
+    private LocalDateTime firstReviewAt;
+    private LocalDate decisionDueDate;
+    private LocalDate expectedClosingDate;
+
+    @FilterableId
+    private UUID loanOfficerId;
+
+    private LocalDateTime assignedAt;
+    private Boolean isRush;
+    private Boolean isException;
+    private Boolean requiresManualReview;
+    private String externalReferenceNumber;
+    private String sourceSystem;
+
     @Size(max = 1000, message = "Note cannot exceed 1000 characters")
     private String note;
     private LocalDateTime createdAt;

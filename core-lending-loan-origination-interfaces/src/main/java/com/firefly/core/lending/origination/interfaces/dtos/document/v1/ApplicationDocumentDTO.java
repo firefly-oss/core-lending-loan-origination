@@ -20,6 +20,7 @@ package com.firefly.core.lending.origination.interfaces.dtos.document.v1;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.firefly.core.utils.annotations.FilterableId;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -55,6 +56,31 @@ public class ApplicationDocumentDTO {
     @NotNull(message = "Received flag is required")
     private Boolean isReceived;
     private LocalDateTime receivedAt;
+
+    @Size(max = 200, message = "Document name cannot exceed 200 characters")
+    private String documentName;
+
+    @Size(max = 500, message = "Document URL cannot exceed 500 characters")
+    private String documentUrl;
+
+    private Long fileSizeBytes;
+
+    @Size(max = 100, message = "MIME type cannot exceed 100 characters")
+    private String mimeType;
+
+    @Size(max = 50, message = "Verification status cannot exceed 50 characters")
+    private String verificationStatus;
+
+    @FilterableId
+    private UUID verifiedBy;
+
+    private LocalDateTime verifiedAt;
+
+    @Size(max = 500, message = "Rejection reason cannot exceed 500 characters")
+    private String rejectionReason;
+
+    private LocalDateTime expiryDate;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

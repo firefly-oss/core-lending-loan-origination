@@ -58,6 +58,54 @@ public class ProposedOffer {
     @Column("valid_until")
     private LocalDate validUntil;
 
+    /**
+     * Status of the offer.
+     */
+    @Column("offer_status")
+    private String offerStatus; // DRAFT, SENT, ACCEPTED, REJECTED, EXPIRED
+
+    /**
+     * Timestamp when the offer was accepted.
+     */
+    @Column("accepted_at")
+    private LocalDateTime acceptedAt;
+
+    /**
+     * User who accepted the offer.
+     */
+    @Column("accepted_by")
+    private String acceptedBy;
+
+    /**
+     * Reason for offer rejection.
+     */
+    @Column("rejection_reason")
+    private String rejectionReason;
+
+    /**
+     * Calculated monthly payment amount.
+     */
+    @Column("monthly_payment")
+    private BigDecimal monthlyPayment;
+
+    /**
+     * Total interest to be paid over the loan term.
+     */
+    @Column("total_interest")
+    private BigDecimal totalInterest;
+
+    /**
+     * Total amount to be repaid (principal + interest).
+     */
+    @Column("total_amount")
+    private BigDecimal totalAmount;
+
+    /**
+     * Annual Percentage Rate (APR).
+     */
+    @Column("apr")
+    private BigDecimal apr;
+
     @Column("created_at")
     private LocalDateTime createdAt;
 

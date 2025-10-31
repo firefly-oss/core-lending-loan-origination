@@ -20,6 +20,7 @@ package com.firefly.core.lending.origination.interfaces.dtos.offer.v1;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.firefly.core.utils.annotations.FilterableId;
 import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -63,6 +64,23 @@ public class ProposedOfferDTO {
 
     @Future(message = "Valid until date must be in the future")
     private LocalDate validUntil;
+
+    @Size(max = 50, message = "Offer status cannot exceed 50 characters")
+    private String offerStatus;
+
+    private LocalDateTime acceptedAt;
+
+    @FilterableId
+    private UUID acceptedBy;
+
+    @Size(max = 500, message = "Rejection reason cannot exceed 500 characters")
+    private String rejectionReason;
+
+    private BigDecimal monthlyPayment;
+    private BigDecimal totalInterest;
+    private BigDecimal totalAmount;
+    private BigDecimal apr;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
