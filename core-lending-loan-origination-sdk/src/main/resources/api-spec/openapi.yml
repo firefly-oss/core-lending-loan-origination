@@ -20,6 +20,8 @@ tags:
     description: Manage underwriting decisions for a loan application
   - name: ApplicationExternalCall
     description: Manage external calls for a loan application
+  - name: DocumentType
+    description: Manage document types
   - name: ApplicationVerification
     description: Manage verifications for a loan application
   - name: LoanApplicationStatusHistory
@@ -34,6 +36,8 @@ tags:
     description: Manage tasks for a loan application
   - name: ApplicationException
     description: Manage exceptions for a loan application
+  - name: DecisionCode
+    description: Manage decision codes for underwriting decisions
   - name: ApplicationFee
     description: Manage fees for a loan application
   - name: LoanApplications
@@ -1714,7 +1718,9 @@ paths:
   /api/v1/document-types/{id}:
     get:
       tags:
-        - document-type-controller
+        - DocumentType
+      summary: Get document type by ID
+      description: Retrieves a specific document type by its ID.
       operationId: getDocumentTypeById
       parameters:
         - name: id
@@ -1738,7 +1744,9 @@ paths:
                 $ref: '#/components/schemas/DocumentType'
     put:
       tags:
-        - document-type-controller
+        - DocumentType
+      summary: Update document type
+      description: Updates an existing document type.
       operationId: updateDocumentType
       parameters:
         - name: id
@@ -1768,7 +1776,9 @@ paths:
                 $ref: '#/components/schemas/DocumentType'
     delete:
       tags:
-        - document-type-controller
+        - DocumentType
+      summary: Delete document type
+      description: Deletes a document type.
       operationId: deleteDocumentType
       parameters:
         - name: id
@@ -1789,7 +1799,9 @@ paths:
   /api/v1/decision-codes/{id}:
     get:
       tags:
-        - decision-code-controller
+        - DecisionCode
+      summary: Get decision code by ID
+      description: Retrieves a specific decision code by its ID.
       operationId: getDecisionCodeById
       parameters:
         - name: id
@@ -1813,7 +1825,9 @@ paths:
                 $ref: '#/components/schemas/DecisionCode'
     put:
       tags:
-        - decision-code-controller
+        - DecisionCode
+      summary: Update decision code
+      description: Updates an existing decision code.
       operationId: updateDecisionCode
       parameters:
         - name: id
@@ -1843,7 +1857,9 @@ paths:
                 $ref: '#/components/schemas/DecisionCode'
     delete:
       tags:
-        - decision-code-controller
+        - DecisionCode
+      summary: Delete decision code
+      description: Deletes a decision code.
       operationId: deleteDecisionCode
       parameters:
         - name: id
@@ -3840,7 +3856,9 @@ paths:
   /api/v1/document-types:
     get:
       tags:
-        - document-type-controller
+        - DocumentType
+      summary: List all document types
+      description: Retrieves all available document types.
       operationId: getAllDocumentTypes
       parameters:
         - name: X-Idempotency-Key
@@ -3860,7 +3878,9 @@ paths:
                   $ref: '#/components/schemas/DocumentType'
     post:
       tags:
-        - document-type-controller
+        - DocumentType
+      summary: Create document type
+      description: Creates a new document type.
       operationId: createDocumentType
       parameters:
         - name: X-Idempotency-Key
@@ -3885,7 +3905,9 @@ paths:
   /api/v1/decision-codes:
     get:
       tags:
-        - decision-code-controller
+        - DecisionCode
+      summary: List all decision codes
+      description: Retrieves all available decision codes.
       operationId: getAllDecisionCodes
       parameters:
         - name: X-Idempotency-Key
@@ -3905,7 +3927,9 @@ paths:
                   $ref: '#/components/schemas/DecisionCode'
     post:
       tags:
-        - decision-code-controller
+        - DecisionCode
+      summary: Create decision code
+      description: Creates a new decision code.
       operationId: createDecisionCode
       parameters:
         - name: X-Idempotency-Key
@@ -4146,7 +4170,9 @@ paths:
   /api/v1/document-types/code/{code}:
     get:
       tags:
-        - document-type-controller
+        - DocumentType
+      summary: Get document type by code
+      description: Retrieves a specific document type by its code.
       operationId: getDocumentTypeByCode
       parameters:
         - name: code
@@ -4170,7 +4196,9 @@ paths:
   /api/v1/decision-codes/code/{code}:
     get:
       tags:
-        - decision-code-controller
+        - DecisionCode
+      summary: Get decision code by code
+      description: Retrieves a specific decision code by its code.
       operationId: getDecisionCodeByCode
       parameters:
         - name: code
