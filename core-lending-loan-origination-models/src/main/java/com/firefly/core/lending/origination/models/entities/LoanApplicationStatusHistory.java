@@ -17,7 +17,7 @@
 
 package com.firefly.core.lending.origination.models.entities;
 
-import com.firefly.core.lending.origination.models.entities.enums.ApplicationStatusEnum;
+import com.firefly.core.lending.origination.interfaces.enums.ApplicationStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

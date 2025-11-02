@@ -78,7 +78,6 @@ erDiagram
         ApplicationSubStatusEnum applicationSubStatus
         LocalDate applicationDate
         SubmissionChannelEnum submissionChannel
-        UUID partyId
         UUID distributorId
         String note
         LocalDateTime createdAt
@@ -286,7 +285,6 @@ The central entity representing a customer's loan application with complete life
 - `applicationSubStatus`: Detailed status (PENDING_DOCUMENTS, NEEDS_MANUAL_REVIEW, COMPLETE)
 - `applicationDate`: Date when the application was submitted
 - `submissionChannel`: Channel used (BRANCH, ONLINE, MOBILE, DISTRIBUTOR)
-- `partyId`: Reference to the primary customer (nullable for unknown customers)
 - `distributorId`: Reference to the distributor (nullable if not via distributor)
 - `note`: Additional comments or notes
 
@@ -545,7 +543,6 @@ curl -X POST "http://localhost:8080/api/v1/loan-applications" \
     "applicationSubStatus": "PENDING_DOCUMENTS",
     "applicationDate": "2025-01-15",
     "submissionChannel": "ONLINE",
-    "partyId": "550e8400-e29b-41d4-a716-446655440001",
     "note": "New loan application for home purchase"
   }'
 ```

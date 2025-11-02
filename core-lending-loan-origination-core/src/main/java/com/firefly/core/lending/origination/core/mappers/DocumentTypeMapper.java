@@ -15,10 +15,10 @@
  */
 
 
-package com.firefly.core.lending.origination.core.mappers.catalog.v1;
+package com.firefly.core.lending.origination.core.mappers;
 
-import com.firefly.core.lending.origination.interfaces.dtos.catalog.v1.DocumentTypeDTO;
-import com.firefly.core.lending.origination.models.entities.catalog.v1.DocumentType;
+import com.firefly.core.lending.origination.interfaces.dtos.DocumentTypeDTO;
+import com.firefly.core.lending.origination.models.entities.DocumentType;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;

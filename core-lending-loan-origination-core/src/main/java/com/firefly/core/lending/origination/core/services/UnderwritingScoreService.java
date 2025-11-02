@@ -15,11 +15,11 @@
  */
 
 
-package com.firefly.core.lending.origination.core.services.score.v1;
+package com.firefly.core.lending.origination.core.services;
 
 import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
-import com.firefly.core.lending.origination.interfaces.dtos.score.v1.UnderwritingScoreDTO;
+import com.firefly.core.lending.origination.interfaces.dtos.UnderwritingScoreDTO;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;

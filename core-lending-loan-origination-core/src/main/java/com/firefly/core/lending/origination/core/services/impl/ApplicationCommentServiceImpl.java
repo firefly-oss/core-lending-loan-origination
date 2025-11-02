@@ -15,15 +15,16 @@
  */
 
 
-package com.firefly.core.lending.origination.core.services.comment.v1;
+package com.firefly.core.lending.origination.core.services.impl;
 
 import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.common.core.queries.PaginationUtils;
 import com.firefly.core.lending.origination.core.mappers.ApplicationCommentMapper;
-import com.firefly.core.lending.origination.interfaces.dtos.comment.v1.ApplicationCommentDTO;
-import com.firefly.core.lending.origination.models.entities.comment.v1.ApplicationComment;
-import com.firefly.core.lending.origination.models.repositories.comment.v1.ApplicationCommentRepository;
+import com.firefly.core.lending.origination.core.services.ApplicationCommentService;
+import com.firefly.core.lending.origination.interfaces.dtos.ApplicationCommentDTO;
+import com.firefly.core.lending.origination.models.entities.ApplicationComment;
+import com.firefly.core.lending.origination.models.repositories.ApplicationCommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

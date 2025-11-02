@@ -15,7 +15,7 @@
  */
 
 
-package com.firefly.core.lending.origination.web.controllers.catalog.v1;
+package com.firefly.core.lending.origination.web.controllers;
 
 import com.firefly.core.lending.origination.core.services.DocumentTypeService;
 import com.firefly.core.lending.origination.models.entities.DocumentType;

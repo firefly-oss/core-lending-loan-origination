@@ -15,9 +15,9 @@
  */
 
 
-package com.firefly.core.lending.origination.core.services.catalog.v1;
+package com.firefly.core.lending.origination.core.services;
 
-import com.firefly.core.lending.origination.models.entities.catalog.v1.DocumentType;
+import com.firefly.core.lending.origination.models.entities.DocumentType;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

@@ -15,10 +15,10 @@
  */
 
 
-package com.firefly.core.lending.origination.core.mappers.task.v1;
+package com.firefly.core.lending.origination.core.mappers;
 
-import com.firefly.core.lending.origination.interfaces.dtos.task.v1.ApplicationTaskDTO;
-import com.firefly.core.lending.origination.models.entities.task.v1.ApplicationTask;
+import com.firefly.core.lending.origination.interfaces.dtos.ApplicationTaskDTO;
+import com.firefly.core.lending.origination.models.entities.ApplicationTask;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;

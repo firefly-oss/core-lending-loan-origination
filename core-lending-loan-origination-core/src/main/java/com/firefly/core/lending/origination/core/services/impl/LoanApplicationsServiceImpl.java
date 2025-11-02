@@ -15,7 +15,7 @@
  */
 
 
-package com.firefly.core.lending.origination.core.services.application.v1;
+package com.firefly.core.lending.origination.core.services.impl;
 
 import com.firefly.common.core.filters.FilterRequest;
 import com.firefly.common.core.filters.FilterUtils;
@@ -23,9 +23,10 @@ import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.common.core.queries.PaginationUtils;
 import com.firefly.core.lending.origination.core.mappers.LoanApplicationMapper;
-import com.firefly.core.lending.origination.interfaces.dtos.application.v1.LoanApplicationDTO;
-import com.firefly.core.lending.origination.models.entities.application.v1.LoanApplication;
-import com.firefly.core.lending.origination.models.repositories.application.v1.LoanApplicationRepository;
+import com.firefly.core.lending.origination.core.services.LoanApplicationsService;
+import com.firefly.core.lending.origination.interfaces.dtos.LoanApplicationDTO;
+import com.firefly.core.lending.origination.models.entities.LoanApplication;
+import com.firefly.core.lending.origination.models.repositories.LoanApplicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

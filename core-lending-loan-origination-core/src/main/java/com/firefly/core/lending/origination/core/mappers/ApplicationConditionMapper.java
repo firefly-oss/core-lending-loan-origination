@@ -15,10 +15,10 @@
  */
 
 
-package com.firefly.core.lending.origination.core.mappers.condition.v1;
+package com.firefly.core.lending.origination.core.mappers;
 
-import com.firefly.core.lending.origination.interfaces.dtos.condition.v1.ApplicationConditionDTO;
-import com.firefly.core.lending.origination.models.entities.condition.v1.ApplicationCondition;
+import com.firefly.core.lending.origination.interfaces.dtos.ApplicationConditionDTO;
+import com.firefly.core.lending.origination.models.entities.ApplicationCondition;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;

@@ -15,7 +15,7 @@
  */
 
 
-package com.firefly.core.lending.origination.models.entities.enums;
+package com.firefly.core.lending.origination.interfaces.enums;
 
 /**
  * Enum representing how an external bank account will be used in the loan lifecycle.

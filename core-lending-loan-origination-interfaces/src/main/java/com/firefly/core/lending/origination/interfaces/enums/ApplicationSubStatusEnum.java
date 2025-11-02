@@ -15,7 +15,7 @@
  */
 
 
-package com.firefly.core.lending.origination.models.entities.enums;
+package com.firefly.core.lending.origination.interfaces.enums;
 
 public enum ApplicationSubStatusEnum {
     PENDING_DOCUMENTS,

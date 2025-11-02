@@ -15,11 +15,11 @@
  */
 
 
-package com.firefly.core.lending.origination.core.services.condition.v1;
+package com.firefly.core.lending.origination.core.services;
 
 import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
-import com.firefly.core.lending.origination.interfaces.dtos.condition.v1.ApplicationConditionDTO;
+import com.firefly.core.lending.origination.interfaces.dtos.ApplicationConditionDTO;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;

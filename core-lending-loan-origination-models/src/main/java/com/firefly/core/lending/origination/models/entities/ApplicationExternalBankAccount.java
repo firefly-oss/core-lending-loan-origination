@@ -17,7 +17,7 @@
 
 package com.firefly.core.lending.origination.models.entities;
 
-import com.firefly.core.lending.origination.models.entities.enums.AccountUsageTypeEnum;
+import com.firefly.core.lending.origination.interfaces.enums.AccountUsageTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

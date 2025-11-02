@@ -15,15 +15,16 @@
  */
 
 
-package com.firefly.core.lending.origination.core.services.decision.v1;
+package com.firefly.core.lending.origination.core.services.impl;
 
 import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.common.core.queries.PaginationUtils;
 import com.firefly.core.lending.origination.core.mappers.UnderwritingDecisionMapper;
-import com.firefly.core.lending.origination.interfaces.dtos.decision.v1.UnderwritingDecisionDTO;
-import com.firefly.core.lending.origination.models.entities.decision.v1.UnderwritingDecision;
-import com.firefly.core.lending.origination.models.repositories.decision.v1.UnderwritingDecisionRepository;
+import com.firefly.core.lending.origination.core.services.UnderwritingDecisionService;
+import com.firefly.core.lending.origination.interfaces.dtos.UnderwritingDecisionDTO;
+import com.firefly.core.lending.origination.models.entities.UnderwritingDecision;
+import com.firefly.core.lending.origination.models.repositories.UnderwritingDecisionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

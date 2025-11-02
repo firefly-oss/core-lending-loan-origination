@@ -15,10 +15,10 @@
  */
 
 
-package com.firefly.core.lending.origination.core.mappers.metric.v1;
+package com.firefly.core.lending.origination.core.mappers;
 
-import com.firefly.core.lending.origination.interfaces.dtos.metric.v1.ApplicationMetricDTO;
-import com.firefly.core.lending.origination.models.entities.metric.v1.ApplicationMetric;
+import com.firefly.core.lending.origination.interfaces.dtos.ApplicationMetricDTO;
+import com.firefly.core.lending.origination.models.entities.ApplicationMetric;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;

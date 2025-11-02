@@ -15,10 +15,10 @@
  */
 
 
-package com.firefly.core.lending.origination.core.mappers.bankaccount.v1;
+package com.firefly.core.lending.origination.core.mappers;
 
-import com.firefly.core.lending.origination.interfaces.dtos.bankaccount.v1.ApplicationExternalBankAccountDTO;
-import com.firefly.core.lending.origination.models.entities.bankaccount.v1.ApplicationExternalBankAccount;
+import com.firefly.core.lending.origination.interfaces.dtos.ApplicationExternalBankAccountDTO;
+import com.firefly.core.lending.origination.models.entities.ApplicationExternalBankAccount;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 

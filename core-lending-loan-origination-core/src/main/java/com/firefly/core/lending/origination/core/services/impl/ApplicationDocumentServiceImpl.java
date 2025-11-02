@@ -15,15 +15,16 @@
  */
 
 
-package com.firefly.core.lending.origination.core.services.document.v1;
+package com.firefly.core.lending.origination.core.services.impl;
 
 import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.common.core.queries.PaginationUtils;
 import com.firefly.core.lending.origination.core.mappers.ApplicationDocumentMapper;
-import com.firefly.core.lending.origination.interfaces.dtos.document.v1.ApplicationDocumentDTO;
-import com.firefly.core.lending.origination.models.entities.document.v1.ApplicationDocument;
-import com.firefly.core.lending.origination.models.repositories.document.v1.ApplicationDocumentRepository;
+import com.firefly.core.lending.origination.core.services.ApplicationDocumentService;
+import com.firefly.core.lending.origination.interfaces.dtos.ApplicationDocumentDTO;
+import com.firefly.core.lending.origination.models.entities.ApplicationDocument;
+import com.firefly.core.lending.origination.models.repositories.ApplicationDocumentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

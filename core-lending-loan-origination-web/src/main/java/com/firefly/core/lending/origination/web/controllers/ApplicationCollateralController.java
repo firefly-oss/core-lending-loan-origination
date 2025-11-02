@@ -15,7 +15,7 @@
  */
 
 
-package com.firefly.core.lending.origination.web.controllers.collateral.v1;
+package com.firefly.core.lending.origination.web.controllers;
 
 import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;

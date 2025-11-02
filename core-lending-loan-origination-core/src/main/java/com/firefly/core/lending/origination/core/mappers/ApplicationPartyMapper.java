@@ -15,10 +15,10 @@
  */
 
 
-package com.firefly.core.lending.origination.core.mappers.party.v1;
+package com.firefly.core.lending.origination.core.mappers;
 
-import com.firefly.core.lending.origination.interfaces.dtos.party.v1.ApplicationPartyDTO;
-import com.firefly.core.lending.origination.models.entities.party.v1.ApplicationParty;
+import com.firefly.core.lending.origination.interfaces.dtos.ApplicationPartyDTO;
+import com.firefly.core.lending.origination.models.entities.ApplicationParty;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

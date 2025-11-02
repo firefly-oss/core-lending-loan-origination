@@ -15,10 +15,10 @@
  */
 
 
-package com.firefly.core.lending.origination.core.mappers.fee.v1;
+package com.firefly.core.lending.origination.core.mappers;
 
-import com.firefly.core.lending.origination.interfaces.dtos.fee.v1.ApplicationFeeDTO;
-import com.firefly.core.lending.origination.models.entities.fee.v1.ApplicationFee;
+import com.firefly.core.lending.origination.interfaces.dtos.ApplicationFeeDTO;
+import com.firefly.core.lending.origination.models.entities.ApplicationFee;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;

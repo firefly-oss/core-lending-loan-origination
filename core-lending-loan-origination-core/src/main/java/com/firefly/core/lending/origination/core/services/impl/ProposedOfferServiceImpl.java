@@ -15,15 +15,16 @@
  */
 
 
-package com.firefly.core.lending.origination.core.services.offer.v1;
+package com.firefly.core.lending.origination.core.services.impl;
 
 import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.common.core.queries.PaginationUtils;
 import com.firefly.core.lending.origination.core.mappers.ProposedOfferMapper;
-import com.firefly.core.lending.origination.interfaces.dtos.offer.v1.ProposedOfferDTO;
-import com.firefly.core.lending.origination.models.entities.offer.v1.ProposedOffer;
-import com.firefly.core.lending.origination.models.repositories.offer.v1.ProposedOfferRepository;
+import com.firefly.core.lending.origination.core.services.ProposedOfferService;
+import com.firefly.core.lending.origination.interfaces.dtos.ProposedOfferDTO;
+import com.firefly.core.lending.origination.models.entities.ProposedOffer;
+import com.firefly.core.lending.origination.models.repositories.ProposedOfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

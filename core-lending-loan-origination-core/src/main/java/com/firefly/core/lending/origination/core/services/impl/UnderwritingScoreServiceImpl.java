@@ -15,15 +15,16 @@
  */
 
 
-package com.firefly.core.lending.origination.core.services.score.v1;
+package com.firefly.core.lending.origination.core.services.impl;
 
 import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.common.core.queries.PaginationUtils;
 import com.firefly.core.lending.origination.core.mappers.UnderwritingScoreMapper;
-import com.firefly.core.lending.origination.interfaces.dtos.score.v1.UnderwritingScoreDTO;
-import com.firefly.core.lending.origination.models.entities.score.v1.UnderwritingScore;
-import com.firefly.core.lending.origination.models.repositories.score.v1.UnderwritingScoreRepository;
+import com.firefly.core.lending.origination.core.services.UnderwritingScoreService;
+import com.firefly.core.lending.origination.interfaces.dtos.UnderwritingScoreDTO;
+import com.firefly.core.lending.origination.models.entities.UnderwritingScore;
+import com.firefly.core.lending.origination.models.repositories.UnderwritingScoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -15,15 +15,16 @@
  */
 
 
-package com.firefly.core.lending.origination.core.services.condition.v1;
+package com.firefly.core.lending.origination.core.services.impl;
 
 import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.common.core.queries.PaginationUtils;
 import com.firefly.core.lending.origination.core.mappers.ApplicationConditionMapper;
-import com.firefly.core.lending.origination.interfaces.dtos.condition.v1.ApplicationConditionDTO;
-import com.firefly.core.lending.origination.models.entities.condition.v1.ApplicationCondition;
-import com.firefly.core.lending.origination.models.repositories.condition.v1.ApplicationConditionRepository;
+import com.firefly.core.lending.origination.core.services.ApplicationConditionService;
+import com.firefly.core.lending.origination.interfaces.dtos.ApplicationConditionDTO;
+import com.firefly.core.lending.origination.models.entities.ApplicationCondition;
+import com.firefly.core.lending.origination.models.repositories.ApplicationConditionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

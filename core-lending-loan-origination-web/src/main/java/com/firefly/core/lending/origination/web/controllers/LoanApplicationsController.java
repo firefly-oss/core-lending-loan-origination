@@ -15,7 +15,7 @@
  */
 
 
-package com.firefly.core.lending.origination.web.controllers.application.v1;
+package com.firefly.core.lending.origination.web.controllers;
 
 import com.firefly.common.core.filters.FilterRequest;
 import com.firefly.common.core.queries.PaginationRequest;

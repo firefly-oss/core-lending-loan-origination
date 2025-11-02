@@ -15,15 +15,16 @@
  */
 
 
-package com.firefly.core.lending.origination.core.services.bankaccount.v1;
+package com.firefly.core.lending.origination.core.services.impl;
 
 import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.common.core.queries.PaginationUtils;
 import com.firefly.core.lending.origination.core.mappers.ApplicationExternalBankAccountMapper;
-import com.firefly.core.lending.origination.interfaces.dtos.bankaccount.v1.ApplicationExternalBankAccountDTO;
-import com.firefly.core.lending.origination.models.entities.bankaccount.v1.ApplicationExternalBankAccount;
-import com.firefly.core.lending.origination.models.repositories.bankaccount.v1.ApplicationExternalBankAccountRepository;
+import com.firefly.core.lending.origination.core.services.ApplicationExternalBankAccountService;
+import com.firefly.core.lending.origination.interfaces.dtos.ApplicationExternalBankAccountDTO;
+import com.firefly.core.lending.origination.models.entities.ApplicationExternalBankAccount;
+import com.firefly.core.lending.origination.models.repositories.ApplicationExternalBankAccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

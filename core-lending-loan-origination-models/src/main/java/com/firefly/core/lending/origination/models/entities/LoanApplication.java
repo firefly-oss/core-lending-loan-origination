@@ -17,7 +17,7 @@
 
 package com.firefly.core.lending.origination.models.entities;
 
-import com.firefly.core.lending.origination.models.entities.enums.PaymentMethodTypeEnum;
+import com.firefly.core.lending.origination.interfaces.enums.PaymentMethodTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -54,14 +54,7 @@ public class LoanApplication {
 
     @Column("submission_channel_id")
     private UUID submissionChannelId;
-    
-    /**
-     * Identifier for a known customer who launched the application.
-     * This field is null for unknown non-customers.
-     */
-    @Column("party_id")
-    private UUID partyId;
-    
+
     /**
      * Identifier for a known distributor who launched the application.
      * This field is null if not submitted via a distributor.

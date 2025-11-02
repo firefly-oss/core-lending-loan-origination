@@ -15,10 +15,10 @@
  */
 
 
-package com.firefly.core.lending.origination.core.mappers.comment.v1;
+package com.firefly.core.lending.origination.core.mappers;
 
-import com.firefly.core.lending.origination.interfaces.dtos.comment.v1.ApplicationCommentDTO;
-import com.firefly.core.lending.origination.models.entities.comment.v1.ApplicationComment;
+import com.firefly.core.lending.origination.interfaces.dtos.ApplicationCommentDTO;
+import com.firefly.core.lending.origination.models.entities.ApplicationComment;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;

@@ -58,4 +58,5 @@ public class ApplicationCollateralDTO {
     private Boolean isPrimaryCollateral;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
 }

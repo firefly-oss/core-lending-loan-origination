@@ -15,10 +15,10 @@
  */
 
 
-package com.firefly.core.lending.origination.core.mappers.decision.v1;
+package com.firefly.core.lending.origination.core.mappers;
 
-import com.firefly.core.lending.origination.interfaces.dtos.decision.v1.UnderwritingDecisionDTO;
-import com.firefly.core.lending.origination.models.entities.decision.v1.UnderwritingDecision;
+import com.firefly.core.lending.origination.interfaces.dtos.UnderwritingDecisionDTO;
+import com.firefly.core.lending.origination.models.entities.UnderwritingDecision;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;

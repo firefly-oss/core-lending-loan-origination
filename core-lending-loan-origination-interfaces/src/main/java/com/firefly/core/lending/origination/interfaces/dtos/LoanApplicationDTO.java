@@ -18,7 +18,7 @@
 package com.firefly.core.lending.origination.interfaces.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.firefly.core.lending.origination.interfaces.enums.payment.v1.PaymentMethodTypeEnum;
+import com.firefly.core.lending.origination.interfaces.enums.PaymentMethodTypeEnum;
 import com.firefly.core.utils.annotations.FilterableId;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -57,14 +57,7 @@ public class LoanApplicationDTO {
     @FilterableId
     @NotNull(message = "Submission channel ID is required")
     private UUID submissionChannelId;
-    
-    /**
-     * Identifier for a known customer who launched the application.
-     * This field is null for unknown non-customers.
-     */
-    @FilterableId
-    private UUID partyId;
-    
+
     /**
      * Identifier for a known distributor who launched the application.
      * This field is null if not submitted via a distributor.

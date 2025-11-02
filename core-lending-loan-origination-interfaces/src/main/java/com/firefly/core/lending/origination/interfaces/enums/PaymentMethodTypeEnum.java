@@ -15,7 +15,7 @@
  */
 
 
-package com.firefly.core.lending.origination.models.entities.enums;
+package com.firefly.core.lending.origination.interfaces.enums;
 
 /**
  * Enum representing the type of payment method for loan disbursement or repayment.

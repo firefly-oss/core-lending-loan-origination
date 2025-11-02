@@ -15,10 +15,9 @@
  */
 
 
-package com.firefly.core.lending.origination.models.repositories.catalog.v1;
+package com.firefly.core.lending.origination.models.repositories;
 
 import com.firefly.core.lending.origination.models.entities.CollateralType;
-import com.firefly.core.lending.origination.models.repositories.BaseRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 

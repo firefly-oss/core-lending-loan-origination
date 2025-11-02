@@ -15,15 +15,16 @@
  */
 
 
-package com.firefly.core.lending.origination.core.services.metric.v1;
+package com.firefly.core.lending.origination.core.services.impl;
 
 import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.common.core.queries.PaginationUtils;
 import com.firefly.core.lending.origination.core.mappers.ApplicationMetricMapper;
-import com.firefly.core.lending.origination.interfaces.dtos.metric.v1.ApplicationMetricDTO;
-import com.firefly.core.lending.origination.models.entities.metric.v1.ApplicationMetric;
-import com.firefly.core.lending.origination.models.repositories.metric.v1.ApplicationMetricRepository;
+import com.firefly.core.lending.origination.core.services.ApplicationMetricService;
+import com.firefly.core.lending.origination.interfaces.dtos.ApplicationMetricDTO;
+import com.firefly.core.lending.origination.models.entities.ApplicationMetric;
+import com.firefly.core.lending.origination.models.repositories.ApplicationMetricRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

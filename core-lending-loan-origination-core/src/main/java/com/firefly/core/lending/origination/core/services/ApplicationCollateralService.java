@@ -15,11 +15,11 @@
  */
 
 
-package com.firefly.core.lending.origination.core.services.collateral.v1;
+package com.firefly.core.lending.origination.core.services;
 
 import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
-import com.firefly.core.lending.origination.interfaces.dtos.collateral.v1.ApplicationCollateralDTO;
+import com.firefly.core.lending.origination.interfaces.dtos.ApplicationCollateralDTO;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;

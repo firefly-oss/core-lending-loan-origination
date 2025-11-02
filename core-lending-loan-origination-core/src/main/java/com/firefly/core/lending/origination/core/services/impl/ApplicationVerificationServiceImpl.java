@@ -15,15 +15,16 @@
  */
 
 
-package com.firefly.core.lending.origination.core.services.verification.v1;
+package com.firefly.core.lending.origination.core.services.impl;
 
 import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.common.core.queries.PaginationUtils;
 import com.firefly.core.lending.origination.core.mappers.ApplicationVerificationMapper;
-import com.firefly.core.lending.origination.interfaces.dtos.verification.v1.ApplicationVerificationDTO;
-import com.firefly.core.lending.origination.models.entities.verification.v1.ApplicationVerification;
-import com.firefly.core.lending.origination.models.repositories.verification.v1.ApplicationVerificationRepository;
+import com.firefly.core.lending.origination.core.services.ApplicationVerificationService;
+import com.firefly.core.lending.origination.interfaces.dtos.ApplicationVerificationDTO;
+import com.firefly.core.lending.origination.models.entities.ApplicationVerification;
+import com.firefly.core.lending.origination.models.repositories.ApplicationVerificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

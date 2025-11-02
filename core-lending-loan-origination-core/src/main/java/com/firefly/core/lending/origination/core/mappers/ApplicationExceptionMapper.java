@@ -15,10 +15,10 @@
  */
 
 
-package com.firefly.core.lending.origination.core.mappers.exception.v1;
+package com.firefly.core.lending.origination.core.mappers;
 
-import com.firefly.core.lending.origination.interfaces.dtos.exception.v1.ApplicationExceptionDTO;
-import com.firefly.core.lending.origination.models.entities.exception.v1.ApplicationException;
+import com.firefly.core.lending.origination.interfaces.dtos.ApplicationExceptionDTO;
+import com.firefly.core.lending.origination.models.entities.ApplicationException;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;

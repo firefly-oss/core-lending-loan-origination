@@ -15,10 +15,10 @@
  */
 
 
-package com.firefly.core.lending.origination.core.mappers.verification.v1;
+package com.firefly.core.lending.origination.core.mappers;
 
-import com.firefly.core.lending.origination.interfaces.dtos.verification.v1.ApplicationVerificationDTO;
-import com.firefly.core.lending.origination.models.entities.verification.v1.ApplicationVerification;
+import com.firefly.core.lending.origination.interfaces.dtos.ApplicationVerificationDTO;
+import com.firefly.core.lending.origination.models.entities.ApplicationVerification;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;

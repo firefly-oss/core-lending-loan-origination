@@ -15,10 +15,9 @@
  */
 
 
-package com.firefly.core.lending.origination.models.repositories.application.v1;
+package com.firefly.core.lending.origination.models.repositories;
 
 import com.firefly.core.lending.origination.models.entities.LoanApplication;
-import com.firefly.core.lending.origination.models.repositories.BaseRepository;
 
 import java.util.UUID;
 

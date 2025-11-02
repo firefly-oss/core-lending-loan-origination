@@ -15,9 +15,9 @@
  */
 
 
-package com.firefly.core.lending.origination.models.repositories.bankaccount.v1;
+package com.firefly.core.lending.origination.models.repositories;
 
-import com.firefly.core.lending.origination.models.entities.enums.AccountUsageTypeEnum;
+import com.firefly.core.lending.origination.interfaces.enums.AccountUsageTypeEnum;
 import com.firefly.core.lending.origination.models.entities.ApplicationExternalBankAccount;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;

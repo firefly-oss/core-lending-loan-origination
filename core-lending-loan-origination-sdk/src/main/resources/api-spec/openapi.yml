@@ -2124,12 +2124,6 @@ paths:
           required: false
           schema:
             type: string
-        - name: filters.partyId
-          in: query
-          description: Exact filter for party id
-          required: false
-          schema:
-            type: string
         - name: filters.distributorId
           in: query
           description: Exact filter for distributor id
@@ -4509,9 +4503,6 @@ components:
           type: string
           format: date
         submissionChannelId:
-          type: string
-          format: uuid
-        partyId:
           type: string
           format: uuid
         distributorId:

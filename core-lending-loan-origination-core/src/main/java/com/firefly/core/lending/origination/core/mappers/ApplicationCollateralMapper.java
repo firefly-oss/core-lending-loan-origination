@@ -15,10 +15,10 @@
  */
 
 
-package com.firefly.core.lending.origination.core.mappers.collateral.v1;
+package com.firefly.core.lending.origination.core.mappers;
 
-import com.firefly.core.lending.origination.interfaces.dtos.collateral.v1.ApplicationCollateralDTO;
-import com.firefly.core.lending.origination.models.entities.collateral.v1.ApplicationCollateral;
+import com.firefly.core.lending.origination.interfaces.dtos.ApplicationCollateralDTO;
+import com.firefly.core.lending.origination.models.entities.ApplicationCollateral;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

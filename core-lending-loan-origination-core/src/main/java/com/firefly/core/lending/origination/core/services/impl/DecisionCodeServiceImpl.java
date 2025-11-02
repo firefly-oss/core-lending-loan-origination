@@ -15,10 +15,11 @@
  */
 
 
-package com.firefly.core.lending.origination.core.services.catalog.v1;
+package com.firefly.core.lending.origination.core.services.impl;
 
-import com.firefly.core.lending.origination.models.entities.catalog.v1.DecisionCode;
-import com.firefly.core.lending.origination.models.repositories.catalog.v1.DecisionCodeRepository;
+import com.firefly.core.lending.origination.core.services.DecisionCodeService;
+import com.firefly.core.lending.origination.models.entities.DecisionCode;
+import com.firefly.core.lending.origination.models.repositories.DecisionCodeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
