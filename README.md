@@ -8,7 +8,9 @@
 
 The **Core Lending Loan Origination Microservice** is a critical component of the **Firefly OpenCore Banking Platform**, developed by **Firefly Software Solutions Inc** under the Apache 2.0 license. This microservice is responsible for managing the complete loan origination process, from initial application submission through underwriting decisions and scoring.
 
-This service handles loan applications, application parties, documents, collateral, proposed offers, underwriting decisions, scoring, and status history tracking. It provides a comprehensive solution for financial institutions to manage their loan origination workflows efficiently.
+This service handles loan applications, application parties, documents, proposed offers, underwriting decisions, scoring, and status history tracking. It provides a comprehensive solution for financial institutions to manage their loan origination workflows efficiently.
+
+**Note:** Collateral management is handled by the separate `core-lending-collateral-management` microservice, which maintains references to loan applications via `loanApplicationId`.
 
 **Built with modern technologies:**
 - **Java 21** with virtual threads for enhanced performance
@@ -52,7 +54,6 @@ The microservice follows a **reactive programming model** using Project Reactor 
 - **Comprehensive Loan Application Management**: Full CRUD operations for loan applications
 - **Multi-Party Support**: Handle primary applicants, co-applicants, and guarantors
 - **Document Management**: Track mandatory and optional documents with receipt status
-- **Collateral Management**: Support for various collateral types with valuation tracking
 - **Proposed Offers**: Manage loan offers with terms and validity periods
 - **Underwriting Decisions**: Record approval/rejection decisions with risk grades
 - **Scoring System**: Evaluate and score loan applications with reason codes
@@ -105,17 +106,6 @@ erDiagram
         Boolean isMandatory
         Boolean isReceived
         LocalDateTime receivedAt
-        LocalDateTime createdAt
-        LocalDateTime updatedAt
-    }
-
-    ApplicationCollateral {
-        UUID applicationCollateralId PK
-        UUID loanApplicationId FK
-        CollateralTypeEnum collateralType
-        BigDecimal estimatedValue
-        String ownershipDetails
-        Boolean isPrimaryCollateral
         LocalDateTime createdAt
         LocalDateTime updatedAt
     }
@@ -229,16 +219,6 @@ erDiagram
         LocalDateTime updatedAt
     }
 
-    CollateralType {
-        UUID collateralTypeId PK
-        String code
-        String name
-        String description
-        Boolean isActive
-        LocalDateTime createdAt
-        LocalDateTime updatedAt
-    }
-
     DecisionCode {
         UUID decisionCodeId PK
         String code
@@ -262,7 +242,6 @@ erDiagram
     %% Core Relationships
     LoanApplication ||--o{ ApplicationParty : "has parties"
     LoanApplication ||--o{ ApplicationDocument : "has documents"
-    LoanApplication ||--o{ ApplicationCollateral : "has collateral"
     LoanApplication ||--o{ ProposedOffer : "has offers"
     LoanApplication ||--o{ UnderwritingScore : "has scores"
     LoanApplication ||--o{ UnderwritingDecision : "has decisions"
@@ -312,17 +291,6 @@ Tracks documents required and received for loan applications.
 - `isMandatory`: Whether the document is required
 - `isReceived`: Whether the document has been received
 - `receivedAt`: Timestamp when document was received
-
-#### ApplicationCollateral
-Represents assets pledged as security for the loan.
-
-**Key Attributes:**
-- `applicationCollateralId`: UUID primary key
-- `loanApplicationId`: Reference to the loan application
-- `collateralType`: Type of collateral (REAL_ESTATE, VEHICLE, FINANCIAL_ASSET, OTHER)
-- `estimatedValue`: Estimated value of the collateral
-- `ownershipDetails`: Details about ownership
-- `isPrimaryCollateral`: Whether this is the primary collateral
 
 #### ProposedOffer
 Loan offers made to applicants with specific terms.
@@ -383,7 +351,6 @@ The system uses catalog entities for dynamic management of reference data:
 - **RoleCode**: Party roles in applications
 - **EmploymentType**: Employment classification types
 - **DocumentType**: Document classification types
-- **CollateralType**: Collateral classification types
 - **DecisionCode**: Underwriting decision types
 - **RiskGrade**: Risk assessment grades
 
@@ -562,20 +529,7 @@ curl -X POST "http://localhost:8080/api/v1/loan-applications/{applicationId}/par
   }'
 ```
 
-#### 3. Add Collateral
-
-```bash
-curl -X POST "http://localhost:8080/api/v1/loan-applications/{applicationId}/collaterals" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "collateralType": "REAL_ESTATE",
-    "estimatedValue": 350000.0,
-    "ownershipDetails": "Sole ownership with clear title",
-    "isPrimaryCollateral": true
-  }'
-```
-
-#### 4. Record Underwriting Decision
+#### 3. Record Underwriting Decision
 
 ```bash
 curl -X POST "http://localhost:8080/api/v1/loan-applications/{applicationId}/decisions" \
@@ -598,7 +552,6 @@ curl -X POST "http://localhost:8080/api/v1/loan-applications/{applicationId}/dec
 | **Loan Applications** | Core loan application management | `GET/POST /api/v1/loan-applications`<br>`GET/PUT/DELETE /api/v1/loan-applications/{id}` |
 | **Application Parties** | Manage applicants, co-applicants, guarantors | `GET/POST /api/v1/loan-applications/{id}/parties`<br>`GET/PUT/DELETE /api/v1/loan-applications/{id}/parties/{partyId}` |
 | **Application Documents** | Document tracking and management | `GET/POST /api/v1/loan-applications/{id}/documents`<br>`GET/PUT/DELETE /api/v1/loan-applications/{id}/documents/{documentId}` |
-| **Application Collaterals** | Collateral and security management | `GET/POST /api/v1/loan-applications/{id}/collaterals`<br>`GET/PUT/DELETE /api/v1/loan-applications/{id}/collaterals/{collateralId}` |
 | **Proposed Offers** | Loan offer management | `GET/POST /api/v1/loan-applications/{id}/offers`<br>`GET/PUT/DELETE /api/v1/loan-applications/{id}/offers/{offerId}` |
 | **Underwriting Decisions** | Decision recording and tracking | `GET/POST /api/v1/loan-applications/{id}/decisions`<br>`GET/PUT/DELETE /api/v1/loan-applications/{id}/decisions/{decisionId}` |
 | **Underwriting Scores** | Risk scoring and assessment | `GET/POST /api/v1/loan-applications/{id}/scores`<br>`GET/PUT/DELETE /api/v1/loan-applications/{id}/scores/{scoreId}` |
