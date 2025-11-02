@@ -35,7 +35,7 @@ import java.util.UUID;
  * REST controller for managing external bank accounts associated with loan applications.
  *
  * <p>This controller handles EXTERNAL bank accounts (accounts outside the Firefly core banking system)
- * used for loan disbursement and/or repayment via direct debit/domiciliación.</p>
+ * used for loan disbursement and/or payment collection via direct debit/domiciliación.</p>
  *
  * <p>For internal accounts (within Firefly), use the payment method fields in LoanApplication directly.</p>
  */
