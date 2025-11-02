@@ -19,11 +19,11 @@ package com.firefly.core.lending.origination.interfaces.enums;
 
 /**
  * Enum representing how an external bank account will be used in the loan lifecycle.
- * 
+ *
  * <ul>
  *   <li><b>DISBURSEMENT</b>: Account used only for receiving loan disbursement.</li>
- *   <li><b>REPAYMENT</b>: Account used only for loan repayment (direct debit/domiciliación).</li>
- *   <li><b>BOTH</b>: Account used for both disbursement and repayment.</li>
+ *   <li><b>PAYMENT_COLLECTION</b>: Account used only for loan payment collection (direct debit/domiciliación).</li>
+ *   <li><b>BOTH</b>: Account used for both disbursement and payment collection.</li>
  * </ul>
  */
 public enum AccountUsageTypeEnum {
@@ -31,14 +31,14 @@ public enum AccountUsageTypeEnum {
      * Account used only for receiving loan disbursement.
      */
     DISBURSEMENT,
-    
+
     /**
-     * Account used only for loan repayment (direct debit/domiciliación).
+     * Account used only for loan payment collection (direct debit/domiciliación).
      */
-    REPAYMENT,
-    
+    PAYMENT_COLLECTION,
+
     /**
-     * Account used for both disbursement and repayment.
+     * Account used for both disbursement and payment collection.
      */
     BOTH
 }

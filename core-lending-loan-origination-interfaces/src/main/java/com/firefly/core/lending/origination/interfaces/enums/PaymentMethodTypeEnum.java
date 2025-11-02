@@ -18,8 +18,8 @@
 package com.firefly.core.lending.origination.interfaces.enums;
 
 /**
- * Enum representing the type of payment method for loan disbursement or repayment.
- * 
+ * Enum representing the type of payment method for loan disbursement or payment collection.
+ *
  * <ul>
  *   <li><b>INTERNAL_ACCOUNT</b>: Payment through an account within the Firefly core banking system.
  *       The account is identified by an internal account ID.</li>
