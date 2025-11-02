@@ -2213,24 +2213,24 @@ paths:
           required: false
           schema:
             type: string
-        - name: filters.repaymentMethodType
+        - name: filters.paymentCollectionMethodType
           in: query
-          description: Exact filter for repayment method type
+          description: Exact filter for payment collection method type
           required: false
           schema:
             type: string
             enum:
               - INTERNAL_ACCOUNT
               - EXTERNAL_ACCOUNT
-        - name: filters.repaymentInternalAccountId
+        - name: filters.paymentCollectionInternalAccountId
           in: query
-          description: Exact filter for repayment internal account id
+          description: Exact filter for payment collection internal account id
           required: false
           schema:
             type: string
-        - name: filters.repaymentExternalBankAccountId
+        - name: filters.paymentCollectionExternalBankAccountId
           in: query
-          description: Exact filter for repayment external bank account id
+          description: Exact filter for payment collection external bank account id
           required: false
           schema:
             type: string
@@ -4391,15 +4391,15 @@ components:
         disbursementExternalBankAccountId:
           type: string
           format: uuid
-        repaymentMethodType:
+        paymentCollectionMethodType:
           type: string
           enum:
             - INTERNAL_ACCOUNT
             - EXTERNAL_ACCOUNT
-        repaymentInternalAccountId:
+        paymentCollectionInternalAccountId:
           type: string
           format: uuid
-        repaymentExternalBankAccountId:
+        paymentCollectionExternalBankAccountId:
           type: string
           format: uuid
         note:
@@ -4836,7 +4836,7 @@ components:
           type: string
           enum:
             - DISBURSEMENT
-            - REPAYMENT
+            - PAYMENT_COLLECTION
             - BOTH
         accountHolderName:
           maxLength: 200
