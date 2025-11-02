@@ -32,13 +32,13 @@ import java.util.UUID;
 /**
  * Represents an EXTERNAL bank account associated with a loan application.
  * This entity stores details of bank accounts OUTSIDE the Firefly core banking system.
- * 
+ *
  * <p>Used for:</p>
  * <ul>
  *   <li>Disbursement: Sending approved loan funds to the customer's external account</li>
- *   <li>Repayment: Setting up direct debit/domiciliación from customer's external account</li>
+ *   <li>Payment Collection: Setting up direct debit/domiciliación from customer's external account</li>
  * </ul>
- * 
+ *
  * <p><b>Note:</b> For internal accounts (accounts within the Firefly core banking system),
  * use the internalAccountId fields in LoanApplication directly. This entity is ONLY for
  * external bank accounts.</p>
@@ -61,7 +61,7 @@ public class ApplicationExternalBankAccount {
 
     /**
      * Type of account usage.
-     * Values: DISBURSEMENT, REPAYMENT, BOTH
+     * Values: DISBURSEMENT, PAYMENT_COLLECTION, BOTH
      */
     @Column("account_usage_type")
     private AccountUsageTypeEnum accountUsageType;

@@ -125,28 +125,28 @@ public class LoanApplicationDTO {
     private UUID disbursementExternalBankAccountId;
 
     /**
-     * Method type for loan repayment/installment collection.
+     * Method type for loan payment collection.
      * - INTERNAL_ACCOUNT: Collect payments from an account within the Firefly core banking system
      * - EXTERNAL_ACCOUNT: Collect payments via direct debit/domiciliación from external bank account
      */
-    private PaymentMethodTypeEnum repaymentMethodType;
+    private PaymentMethodTypeEnum paymentCollectionMethodType;
 
     /**
-     * Internal account ID for repayment (ONLY when repaymentMethodType = INTERNAL_ACCOUNT).
+     * Internal account ID for payment collection (ONLY when paymentCollectionMethodType = INTERNAL_ACCOUNT).
      * References an account in the Firefly core banking system from which installments will be debited.
-     * Must be null when repaymentMethodType = EXTERNAL_ACCOUNT.
+     * Must be null when paymentCollectionMethodType = EXTERNAL_ACCOUNT.
      */
     @FilterableId
-    private UUID repaymentInternalAccountId;
+    private UUID paymentCollectionInternalAccountId;
 
     /**
-     * External bank account ID for repayment (ONLY when repaymentMethodType = EXTERNAL_ACCOUNT).
+     * External bank account ID for payment collection (ONLY when paymentCollectionMethodType = EXTERNAL_ACCOUNT).
      * References application_external_bank_account table.
      * Used for setting up direct debit/domiciliación.
-     * Must be null when repaymentMethodType = INTERNAL_ACCOUNT.
+     * Must be null when paymentCollectionMethodType = INTERNAL_ACCOUNT.
      */
     @FilterableId
-    private UUID repaymentExternalBankAccountId;
+    private UUID paymentCollectionExternalBankAccountId;
 
     @Size(max = 1000, message = "Note cannot exceed 1000 characters")
     private String note;
