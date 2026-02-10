@@ -1,7 +1,7 @@
 # Core Lending Loan Origination Microservice
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://openjdk.java.net/projects/jdk/21/)
+[![Java](https://img.shields.io/badge/Java-25-orange.svg)](https://openjdk.java.net/projects/jdk/25/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-green.svg)](https://spring.io/projects/spring-boot)
 
 ## Overview
@@ -13,7 +13,7 @@ This service handles loan applications, application parties, documents, proposed
 **Note:** Collateral management is handled by the separate `core-lending-collateral-management` microservice, which maintains references to loan applications via `loanApplicationId`.
 
 **Built with modern technologies:**
-- **Java 21** with virtual threads for enhanced performance
+- **Java 25** with virtual threads for enhanced performance
 - **Spring Boot 3.x** with **Spring WebFlux** for reactive programming
 - **Spring Data R2DBC** for reactive database access
 - **PostgreSQL** with **Flyway** for database migrations
@@ -358,7 +358,7 @@ All catalog entities follow a consistent structure with `code`, `name`, `descrip
 
 ## Technology Stack
 
-- **Java 21** with Virtual Threads for enhanced concurrency
+- **Java 25** with Virtual Threads for enhanced concurrency
 - **Spring Boot 3.x** with Spring WebFlux for reactive programming
 - **Spring Data R2DBC** for reactive database access
 - **PostgreSQL** as the primary database
@@ -556,6 +556,19 @@ curl -X POST "http://localhost:8080/api/v1/loan-applications/{applicationId}/dec
 | **Underwriting Decisions** | Decision recording and tracking | `GET/POST /api/v1/loan-applications/{id}/decisions`<br>`GET/PUT/DELETE /api/v1/loan-applications/{id}/decisions/{decisionId}` |
 | **Underwriting Scores** | Risk scoring and assessment | `GET/POST /api/v1/loan-applications/{id}/scores`<br>`GET/PUT/DELETE /api/v1/loan-applications/{id}/scores/{scoreId}` |
 | **Status History** | Application status audit trail | `GET/POST /api/v1/loan-applications/{id}/status-history`<br>`GET/PUT/DELETE /api/v1/loan-applications/{id}/status-history/{historyId}` |
+| **Application Tasks** | Task management for applications | `GET/POST /api/v1/loan-applications/{id}/tasks`<br>`GET/PUT/DELETE /api/v1/loan-applications/{id}/tasks/{taskId}` |
+| **Application Conditions** | Conditions attached to applications | `GET/POST /api/v1/loan-applications/{id}/conditions`<br>`GET/PUT/DELETE /api/v1/loan-applications/{id}/conditions/{conditionId}` |
+| **Application Exceptions** | Exception tracking for applications | `GET/POST /api/v1/loan-applications/{id}/exceptions`<br>`GET/PUT/DELETE /api/v1/loan-applications/{id}/exceptions/{exceptionId}` |
+| **Application Fees** | Fee management for applications | `GET/POST /api/v1/loan-applications/{id}/fees`<br>`GET/PUT/DELETE /api/v1/loan-applications/{id}/fees/{feeId}` |
+| **Application Metrics** | Metrics and KPIs for applications | `GET/POST /api/v1/loan-applications/{id}/metrics`<br>`GET/PUT/DELETE /api/v1/loan-applications/{id}/metrics/{metricId}` |
+| **Application Communications** | Communication logs for applications | `GET/POST /api/v1/loan-applications/{id}/communications`<br>`GET/PUT/DELETE /api/v1/loan-applications/{id}/communications/{communicationId}` |
+| **Application Comments** | Comments on applications | `GET/POST /api/v1/loan-applications/{id}/comments`<br>`GET/PUT/DELETE /api/v1/loan-applications/{id}/comments/{commentId}` |
+| **Application Verifications** | Verification records for applications | `GET/POST /api/v1/loan-applications/{id}/verifications`<br>`GET/PUT/DELETE /api/v1/loan-applications/{id}/verifications/{verificationId}` |
+| **Application External Calls** | External service call records | `GET/POST /api/v1/loan-applications/{id}/external-calls`<br>`GET/PUT/DELETE /api/v1/loan-applications/{id}/external-calls/{externalCallId}` |
+| **External Bank Accounts** | External bank account management | `GET/POST /api/v1/loan-applications/{id}/external-bank-accounts`<br>`GET/PUT/DELETE /api/v1/loan-applications/{id}/external-bank-accounts/{accountId}` |
+| **Application Statuses** | Application status catalog | `GET/POST /api/v1/application-statuses`<br>`GET/PUT/DELETE /api/v1/application-statuses/{id}` |
+| **Document Types** | Document type catalog | `GET/POST /api/v1/document-types`<br>`GET/PUT/DELETE /api/v1/document-types/{id}` |
+| **Decision Codes** | Decision code catalog | `GET/POST /api/v1/decision-codes`<br>`GET/PUT/DELETE /api/v1/decision-codes/{id}` |
 
 ### Error Handling
 
@@ -773,4 +786,4 @@ This project is licensed under the **Apache License 2.0** - see the [LICENSE](LI
 
 ---
 
-**Copyright © 2025 Firefly Software Solutions Inc. All rights reserved.**
+**Copyright 2025 Firefly Software Solutions Inc. All rights reserved.**
