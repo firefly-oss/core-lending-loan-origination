@@ -17,8 +17,8 @@
 
 package com.firefly.core.lending.origination.core.services;
 
-import com.firefly.common.core.queries.PaginationRequest;
-import com.firefly.common.core.queries.PaginationResponse;
+import org.fireflyframework.core.queries.PaginationRequest;
+import org.fireflyframework.core.queries.PaginationResponse;
 import com.firefly.core.lending.origination.interfaces.dtos.ApplicationTaskDTO;
 import reactor.core.publisher.Mono;
 

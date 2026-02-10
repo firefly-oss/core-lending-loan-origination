@@ -17,9 +17,9 @@
 
 package com.firefly.core.lending.origination.core.services.impl;
 
-import com.firefly.common.core.queries.PaginationRequest;
-import com.firefly.common.core.queries.PaginationResponse;
-import com.firefly.common.core.queries.PaginationUtils;
+import org.fireflyframework.core.queries.PaginationRequest;
+import org.fireflyframework.core.queries.PaginationResponse;
+import org.fireflyframework.core.queries.PaginationUtils;
 import com.firefly.core.lending.origination.core.mappers.ApplicationMetricMapper;
 import com.firefly.core.lending.origination.core.services.ApplicationMetricService;
 import com.firefly.core.lending.origination.interfaces.dtos.ApplicationMetricDTO;

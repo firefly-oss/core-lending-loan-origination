@@ -17,8 +17,8 @@
 
 package com.firefly.core.lending.origination.web.controllers;
 
-import com.firefly.common.core.queries.PaginationRequest;
-import com.firefly.common.core.queries.PaginationResponse;
+import org.fireflyframework.core.queries.PaginationRequest;
+import org.fireflyframework.core.queries.PaginationResponse;
 import com.firefly.core.lending.origination.core.services.ApplicationFeeService;
 import com.firefly.core.lending.origination.interfaces.dtos.ApplicationFeeDTO;
 import io.swagger.v3.oas.annotations.Operation;
