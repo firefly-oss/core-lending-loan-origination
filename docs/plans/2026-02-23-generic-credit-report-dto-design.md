@@ -30,6 +30,7 @@ CreditReportDTO
 │   ├── subjectType: SubjectTypeEnum  (INDIVIDUAL or BUSINESS)
 │   ├── fullName: String              (full name or legal name)
 │   ├── taxId: String                 (SSN, EIN, RFC, etc.)
+│   ├── taxIdType: String             ("SSN", "DNI", "EIN", "CIF", "RFC", etc.)
 │   ├── firstName: String             (individual-only, nullable)
 │   ├── lastName: String              (individual-only, nullable)
 │   ├── middleName: String            (individual-only, nullable)
@@ -56,7 +57,9 @@ CreditReportDTO
     ├── delinquentAccounts: Integer    (nullable)
     ├── oldestAccountDate: String      (nullable)
     ├── publicRecords: Integer         (nullable)
-    └── collections: Integer           (nullable)
+    ├── collections: Integer           (nullable)
+    ├── totalDebtAmount: Double        (total unpaid/debt amount, nullable)
+    └── totalOperationsAmount: Double  (total operations amount, nullable)
 ```
 
 ## New Enum

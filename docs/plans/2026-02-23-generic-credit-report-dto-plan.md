@@ -89,6 +89,7 @@ public class CreditReportDTO {
         // Common
         private String fullName;
         private String taxId;
+        private String taxIdType;
 
         // Individual-specific (null when subjectType = BUSINESS)
         private String firstName;
@@ -138,6 +139,8 @@ public class CreditReportDTO {
         private String oldestAccountDate;
         private Integer publicRecords;
         private Integer collections;
+        private Double totalDebtAmount;
+        private Double totalOperationsAmount;
     }
 }
 ```
@@ -197,6 +200,7 @@ protected CreditReportDTO mapToTarget(EquifaxReportResponse response) {
                                 .subjectType(SubjectTypeEnum.INDIVIDUAL)
                                 .taxId(report.getSubjectSocialNum() != null
                                         ? String.valueOf(report.getSubjectSocialNum()) : null)
+                                .taxIdType("SSN")
                                 .dateOfBirth(report.getBirthDate());
 
                 Optional.ofNullable(report.getSubjectName()).ifPresent(name -> {
@@ -401,6 +405,7 @@ class EquifaxEnricherTest {
         assertEquals("Doe", result.getSubject().getLastName());
         assertEquals("John Doe", result.getSubject().getFullName());
         assertEquals("123456789", result.getSubject().getTaxId());
+        assertEquals("SSN", result.getSubject().getTaxIdType());
         assertEquals("1990-01-01", result.getSubject().getDateOfBirth());
 
         // Scores
