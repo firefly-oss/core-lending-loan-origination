@@ -6,7 +6,7 @@
 
 ## Overview
 
-The **Core Lending Loan Origination Microservice** is a critical component of the **Firefly OpenCore Banking Platform**, developed by **Firefly Software Solutions Inc** under the Apache 2.0 license. This microservice is responsible for managing the complete loan origination process, from initial application submission through underwriting decisions and scoring.
+The **Core Lending Loan Origination Microservice** is a critical component of the **Firefly OpenCore Banking Platform**, developed by **Firefly Software Foundation** under the Apache 2.0 license. This microservice is responsible for managing the complete loan origination process, from initial application submission through underwriting decisions and scoring.
 
 This service handles loan applications, application parties, documents, proposed offers, underwriting decisions, scoring, and status history tracking. It provides a comprehensive solution for financial institutions to manage their loan origination workflows efficiently.
 
@@ -475,7 +475,7 @@ spring:
     version: 1.0.0
     description: Loan Origination Core Application
     team:
-      name: Firefly Software Solutions Inc
+      name: Firefly Software Foundation
       email: dev@getfirefly.io
 ```
 
@@ -778,7 +778,7 @@ This project is licensed under the **Apache License 2.0** - see the [LICENSE](LI
 
 ## About Firefly
 
-**Firefly Software Solutions Inc** is dedicated to building open-source banking and financial technology solutions. The Firefly OpenCore Banking Platform provides modern, scalable, and secure microservices for financial institutions.
+**Firefly Software Foundation** is dedicated to building open-source banking and financial technology solutions. The Firefly OpenCore Banking Platform provides modern, scalable, and secure microservices for financial institutions.
 
 - **Website**: [getfirefly.io](https://getfirefly.io)
 - **Email**: [dev@getfirefly.io](mailto:dev@getfirefly.io)
@@ -786,4 +786,4 @@ This project is licensed under the **Apache License 2.0** - see the [LICENSE](LI
 
 ---
 
-**Copyright 2025 Firefly Software Solutions Inc. All rights reserved.**
+**Copyright 2025 Firefly Software Foundation. All rights reserved.**
