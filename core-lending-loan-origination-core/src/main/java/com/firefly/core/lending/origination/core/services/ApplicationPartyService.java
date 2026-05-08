@@ -20,6 +20,7 @@ package com.firefly.core.lending.origination.core.services;
 import org.fireflyframework.core.queries.PaginationRequest;
 import org.fireflyframework.core.queries.PaginationResponse;
 import com.firefly.core.lending.origination.interfaces.dtos.ApplicationPartyDTO;
+import com.firefly.core.lending.origination.interfaces.dtos.EmploymentDataPatchDTO;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
@@ -72,4 +73,23 @@ public interface ApplicationPartyService {
      * @return a Mono signaling when the deletion operation has been completed
      */
     Mono<Void> deleteParty(UUID applicationId, UUID partyId);
+
+    /**
+     * Patches the 12 BE-4 economic / employment fields on an application party,
+     * leaving every other field untouched. Only non-null fields in the patch are applied.
+     *
+     * @param applicationPartyId the application party identifier
+     * @param patch              the partial payload (any subset of the 12 fields)
+     * @return the updated application party
+     */
+    Mono<ApplicationPartyDTO> updateEmploymentData(UUID applicationPartyId, EmploymentDataPatchDTO patch);
+
+    /**
+     * Returns the primary application party for the given loan application
+     * (the row whose {@code is_primary} flag is {@code TRUE}).
+     *
+     * @param applicationId the loan application identifier
+     * @return the primary party, or empty if none has been marked as primary yet
+     */
+    Mono<ApplicationPartyDTO> findPrimaryByApplicationId(UUID applicationId);
 }
