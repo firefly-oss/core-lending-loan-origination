@@ -26,12 +26,16 @@ tags:
   description: Manage communications for a loan application
 - name: ApplicationMetric
   description: Manage metrics for a loan application
+- name: ApplicationPartyEmployment
+  description: Economic / employment data on application parties (BE-4)
 - name: ApplicationTask
   description: Manage tasks for a loan application
 - name: ApplicationException
   description: Manage exceptions for a loan application
 - name: DecisionCode
   description: Manage decision codes for underwriting decisions
+- name: Simulation
+  description: "Persisted lending simulations (PERSONAL_LOAN, LEASING)"
 - name: ApplicationFee
   description: Manage fees for a loan application
 - name: LoanApplications
@@ -2012,6 +2016,41 @@ paths:
       responses:
         "200":
           description: OK
+  /api/v1/simulations:
+    post:
+      tags:
+      - Simulation
+      summary: Create simulation
+      description: Persists a new lending simulation. Calculation values may be supplied
+        by the pricing engine or left blank.
+      operationId: createSimulation
+      parameters:
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SimulationDTO"
+        required: true
+      responses:
+        "201":
+          description: Simulation persisted
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SimulationDTO"
+        "400":
+          description: Invalid simulation payload
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SimulationDTO"
   /api/v1/loan-applications:
     get:
       tags:
@@ -3910,6 +3949,133 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ApplicationStatusDTO"
+  /api/v1/simulations/{id}:
+    get:
+      tags:
+      - Simulation
+      summary: Get simulation
+      description: Retrieves a persisted simulation by its identifier.
+      operationId: getSimulation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Simulation found
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SimulationDTO"
+        "404":
+          description: Simulation not found
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SimulationDTO"
+    patch:
+      tags:
+      - Simulation
+      summary: Update simulation calculations
+      description: "Writes the computed monthly payment, TIN, TAE and total amount\
+        \ onto an existing simulation row."
+      operationId: updateSimulation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateSimulationCalculationsRequest"
+        required: true
+      responses:
+        "200":
+          description: Simulation updated
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SimulationDTO"
+        "400":
+          description: Invalid update payload
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SimulationDTO"
+        "404":
+          description: Simulation not found
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SimulationDTO"
+  /api/v1/application-parties/{id}/employment-data:
+    patch:
+      tags:
+      - ApplicationPartyEmployment
+      summary: Patch the economic / employment fields of an application party
+      description: Applies a partial update to the 12 BE-4 economic fields. Null fields
+        on the payload are ignored.
+      operationId: updateApplicationPartyEmploymentData
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmploymentDataPatchDTO"
+        required: true
+      responses:
+        "200":
+          description: Application party updated
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApplicationPartyDTO"
+        "400":
+          description: Invalid patch payload
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApplicationPartyDTO"
+        "404":
+          description: Application party not found
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApplicationPartyDTO"
   /api/v1/loan-applications/all:
     get:
       tags:
@@ -4119,6 +4285,40 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PaginationResponseApplicationStatusDTO"
+  /api/v1/application-parties/by-application/{applicationId}/primary:
+    get:
+      tags:
+      - ApplicationPartyEmployment
+      summary: Find the primary application party for an application
+      description: Returns the application party row whose is_primary flag is TRUE.
+      operationId: findPrimaryApplicationParty
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Primary party found
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApplicationPartyDTO"
+        "404":
+          description: No primary party for the given application
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApplicationPartyDTO"
 components:
   schemas:
     LoanApplicationDTO:
@@ -4220,6 +4420,9 @@ components:
           maxLength: 1000
           minLength: 0
           type: string
+        simulationId:
+          type: string
+          format: uuid
         createdAt:
           type: string
           format: date-time
@@ -4442,6 +4645,64 @@ components:
         employmentTypeId:
           type: string
           format: uuid
+        employmentStatus:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Employment status
+          example: EMPLOYED
+        employmentTypeLabel:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Free-form employment type label sent by the front-end. Distinct
+            from the catalog FK employmentTypeId.
+        employer:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: Employer name
+        position:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: Job position / title
+        employmentStartDate:
+          type: string
+          description: Date when current employment started
+          format: date
+        annualPaydays:
+          type: integer
+          description: Number of paydays per year (typically 12 or 14)
+          format: int32
+          example: 14
+        monthlySalary:
+          type: number
+          description: Net monthly salary
+        housingType:
+          maxLength: 20
+          minLength: 0
+          type: string
+          description: Housing situation
+          example: OWNED
+        housingCost:
+          type: number
+          description: Monthly housing cost (rent or mortgage payment)
+        housingStartDate:
+          type: string
+          description: Date when current housing situation started
+          format: date
+        existingLoans:
+          type: integer
+          description: Number of currently active loans
+          format: int32
+        otherDebts:
+          type: number
+          description: Total monthly amount of other recurring debts
+        isPrimary:
+          type: boolean
+          description: TRUE when this party is the primary applicant for the loan
+            application. Enforced unique per loan_application_id by ux_application_party_primary.
         createdAt:
           type: string
           format: date-time
@@ -5066,6 +5327,168 @@ components:
           type: string
           format: date-time
           readOnly: true
+    SimulationDTO:
+      required:
+      - productType
+      - requestedAmount
+      - term
+      type: object
+      properties:
+        simulationId:
+          type: string
+          description: Unique identifier of the simulation.
+          format: uuid
+          readOnly: true
+        productId:
+          type: string
+          description: Reference to the product in core-common-product-mgmt. No FK
+            across services.
+          format: uuid
+        productType:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Product family discriminator.
+          example: PERSONAL_LOAN
+        requestedAmount:
+          minimum: 0.0
+          exclusiveMinimum: true
+          type: number
+          description: Requested loan / financed amount.
+          example: 10000.0
+        term:
+          type: integer
+          description: Number of monthly installments.
+          format: int32
+          example: 36
+        purpose:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Loan purpose (free-form code).
+          example: VEHICLE_PURCHASE
+        sector:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Customer business sector (LEASING).
+        assetType:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Asset type to be financed (LEASING).
+        monthlyPayment:
+          type: number
+          description: Computed monthly payment. Populated by the pricing engine.
+        tin:
+          type: number
+          description: Nominal interest rate (TIN). Populated by the pricing engine.
+        tae:
+          type: number
+          description: Annual equivalent rate (TAE). Populated by the pricing engine.
+        totalAmount:
+          type: number
+          description: Total amount to be repaid (principal + interest). Populated
+            by the pricing engine.
+        currency:
+          maxLength: 3
+          minLength: 3
+          type: string
+          description: ISO 4217 currency code.
+          example: EUR
+          default: EUR
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+      description: A persisted lending simulation (PERSONAL_LOAN or LEASING).
+    UpdateSimulationCalculationsRequest:
+      required:
+      - monthlyPayment
+      - tae
+      - tin
+      - totalAmount
+      type: object
+      properties:
+        monthlyPayment:
+          type: number
+          description: Computed monthly payment.
+          example: 320.55
+        tin:
+          type: number
+          description: Nominal interest rate (TIN) as a percentage.
+          example: 7.99
+        tae:
+          type: number
+          description: Annual equivalent rate (TAE) as a percentage.
+          example: 8.29
+        totalAmount:
+          type: number
+          description: Total amount to be repaid (principal + interest).
+          example: 11539.8
+      description: Computed financial values to persist on an existing simulation.
+    EmploymentDataPatchDTO:
+      type: object
+      properties:
+        employmentStatus:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Employment status
+          example: EMPLOYED
+        employmentTypeLabel:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Free-form employment type label sent by the front-end.
+        employer:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: Employer name
+        position:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: Job position / title
+        employmentStartDate:
+          type: string
+          description: Date when current employment started
+          format: date
+        annualPaydays:
+          type: integer
+          description: Number of paydays per year
+          format: int32
+          example: 14
+        monthlySalary:
+          type: number
+          description: Net monthly salary
+        housingType:
+          maxLength: 20
+          minLength: 0
+          type: string
+          description: Housing situation
+          example: OWNED
+        housingCost:
+          type: number
+          description: Monthly housing cost (rent or mortgage payment)
+        housingStartDate:
+          type: string
+          description: Date when current housing situation started
+          format: date
+        existingLoans:
+          type: integer
+          description: Number of currently active loans
+          format: int32
+        otherDebts:
+          type: number
+          description: Total monthly amount of other recurring debts
+      description: Partial-update payload for the 12 economic and employment fields
+        on an application party.
     PaginationResponseLoanApplicationDTO:
       type: object
       properties:

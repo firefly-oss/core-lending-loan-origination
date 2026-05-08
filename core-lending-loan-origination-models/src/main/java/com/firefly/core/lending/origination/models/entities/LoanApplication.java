@@ -218,6 +218,14 @@ public class LoanApplication {
     @Column("note")
     private String note;
 
+    /**
+     * Soft link to the simulation that produced this application (table {@code simulation}, V14).
+     * No FK is used across bounded contexts — future product types may persist their simulations
+     * in their own tables.
+     */
+    @Column("simulation_id")
+    private UUID simulationId;
+
     @Column("created_at")
     private LocalDateTime createdAt;
 

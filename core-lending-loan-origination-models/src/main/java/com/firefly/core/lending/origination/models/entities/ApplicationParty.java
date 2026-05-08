@@ -26,6 +26,7 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -59,6 +60,58 @@ public class ApplicationParty {
 
     @Column("employment_type_id")
     private UUID employmentTypeId;
+
+    // -----------------------------------------------------------------
+    // BE-4 economic / employment data (V15)
+    // -----------------------------------------------------------------
+
+    @Column("employment_status")
+    private String employmentStatus;
+
+    /**
+     * Free-form employment type label sent by the front-end.
+     * Distinct from the catalog FK column {@link #employmentTypeId}.
+     */
+    @Column("employment_type_label")
+    private String employmentTypeLabel;
+
+    @Column("employer")
+    private String employer;
+
+    @Column("position")
+    private String position;
+
+    @Column("employment_start_date")
+    private LocalDate employmentStartDate;
+
+    @Column("annual_paydays")
+    private Short annualPaydays;
+
+    @Column("monthly_salary")
+    private BigDecimal monthlySalary;
+
+    @Column("housing_type")
+    private String housingType;
+
+    @Column("housing_cost")
+    private BigDecimal housingCost;
+
+    @Column("housing_start_date")
+    private LocalDate housingStartDate;
+
+    @Column("existing_loans")
+    private Short existingLoans;
+
+    @Column("other_debts")
+    private BigDecimal otherDebts;
+
+    /**
+     * TRUE if this party is the primary applicant for the loan application.
+     * Enforced unique per loan_application_id via partial unique index
+     * {@code ux_application_party_primary}.
+     */
+    @Column("is_primary")
+    private Boolean isPrimary;
 
     @Column("created_at")
     private LocalDateTime createdAt;

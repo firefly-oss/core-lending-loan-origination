@@ -150,6 +150,14 @@ public class LoanApplicationDTO {
 
     @Size(max = 1000, message = "Note cannot exceed 1000 characters")
     private String note;
+
+    /**
+     * Soft link to the simulation that produced this application (table {@code simulation}, V14).
+     * No FK across bounded contexts.
+     */
+    @FilterableId
+    private UUID simulationId;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

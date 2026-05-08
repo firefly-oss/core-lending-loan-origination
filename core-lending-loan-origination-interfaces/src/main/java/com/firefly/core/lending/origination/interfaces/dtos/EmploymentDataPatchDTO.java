@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Firefly Software Foundation
+ * Copyright 2025 Firefly Software Solutions Inc
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,7 @@
 
 package com.firefly.core.lending.origination.interfaces.dtos;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.fireflyframework.utils.annotations.FilterableId;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -32,55 +27,26 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
+/**
+ * Partial-update payload for the 12 BE-4 economic / employment fields on an application party.
+ *
+ * <p>All fields are optional. When a field is {@code null} on the request,
+ * the corresponding column on the entity is left untouched.</p>
+ */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApplicationPartyDTO {
-
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private UUID applicationPartyId;
-
-    @FilterableId
-    @NotNull(message = "Loan application ID is required")
-    private UUID loanApplicationId;
-
-    @FilterableId
-    @NotNull(message = "Party ID is required")
-    private UUID partyId;
-
-    @FilterableId
-    @NotNull(message = "Role code ID is required")
-    private UUID roleCodeId;
-
-    @DecimalMin(value = "0.0", inclusive = true, message = "Share percentage must be non-negative")
-    @DecimalMax(value = "100.0", inclusive = true, message = "Share percentage cannot exceed 100%")
-    private BigDecimal sharePercentage;
-
-    @PositiveOrZero(message = "Annual income must be non-negative")
-    private BigDecimal annualIncome;
-
-    @PositiveOrZero(message = "Monthly expenses must be non-negative")
-    private BigDecimal monthlyExpenses;
-
-    @FilterableId
-    @NotNull(message = "Employment type ID is required")
-    private UUID employmentTypeId;
-
-    // -----------------------------------------------------------------
-    // BE-4 economic / employment data (V15)
-    // -----------------------------------------------------------------
+@Schema(description = "Partial-update payload for the 12 economic and employment fields on an application party.")
+public class EmploymentDataPatchDTO {
 
     @Size(max = 50)
     @Schema(description = "Employment status", example = "EMPLOYED")
     private String employmentStatus;
 
     @Size(max = 50)
-    @Schema(description = "Free-form employment type label sent by the front-end. " +
-            "Distinct from the catalog FK employmentTypeId.")
+    @Schema(description = "Free-form employment type label sent by the front-end.")
     private String employmentTypeLabel;
 
     @Size(max = 255)
@@ -95,7 +61,7 @@ public class ApplicationPartyDTO {
     private LocalDate employmentStartDate;
 
     @PositiveOrZero(message = "Annual paydays must be non-negative")
-    @Schema(description = "Number of paydays per year (typically 12 or 14)", example = "14")
+    @Schema(description = "Number of paydays per year", example = "14")
     private Short annualPaydays;
 
     @PositiveOrZero(message = "Monthly salary must be non-negative")
@@ -120,11 +86,4 @@ public class ApplicationPartyDTO {
     @PositiveOrZero(message = "Other debts must be non-negative")
     @Schema(description = "Total monthly amount of other recurring debts")
     private BigDecimal otherDebts;
-
-    @Schema(description = "TRUE when this party is the primary applicant for the loan application. " +
-            "Enforced unique per loan_application_id by ux_application_party_primary.")
-    private Boolean isPrimary;
-
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 }

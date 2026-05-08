@@ -23,24 +23,28 @@ import org.fireflyframework.core.queries.PaginationUtils;
 import com.firefly.core.lending.origination.core.mappers.ApplicationPartyMapper;
 import com.firefly.core.lending.origination.core.services.ApplicationPartyService;
 import com.firefly.core.lending.origination.interfaces.dtos.ApplicationPartyDTO;
+import com.firefly.core.lending.origination.interfaces.dtos.EmploymentDataPatchDTO;
 import com.firefly.core.lending.origination.models.entities.ApplicationParty;
 import com.firefly.core.lending.origination.models.repositories.ApplicationPartyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.fireflyframework.web.error.exceptions.BusinessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
 @Transactional
 public class ApplicationPartyServiceImpl implements ApplicationPartyService {
 
-    @Autowired
-    private ApplicationPartyRepository repository;
-
-    @Autowired
-    private ApplicationPartyMapper mapper;
+    private final ApplicationPartyRepository repository;
+    private final ApplicationPartyMapper mapper;
 
     @Override
     public Mono<PaginationResponse<ApplicationPartyDTO>> findAll(UUID applicationId, PaginationRequest paginationRequest) {
@@ -85,5 +89,77 @@ public class ApplicationPartyServiceImpl implements ApplicationPartyService {
         return repository.findById(partyId)
                 .filter(entity -> entity.getLoanApplicationId().equals(applicationId))
                 .flatMap(entity -> repository.delete(entity));
+    }
+
+    @Override
+    public Mono<ApplicationPartyDTO> updateEmploymentData(UUID applicationPartyId, EmploymentDataPatchDTO patch) {
+        log.debug("Patching employment data for applicationPartyId={}", applicationPartyId);
+        return repository.findById(applicationPartyId)
+                .switchIfEmpty(Mono.error(new BusinessException(
+                        HttpStatus.NOT_FOUND,
+                        "APPLICATION_PARTY_NOT_FOUND",
+                        "Application party not found: " + applicationPartyId)))
+                .flatMap(existing -> {
+                    applyEmploymentDataPatch(existing, patch);
+                    existing.setUpdatedAt(LocalDateTime.now());
+                    return repository.save(existing);
+                })
+                .doOnNext(saved -> log.info("Employment data updated for applicationPartyId={}",
+                        saved.getApplicationPartyId()))
+                .map(mapper::toDTO);
+    }
+
+    @Override
+    public Mono<ApplicationPartyDTO> findPrimaryByApplicationId(UUID applicationId) {
+        log.debug("Looking up primary application party for applicationId={}", applicationId);
+        return repository.findFirstByLoanApplicationIdAndIsPrimaryTrue(applicationId)
+                .map(mapper::toDTO);
+    }
+
+    /**
+     * Applies the (non-null) values of the patch onto the entity.
+     * Null fields on the patch are ignored — every other column on the entity
+     * is left untouched (per BE-4 contract).
+     */
+    private static void applyEmploymentDataPatch(ApplicationParty entity, EmploymentDataPatchDTO patch) {
+        if (patch == null) {
+            return;
+        }
+        if (patch.getEmploymentStatus() != null) {
+            entity.setEmploymentStatus(patch.getEmploymentStatus());
+        }
+        if (patch.getEmploymentTypeLabel() != null) {
+            entity.setEmploymentTypeLabel(patch.getEmploymentTypeLabel());
+        }
+        if (patch.getEmployer() != null) {
+            entity.setEmployer(patch.getEmployer());
+        }
+        if (patch.getPosition() != null) {
+            entity.setPosition(patch.getPosition());
+        }
+        if (patch.getEmploymentStartDate() != null) {
+            entity.setEmploymentStartDate(patch.getEmploymentStartDate());
+        }
+        if (patch.getAnnualPaydays() != null) {
+            entity.setAnnualPaydays(patch.getAnnualPaydays());
+        }
+        if (patch.getMonthlySalary() != null) {
+            entity.setMonthlySalary(patch.getMonthlySalary());
+        }
+        if (patch.getHousingType() != null) {
+            entity.setHousingType(patch.getHousingType());
+        }
+        if (patch.getHousingCost() != null) {
+            entity.setHousingCost(patch.getHousingCost());
+        }
+        if (patch.getHousingStartDate() != null) {
+            entity.setHousingStartDate(patch.getHousingStartDate());
+        }
+        if (patch.getExistingLoans() != null) {
+            entity.setExistingLoans(patch.getExistingLoans());
+        }
+        if (patch.getOtherDebts() != null) {
+            entity.setOtherDebts(patch.getOtherDebts());
+        }
     }
 }
