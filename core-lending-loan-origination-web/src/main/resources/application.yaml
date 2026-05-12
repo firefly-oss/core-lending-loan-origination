@@ -7,6 +7,9 @@ spring:
       name: Firefly Software Foundation
       email: dev@getfirefly.io
 
+  codec:
+    max-in-memory-size: 20MB
+
   r2dbc:
     pool:
       initial-size: 5
