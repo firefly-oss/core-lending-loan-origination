@@ -18,6 +18,7 @@
 package com.firefly.core.lending.origination.models.repositories;
 
 import com.firefly.core.lending.origination.models.entities.ApplicationParty;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
@@ -35,4 +36,14 @@ public interface ApplicationPartyRepository extends BaseRepository<ApplicationPa
      * @return the primary party, or empty if none has been marked as primary yet
      */
     Mono<ApplicationParty> findFirstByLoanApplicationIdAndIsPrimaryTrue(UUID loanApplicationId);
+
+    /**
+     * Returns every application-party row referencing the given party identifier.
+     *
+     * <p>Backed by the {@code ix_application_party_party_id} index.</p>
+     *
+     * @param partyId the party identifier
+     * @return all application-party links for the party
+     */
+    Flux<ApplicationParty> findByPartyId(UUID partyId);
 }

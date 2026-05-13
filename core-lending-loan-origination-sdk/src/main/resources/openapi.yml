@@ -22,6 +22,8 @@ tags:
   description: Manage status history records for a loan application
 - name: ApplicationParty
   description: Manage parties for a loan application
+- name: ApplicationPartyQuery
+  description: Cross-application queries over application-party rows
 - name: ApplicationCommunication
   description: Manage communications for a loan application
 - name: ApplicationMetric
@@ -4285,6 +4287,38 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PaginationResponseApplicationStatusDTO"
+  /api/v1/application-parties/by-party/{partyId}:
+    get:
+      tags:
+      - ApplicationPartyQuery
+      summary: List application-party links for a party
+      description: "Returns every application-party row that references the given\
+        \ party, across any loan application. Backed by the ix_application_party_party_id\
+        \ index."
+      operationId: findByPartyId
+      parameters:
+      - name: partyId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ApplicationPartyDTO"
   /api/v1/application-parties/by-application/{applicationId}/primary:
     get:
       tags:

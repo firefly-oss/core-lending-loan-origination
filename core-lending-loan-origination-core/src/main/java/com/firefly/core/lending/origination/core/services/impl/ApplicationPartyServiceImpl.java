@@ -32,6 +32,7 @@ import org.fireflyframework.web.error.exceptions.BusinessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
@@ -113,6 +114,13 @@ public class ApplicationPartyServiceImpl implements ApplicationPartyService {
     public Mono<ApplicationPartyDTO> findPrimaryByApplicationId(UUID applicationId) {
         log.debug("Looking up primary application party for applicationId={}", applicationId);
         return repository.findFirstByLoanApplicationIdAndIsPrimaryTrue(applicationId)
+                .map(mapper::toDTO);
+    }
+
+    @Override
+    public Flux<ApplicationPartyDTO> findByPartyId(UUID partyId) {
+        log.debug("Looking up application parties for partyId={}", partyId);
+        return repository.findByPartyId(partyId)
                 .map(mapper::toDTO);
     }
 

@@ -21,6 +21,7 @@ import org.fireflyframework.core.queries.PaginationRequest;
 import org.fireflyframework.core.queries.PaginationResponse;
 import com.firefly.core.lending.origination.interfaces.dtos.ApplicationPartyDTO;
 import com.firefly.core.lending.origination.interfaces.dtos.EmploymentDataPatchDTO;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
@@ -92,4 +93,13 @@ public interface ApplicationPartyService {
      * @return the primary party, or empty if none has been marked as primary yet
      */
     Mono<ApplicationPartyDTO> findPrimaryByApplicationId(UUID applicationId);
+
+    /**
+     * Returns every application-party row associated with the given party
+     * identifier across any loan application.
+     *
+     * @param partyId the party identifier
+     * @return all application-party links for the party
+     */
+    Flux<ApplicationPartyDTO> findByPartyId(UUID partyId);
 }
