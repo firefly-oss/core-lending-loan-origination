@@ -12,6 +12,7 @@
     </parent>
 
     <artifactId>core-lending-loan-origination</artifactId>
+    <name>core-lending-loan-origination</name>
     <packaging>pom</packaging>
     <modules>
         <module>core-lending-loan-origination-core</module>
