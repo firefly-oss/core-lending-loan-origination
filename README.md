@@ -476,7 +476,7 @@ spring:
     description: Loan Origination Core Application
     team:
       name: Firefly Software Foundation
-      email: dev@getfirefly.io
+      email: dev@fireflysoftware.io
 ```
 
 ## API Documentation
@@ -767,7 +767,7 @@ We welcome contributions to the Firefly OpenCore Banking Platform! Please follow
 - Use meaningful commit messages following conventional commits
 
 ### Community
-- **Website**: [getfirefly.io](https://getfirefly.io)
+- **Website**: [fireflysoftware.io](https://fireflysoftware.io)
 - **GitHub Organization**: [firefly-oss](https://github.com/firefly-oss)
 - **Issues**: Report bugs and request features via GitHub Issues
 - **Discussions**: Join community discussions on GitHub Discussions
@@ -780,8 +780,8 @@ This project is licensed under the **Apache License 2.0** - see the [LICENSE](LI
 
 **Firefly Software Foundation** is dedicated to building open-source banking and financial technology solutions. The Firefly OpenCore Banking Platform provides modern, scalable, and secure microservices for financial institutions.
 
-- **Website**: [getfirefly.io](https://getfirefly.io)
-- **Email**: [dev@getfirefly.io](mailto:dev@getfirefly.io)
+- **Website**: [fireflysoftware.io](https://fireflysoftware.io)
+- **Email**: [dev@fireflysoftware.io](mailto:dev@fireflysoftware.io)
 - **GitHub**: [github.com/firefly-oss](https://github.com/firefly-oss)
 
 ---
