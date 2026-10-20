@@ -15,12 +15,12 @@
 ### Task 1: Create SubjectTypeEnum
 
 **Files:**
-- Create: `core-data-credit-bureaus/core-data-credit-bureaus-infra/src/main/java/com/firefly/data/credit/bureaus/infra/dtos/SubjectTypeEnum.java`
+- Create: `core-data-credit-bureaus/core-data-credit-bureaus-infra/src/main/java/io/fireflysoftware/data/credit/bureaus/infra/dtos/SubjectTypeEnum.java`
 
 **Step 1: Create the enum**
 
 ```java
-package com.firefly.data.credit.bureaus.infra.dtos;
+package io.fireflysoftware.data.credit.bureaus.infra.dtos;
 
 public enum SubjectTypeEnum {
     INDIVIDUAL,
@@ -31,7 +31,7 @@ public enum SubjectTypeEnum {
 **Step 2: Commit**
 
 ```bash
-git add core-data-credit-bureaus/core-data-credit-bureaus-infra/src/main/java/com/firefly/data/credit/bureaus/infra/dtos/SubjectTypeEnum.java
+git add core-data-credit-bureaus/core-data-credit-bureaus-infra/src/main/java/io/fireflysoftware/data/credit/bureaus/infra/dtos/SubjectTypeEnum.java
 git commit -m "feat: add SubjectTypeEnum for individual/business discrimination"
 ```
 
@@ -40,12 +40,12 @@ git commit -m "feat: add SubjectTypeEnum for individual/business discrimination"
 ### Task 2: Rewrite CreditReportDTO with composition pattern
 
 **Files:**
-- Modify: `core-data-credit-bureaus/core-data-credit-bureaus-infra/src/main/java/com/firefly/data/credit/bureaus/infra/dtos/CreditReportDTO.java` (full rewrite)
+- Modify: `core-data-credit-bureaus/core-data-credit-bureaus-infra/src/main/java/io/fireflysoftware/data/credit/bureaus/infra/dtos/CreditReportDTO.java` (full rewrite)
 
 **Step 1: Replace CreditReportDTO with the new composition structure**
 
 ```java
-package com.firefly.data.credit.bureaus.infra.dtos;
+package io.fireflysoftware.data.credit.bureaus.infra.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -148,7 +148,7 @@ public class CreditReportDTO {
 **Step 2: Commit**
 
 ```bash
-git add core-data-credit-bureaus/core-data-credit-bureaus-infra/src/main/java/com/firefly/data/credit/bureaus/infra/dtos/CreditReportDTO.java
+git add core-data-credit-bureaus/core-data-credit-bureaus-infra/src/main/java/io/fireflysoftware/data/credit/bureaus/infra/dtos/CreditReportDTO.java
 git commit -m "feat: rewrite CreditReportDTO with provider-agnostic composition structure"
 ```
 
@@ -157,7 +157,7 @@ git commit -m "feat: rewrite CreditReportDTO with provider-agnostic composition 
 ### Task 3: Update EquifaxEnricher.mapToTarget()
 
 **Files:**
-- Modify: `core-data-credit-bureaus/core-data-credit-bureaus-infra/src/main/java/com/firefly/data/credit/bureaus/infra/services/EquifaxEnricher.java:77-119`
+- Modify: `core-data-credit-bureaus/core-data-credit-bureaus-infra/src/main/java/io/fireflysoftware/data/credit/bureaus/infra/services/EquifaxEnricher.java:77-119`
 
 **Step 1: Update the mapToTarget method to build the new sub-DTOs**
 
@@ -273,7 +273,7 @@ Expected: BUILD SUCCESS
 **Step 3: Commit**
 
 ```bash
-git add core-data-credit-bureaus/core-data-credit-bureaus-infra/src/main/java/com/firefly/data/credit/bureaus/infra/services/EquifaxEnricher.java
+git add core-data-credit-bureaus/core-data-credit-bureaus-infra/src/main/java/io/fireflysoftware/data/credit/bureaus/infra/services/EquifaxEnricher.java
 git commit -m "feat: update EquifaxEnricher.mapToTarget to populate new generic CreditReportDTO"
 ```
 
@@ -282,14 +282,14 @@ git commit -m "feat: update EquifaxEnricher.mapToTarget to populate new generic 
 ### Task 4: Update EquifaxEnricherTest
 
 **Files:**
-- Modify: `core-data-credit-bureaus/core-data-credit-bureaus-infra/src/test/java/com/firefly/data/credit/bureaus/infra/services/EquifaxEnricherTest.java`
+- Modify: `core-data-credit-bureaus/core-data-credit-bureaus-infra/src/test/java/io/fireflysoftware/data/credit/bureaus/infra/services/EquifaxEnricherTest.java`
 
 **Step 1: Update test assertions for the new DTO structure**
 
 Replace the test class with updated assertions that verify the new sub-DTOs:
 
 ```java
-package com.firefly.data.credit.bureaus.infra.services;
+package io.fireflysoftware.data.credit.bureaus.infra.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.fireflyframework.data.event.EnrichmentEventPublisher;
@@ -297,10 +297,10 @@ import org.fireflyframework.data.model.EnrichmentRequest;
 import org.fireflyframework.data.observability.JobMetricsService;
 import org.fireflyframework.data.observability.JobTracingService;
 import org.fireflyframework.data.resiliency.ResiliencyDecoratorService;
-import com.firefly.data.credit.bureaus.infra.dtos.CreditReportDTO;
-import com.firefly.data.credit.bureaus.infra.dtos.EquifaxReportRequest;
-import com.firefly.data.credit.bureaus.infra.dtos.EquifaxReportResponse;
-import com.firefly.data.credit.bureaus.infra.dtos.SubjectTypeEnum;
+import io.fireflysoftware.data.credit.bureaus.infra.dtos.CreditReportDTO;
+import io.fireflysoftware.data.credit.bureaus.infra.dtos.EquifaxReportRequest;
+import io.fireflysoftware.data.credit.bureaus.infra.dtos.EquifaxReportResponse;
+import io.fireflysoftware.data.credit.bureaus.infra.dtos.SubjectTypeEnum;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -476,7 +476,7 @@ Expected: All tests PASS
 **Step 3: Commit**
 
 ```bash
-git add core-data-credit-bureaus/core-data-credit-bureaus-infra/src/test/java/com/firefly/data/credit/bureaus/infra/services/EquifaxEnricherTest.java
+git add core-data-credit-bureaus/core-data-credit-bureaus-infra/src/test/java/io/fireflysoftware/data/credit/bureaus/infra/services/EquifaxEnricherTest.java
 git commit -m "test: update EquifaxEnricherTest for generic CreditReportDTO structure"
 ```
 
